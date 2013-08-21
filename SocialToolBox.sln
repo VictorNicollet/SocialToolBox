@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialToolBox.Sample.Web", "SocialToolBox.Sample.Web\SocialToolBox.Sample.Web.csproj", "{409FEF88-40B6-4DFE-A96B-DE098870358A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialToolBox.Core.Mocks", "SocialToolBox.Core.Mocks\SocialToolBox.Core.Mocks.csproj", "{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialToolBox.Core.Tests", "SocialToolBox.Core.Tests\SocialToolBox.Core.Tests.csproj", "{5F12D2E9-E3C0-470B-8EF3-78403E3F52E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{409FEF88-40B6-4DFE-A96B-DE098870358A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{409FEF88-40B6-4DFE-A96B-DE098870358A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{409FEF88-40B6-4DFE-A96B-DE098870358A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F12D2E9-E3C0-470B-8EF3-78403E3F52E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F12D2E9-E3C0-470B-8EF3-78403E3F52E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F12D2E9-E3C0-470B-8EF3-78403E3F52E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F12D2E9-E3C0-470B-8EF3-78403E3F52E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

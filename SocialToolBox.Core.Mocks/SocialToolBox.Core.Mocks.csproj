@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4153AFAF-2332-4873-9BBF-508F553D99B2}</ProjectGuid>
+    <ProjectGuid>{436B21DA-8DEF-4E9E-8EFE-3B01F83F8670}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocialToolBox.Core</RootNamespace>
-    <AssemblyName>SocialToolBox.Core</AssemblyName>
+    <RootNamespace>SocialToolBox.Core.Mocks</RootNamespace>
+    <AssemblyName>SocialToolBox.Core.Mocks</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,12 +37,17 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\IDatabaseDriver.cs" />
-    <Compile Include="Database\IEventStream.cs" />
-    <Compile Include="Database\ITypeDictionary.cs" />
-    <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
-    <Compile Include="Database\Serialization\UntypedSerializer.cs" />
+    <Compile Include="Database\DatabaseDriver.cs" />
+    <Compile Include="Database\EventStream.cs" />
+    <Compile Include="Database\Serialization\MockAccount.cs" />
+    <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialToolBox.Core\SocialToolBox.Core.csproj">
+      <Project>{4153afaf-2332-4873-9bbf-508f553d99b2}</Project>
+      <Name>SocialToolBox.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
