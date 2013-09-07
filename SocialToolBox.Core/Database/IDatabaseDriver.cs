@@ -21,5 +21,11 @@
         /// driver.
         /// </summary>
         ITypeDictionary TypeDictionary { get; }
+
+        /// <summary>
+        /// A clock registry used by projection aspects of this database
+        /// driver.
+        /// </summary>
+        IClockRegistry ClockRegistry { get; }
     }
 }

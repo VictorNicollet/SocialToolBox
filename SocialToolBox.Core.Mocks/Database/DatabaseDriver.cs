@@ -15,9 +15,16 @@ namespace SocialToolBox.Core.Mocks.Database
         /// </summary>
         public readonly TypeDictionary InnerTypeDictionary;
 
+        /// <summary>
+        /// The mock clock registry used internally.
+        /// </summary>
+        public readonly ClockRegistry InnerClockRegistry;
+
         public DatabaseDriver()
         {
             EventStreams = new Dictionary<string, EventStream>();
+            InnerTypeDictionary = new TypeDictionary();
+            InnerClockRegistry = new ClockRegistry();
         }
 
         public IEventStream GetEventStream(string name, bool createIfMissing)
@@ -33,5 +40,7 @@ namespace SocialToolBox.Core.Mocks.Database
         }
 
         public ITypeDictionary TypeDictionary { get { return InnerTypeDictionary; } }
+
+        public IClockRegistry ClockRegistry { get { return InnerClockRegistry; } }
     }
 }
