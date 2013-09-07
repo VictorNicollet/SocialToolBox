@@ -9,23 +9,23 @@ namespace SocialToolBox.Core.Tests.Database.Serialization
     public class untyped_serializer
     {
         [SetUp]
-        public void setUp()
+        public void SetUp()
         {
             var dictionary = new TypeDictionary();
-            Serializer = new UntypedSerializer(dictionary);
+            _serializer = new UntypedSerializer(dictionary);
         }
 
         [Test]
         public void serialize_and_unserialize()
         {
             var original = Mock;
-            var bytes = Serializer.Serialize(original);
-            var copy = Serializer.Unserialize<MockAccount>(bytes);
+            var bytes = _serializer.Serialize(original);
+            var copy = _serializer.Unserialize<MockAccount>(bytes);
 
             Assert.AreEqual(original, copy);
         }
 
-        private UntypedSerializer Serializer;
+        private UntypedSerializer _serializer;
 
         private MockAccount Mock 
         {

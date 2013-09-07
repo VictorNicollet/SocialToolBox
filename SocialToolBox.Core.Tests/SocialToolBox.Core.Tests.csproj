@@ -49,9 +49,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SocialToolBox.Core.Mocks\SocialToolBox.Core.Mocks.csproj">
       <Project>{436b21da-8def-4e9e-8efe-3b01f83f8670}</Project>
       <Name>SocialToolBox.Core.Mocks</Name>
