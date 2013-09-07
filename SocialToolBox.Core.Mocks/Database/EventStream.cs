@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.EventStream;
 using SocialToolBox.Core.Database.Serialization;
 
 namespace SocialToolBox.Core.Mocks.Database

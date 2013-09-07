@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using SocialToolBox.Core.Database.EventStream;
 
 namespace SocialToolBox.Core.Database
 {

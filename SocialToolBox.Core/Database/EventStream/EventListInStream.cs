@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SocialToolBox.Core.Database
+namespace SocialToolBox.Core.Database.EventStream
 {
     /// <summary>
     /// A list of events returned by a database request.

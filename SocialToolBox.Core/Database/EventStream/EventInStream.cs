@@ -1,8 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Diagnostics;
 
-namespace SocialToolBox.Core.Database
+namespace SocialToolBox.Core.Database.EventStream
 {
     /// <summary>
     /// An event inside an <see cref="IEventStream"/>. Includes the actual event, 

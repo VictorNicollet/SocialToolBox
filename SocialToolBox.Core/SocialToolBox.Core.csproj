@@ -37,8 +37,8 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\EventInStream.cs" />
-    <Compile Include="Database\EventListInStream.cs" />
+    <Compile Include="Database\EventStream\EventInStream.cs" />
+    <Compile Include="Database\EventStream\EventListInStream.cs" />
     <Compile Include="Database\IDatabaseDriver.cs" />
     <Compile Include="Database\IEventStream.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
