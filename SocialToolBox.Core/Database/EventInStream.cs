@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SocialToolBox.Core.Database
 {

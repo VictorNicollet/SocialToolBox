@@ -26,5 +26,15 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
             return other.Name == Name
                    && Password.Equals(other.Password);
         }
+
+        public static MockAccount Bob = new MockAccount
+        {
+            Name = "Bob",
+            Password = new HashedPassword
+            {
+                BcryptIterationCount = 10,
+                Hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+        };
     }
 }

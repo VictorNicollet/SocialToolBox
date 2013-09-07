@@ -31,15 +31,7 @@ namespace SocialToolBox.Core.Tests.Database.Serialization
         {
             get
             {
-                return new MockAccount
-                {
-                    Name = "Bob",
-                    Password = new MockAccount.HashedPassword
-                    {
-                        BcryptIterationCount = 10,
-                        Hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                    }
-                };
+                return MockAccount.Bob;
             }
         }
     }

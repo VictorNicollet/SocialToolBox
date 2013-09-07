@@ -46,14 +46,14 @@ namespace SocialToolBox.Core.Mocks.Database
             get { return _name; }
         }
 
-        public Task AddEvent(ISerializable e)
+        public Task AddEvent(object e)
         {
             var serialized = Serializer.Serialize(e);
             SerializedEventList.Add(serialized);
             return new Task(() => {});
         }
 
-        public async Task<EventInStream<T>> GetEvent<T>(long position) where T : class, ISerializable
+        public async Task<EventInStream<T>> GetEvent<T>(long position) where T : class
         {
             await Task.Yield();
 
@@ -66,7 +66,7 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventInStream<T>(ev, position);
         }
 
-        public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count) where T : class, ISerializable
+        public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count) where T : class
         {
             await Task.Yield();
 
@@ -85,7 +85,7 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventListInStream<T>(list, pos, pos - start);
         }
 
-        public async Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count) where T : class, ISerializable
+        public async Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count) where T : class
         {
             await Task.Yield();
 
