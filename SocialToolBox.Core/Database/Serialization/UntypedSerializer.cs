@@ -49,6 +49,20 @@ namespace SocialToolBox.Core.Database.Serialization
         }
 
         /// <summary>
+        /// Unserializes an object of a specific type from a byte sequence.
+        /// Throws if unserialization fails, returns <code>null</code>
+        /// if object was not of expected type.
+        /// </summary>
+        public T UnserializeOfType<T>(byte[] input) where T : class
+        {
+            using (var stream = new MemoryStream(input))
+            {
+                var obj = Unserialize(stream);
+                return obj as T;
+            }
+        }
+
+        /// <summary>
         /// Serializes an object to a stream.
         /// </summary>
         public void Serialize(object input, Stream output)
