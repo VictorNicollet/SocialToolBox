@@ -65,6 +65,14 @@ namespace SocialToolBox.Core.Database.EventStream
         }
 
         /// <summary>
+        /// Advances the clock to right after the provided event.
+        /// </summary>
+        public void Advance<T>(EventInStream<T> inStream) where T : class
+        {
+            Advance(inStream.Stream.Name, inStream.Position + 1);        
+        }
+
+        /// <summary>
         /// Serialize the vector clock to a human-readable format.
         /// </summary>
         public override string ToString()
@@ -129,6 +137,18 @@ namespace SocialToolBox.Core.Database.EventStream
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Create a clone of this clock. Initially equal, but can be modified
+        /// separately.
+        /// </summary>
+        public VectorClock Clone()
+        {
+            var clock = new VectorClock();
+            foreach (var kv in _positions)
+                clock._positions.Add(kv.Key, kv.Value);
+            return clock;
         }
     }
 }

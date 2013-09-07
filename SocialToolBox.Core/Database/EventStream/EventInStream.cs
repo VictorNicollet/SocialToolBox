@@ -8,14 +8,17 @@ namespace SocialToolBox.Core.Database.EventStream
     /// </summary>
     public class EventInStream<T> where T : class
     {
+        public readonly IEventStream Stream;
         public readonly T Event;
         public readonly long Position;
 
-        public EventInStream(T e, long pos)
+        public EventInStream(IEventStream stream, T e, long pos)
         {
+            Debug.Assert(stream != null);
             Debug.Assert(e != null);
             Debug.Assert(pos >= 0);
 
+            Stream = stream;
             Event = e;
             Position = pos;
         }

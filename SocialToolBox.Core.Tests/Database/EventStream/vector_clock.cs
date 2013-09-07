@@ -49,6 +49,17 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         }
 
         [Test]
+        public void advance_using_event()
+        {
+            var e = new EventInStream<string>(A, "", 9);
+            Clock.Advance(e);
+            Assert.AreEqual(10, Clock.GetNextInStream("A"));
+            Assert.AreEqual(10, Clock.GetNextInStream(A));
+            Assert.AreEqual(0, Clock.GetNextInStream("B"));
+            Assert.AreEqual(0, Clock.GetNextInStream(B));
+        }
+
+        [Test]
         public void equality()
         {
             var clock = new VectorClock();
@@ -57,6 +68,16 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             Assert.AreEqual(clock, Clock);
 
             clock.Advance(B, 0);
+            Assert.AreEqual(clock, Clock);
+
+            clock.Advance(B, 1);
+            Assert.AreNotEqual(clock, Clock);
+        }
+
+        [Test]
+        public void clone()
+        {
+            var clock = Clock.Clone();
             Assert.AreEqual(clock, Clock);
 
             clock.Advance(B, 1);

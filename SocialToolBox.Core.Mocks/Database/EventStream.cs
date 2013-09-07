@@ -63,7 +63,7 @@ namespace SocialToolBox.Core.Mocks.Database
             var bytes = SerializedEventList[(int) position];
             var ev = Serializer.Unserialize<T>(bytes);
 
-            return new EventInStream<T>(ev, position);
+            return new EventInStream<T>(this, ev, position);
         }
 
         public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count) where T : class
@@ -79,7 +79,7 @@ namespace SocialToolBox.Core.Mocks.Database
             {
                 var bytes = SerializedEventList[pos];
                 var ev = Serializer.Unserialize<T>(bytes);
-                list.Add(new EventInStream<T>(ev, pos));
+                list.Add(new EventInStream<T>(this, ev, pos));
             }
 
             return new EventListInStream<T>(list, pos, pos - start);
@@ -98,7 +98,7 @@ namespace SocialToolBox.Core.Mocks.Database
             {
                 var bytes = SerializedEventList[pos];
                 var ev = Serializer.UnserializeOfType<T>(bytes);
-                if (ev != null) list.Add(new EventInStream<T>(ev, pos));
+                if (ev != null) list.Add(new EventInStream<T>(this, ev, pos));
             }
 
             return new EventListInStream<T>(list, pos, pos - start);
