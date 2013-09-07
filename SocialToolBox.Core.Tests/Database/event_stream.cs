@@ -19,7 +19,8 @@ namespace SocialToolBox.Core.Tests.Database
         [SetUp]
         public void SetUp()
         {
-            EventStream = new EventStream("TheCorrectName", new DatabaseDriver());
+            var driver = new DatabaseDriver();
+            EventStream = driver.GetEventStream("TheCorrectName", true);
         }
 
         [Test]
