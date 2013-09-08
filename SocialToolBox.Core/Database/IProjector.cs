@@ -8,6 +8,12 @@ namespace SocialToolBox.Core.Database
     public interface IProjector<in T>
     {
         /// <summary>
+        /// The name of the projector. Used to save/load the vector clock
+        /// for the corresponding projection.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Given the current state of the projector, a commit is recommended.
         /// </summary>
         bool CommitRecommended { get; }

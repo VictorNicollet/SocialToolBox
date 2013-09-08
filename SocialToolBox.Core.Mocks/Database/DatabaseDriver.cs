@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.Projection;
+using SocialToolBox.Core.Mocks.Database.Projections;
 
 namespace SocialToolBox.Core.Mocks.Database
 {
@@ -20,11 +22,23 @@ namespace SocialToolBox.Core.Mocks.Database
         /// </summary>
         public readonly ClockRegistry InnerClockRegistry;
 
+        /// <summary>
+        /// The actual projection engine.
+        /// </summary>
+        public readonly ProjectionEngine InnerProjectionEngine;
+
+        /// <summary>
+        /// The mock entity store factory.
+        /// </summary>
+        public readonly EntityStoreFactory InnerEntityStore;
+
         public DatabaseDriver()
         {
             EventStreams = new Dictionary<string, EventStream>();
             InnerTypeDictionary = new TypeDictionary();
             InnerClockRegistry = new ClockRegistry();
+            InnerProjectionEngine = new ProjectionEngine(this);
+            InnerEntityStore = new EntityStoreFactory(this);
         }
 
         public IEventStream GetEventStream(string name, bool createIfMissing)
@@ -42,5 +56,10 @@ namespace SocialToolBox.Core.Mocks.Database
         public ITypeDictionary TypeDictionary { get { return InnerTypeDictionary; } }
 
         public IClockRegistry ClockRegistry { get { return InnerClockRegistry; } }
+        
+        public IEntityStoreFactory EntityStore { get { return InnerEntityStore; } }
+
+        public ProjectionEngine Projections { get { return InnerProjectionEngine;  } }
+        
     }
 }

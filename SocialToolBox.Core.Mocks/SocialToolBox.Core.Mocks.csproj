@@ -40,6 +40,8 @@
     <Compile Include="Database\ClockRegistry.cs" />
     <Compile Include="Database\DatabaseDriver.cs" />
     <Compile Include="Database\EventStream.cs" />
+    <Compile Include="Database\Projections\EntityStore.cs" />
+    <Compile Include="Database\Projections\EntityStoreFactory.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
     <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

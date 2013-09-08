@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace SocialToolBox.Core.Database
@@ -8,7 +9,8 @@ namespace SocialToolBox.Core.Database
     /// An unique identifier. Uses characters [a-zA-Z0-9] and 
     /// is 11 characters long.
     /// </summary>
-    public struct Id : IEquatable<Id>, IComparable<Id>
+    [Serializable]
+    public struct Id : IEquatable<Id>, IComparable<Id>, ISerializable
     {
         /// <summary>
         /// The number of characters in an identifier.
@@ -23,6 +25,11 @@ namespace SocialToolBox.Core.Database
         private Id(string value)
         {
             Value = value;
+        }
+
+        public Id(SerializationInfo info, StreamingContext context)
+        {
+            Value = info.GetString("id");
         }
 
         /// <summary>
@@ -125,6 +132,11 @@ namespace SocialToolBox.Core.Database
         public override string ToString()
         {
             return Value;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id",Value);
         }
     }
 }

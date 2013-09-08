@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Database
+﻿using SocialToolBox.Core.Database.Projection;
+
+namespace SocialToolBox.Core.Database
 {
     /// <summary>
     /// Database drivers describe how data can be written to and
@@ -27,5 +29,15 @@
         /// driver.
         /// </summary>
         IClockRegistry ClockRegistry { get; }
+
+        /// <summary>
+        /// A factory for creating entity stores.
+        /// </summary>
+        IEntityStoreFactory EntityStore { get; }
+
+        /// <summary>
+        /// The projection engine for this database drive.
+        /// </summary>
+        ProjectionEngine Projections { get; }
     }
 }

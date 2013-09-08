@@ -1,0 +1,146 @@
+﻿using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.EventStream;
+using SocialToolBox.Core.Mocks.Database;
+
+namespace SocialToolBox.Core.Tests.Database
+{
+    [TestFixture]
+    public class projection_engine
+    {
+        public ProjectionEngine Engine;
+        public IEventStream A;
+        public IEventStream B;
+        public IClockRegistry Clocks;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var driver = new DatabaseDriver();
+            Engine = driver.Projections;
+            A = driver.GetEventStream("A", true);
+            B = driver.GetEventStream("B", true);
+            Clocks = driver.ClockRegistry;
+        }
+
+        [Test]
+        public void empty_does_nothing()
+        {
+            Engine.Run();
+        }
+
+        private class Projector : IProjector<string>
+        {
+            public readonly StringBuilder Contents;
+            private int _sinceLastCount;
+            public string Name { get; set; }            
+            public bool CommitRecommended { get { return _sinceLastCount >= 5; } }
+
+            public Projector()
+            {
+                Contents = new StringBuilder();
+            }
+
+            public void ProcessEvent(string ev)
+            {
+                _sinceLastCount++;
+                Contents.Append(ev);
+                Contents.Append('\n');
+            }
+
+            public async Task Commit()
+            {
+                await Task.Yield();
+                _sinceLastCount = 0;
+                Contents.Append("[COMMIT]\n");
+            }
+        }
+
+        [Test]
+        public void simple_projector()
+        {
+            var proj = new Projector { Name = "TEST" };
+
+            A.AddEvent("A1");
+            A.AddEvent("A2");
+            Engine.Register(proj, new [] { A });
+
+            Assert.AreEqual("", proj.Contents.ToString());
+
+            Engine.Run();
+
+            Assert.AreEqual("A1\nA2\n[COMMIT]\n", proj.Contents.ToString());
+        }
+
+        [Test]
+        public void simple_projection_vector_clock()
+        {
+            var proj = new Projector { Name = "TEST" };
+
+            Clocks.SaveProjection("TEST", VectorClock.Unserialize("A:1")).Wait();
+
+            A.AddEvent("A1");
+            A.AddEvent("A2");
+            Engine.Register(proj, new[] { A });
+            Engine.Run();
+
+            Assert.AreEqual("A2\n[COMMIT]\n", proj.Contents.ToString());
+            Assert.AreEqual(VectorClock.Unserialize("A:2"), Clocks.LoadProjection("TEST").Result);
+        }
+
+        [Test]
+        public void simple_projection_autocommit()
+        {
+            var proj = new Projector { Name = "TEST" };
+
+            A.AddEvent("A1");
+            A.AddEvent("A2");
+            A.AddEvent("A3");
+            A.AddEvent("A4");
+            A.AddEvent("A5");
+            A.AddEvent("A6");
+            A.AddEvent("A7");
+            Engine.Register(proj, new[] { A });
+            Engine.Run();
+
+            Assert.AreEqual("A1\nA2\nA3\nA4\nA5\n[COMMIT]\nA6\nA7\n[COMMIT]\n", 
+                proj.Contents.ToString());            
+        }
+
+        [Test]
+        public void double_projection()
+        {
+            var proj1 = new Projector { Name = "TEST1" };
+            var proj2 = new Projector { Name = "TEST2" };
+
+            A.AddEvent("A1");
+            A.AddEvent("A2");
+            Engine.Register(proj1, new[] { A });
+            Engine.Register(proj2, new[] { A });
+            Engine.Run();
+
+            Assert.AreEqual("A1\nA2\n[COMMIT]\n", proj1.Contents.ToString());
+            Assert.AreEqual("A1\nA2\n[COMMIT]\n", proj2.Contents.ToString());
+        }
+
+        [Test]
+        public void double_projection_double_stream()
+        {
+            var proj1 = new Projector { Name = "TEST1" };
+            var proj2 = new Projector { Name = "TEST2" };
+
+            A.AddEvent("A1");
+            A.AddEvent("A2");
+            B.AddEvent("B1");
+            B.AddEvent("B2");
+            Engine.Register(proj1, new[] { A });
+            Engine.Register(proj2, new[] { A, B });
+            Engine.Run();
+
+            Assert.AreEqual("A1\nA2\n[COMMIT]\n", proj1.Contents.ToString());
+            Assert.AreEqual("A1\nA2\nB1\nB2\n[COMMIT]\n", proj2.Contents.ToString());
+        }
+    }
+}

@@ -46,8 +46,13 @@
     <Compile Include="Database\Id.cs" />
     <Compile Include="Database\IDatabaseDriver.cs" />
     <Compile Include="Database\IEventStream.cs" />
+    <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
+    <Compile Include="Database\Projection\IEntityStore.cs" />
+    <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
+    <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
+    <Compile Include="Database\Projection\IIdExtractor.cs" />
     <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
     <Compile Include="Database\Serialization\UntypedSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

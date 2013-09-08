@@ -47,6 +47,8 @@
     <Compile Include="Database\EventStream\vector_clock.cs" />
     <Compile Include="Database\event_stream.cs" />
     <Compile Include="Database\id.cs" />
+    <Compile Include="Database\Projection\entity_store_factory.cs" />
+    <Compile Include="Database\projection_engine.cs" />
     <Compile Include="Database\Serialization\untyped_serializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
