@@ -88,7 +88,7 @@ namespace SocialToolBox.Core.Database
             var output = new byte[Length];
             
             // Locking the alphabet instead of the genseq, because we need an object 
-            var genseq = 0;
+            int genseq;
             lock (Alphabet) genseq = _generatorSequence++;
 
             genseq = genseq * 62 + UidSeed;
