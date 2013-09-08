@@ -43,6 +43,7 @@
     <Compile Include="Database\EventStream\IMultiStreamIterator.cs" />
     <Compile Include="Database\EventStream\VectorClock.cs" />
     <Compile Include="Database\IClockRegistry.cs" />
+    <Compile Include="Database\Id.cs" />
     <Compile Include="Database\IDatabaseDriver.cs" />
     <Compile Include="Database\IEventStream.cs" />
     <Compile Include="Database\IProjector.cs" />
