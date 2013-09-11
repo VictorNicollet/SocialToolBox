@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Session.Event;
 using SocialToolBox.Core.User.Event;
 using SocialToolBox.Core.User.Projection;
 
@@ -20,6 +21,14 @@ namespace SocialToolBox.Core.Tests.User.Projection
         {
             var date = new DateTime(2010, 2, 3, 0, 0, 0, DateTimeKind.Utc);
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date));
+            Assert.AreEqual(new UserCreationTime(date), Value);
+        }
+
+        [Test]
+        public void set_once_from_session()
+        {
+            var date = new DateTime(2010, 2, 3, 0, 0, 0, DateTimeKind.Utc);
+            After(new SessionCreated(Id.Parse("aaaaaaaaaaa"), date, Id.Parse("aaaaaaaaaaa"), ""));
             Assert.AreEqual(new UserCreationTime(date), Value);
         }
     }
