@@ -1,14 +1,18 @@
 ﻿using System;
+using SocialToolBox.Core.Database.Serialization;
 
 namespace SocialToolBox.Core.Mocks.Database.Serialization
 {
-    [Serializable]
+    [Persist("SocialToolBox.Core.Mocks.MockAccount")]
     public class MockAccount : IEquatable<MockAccount>
     {
-        [Serializable]
+        [Persist("SocialToolBox.Core.Mocks.MockAccount.HashedPassword")]
         public class HashedPassword : IEquatable<HashedPassword>
         {
+            [PersistMember(0)]
             public int BcryptIterationCount;
+            
+            [PersistMember(1)]
             public string Hash;
 
             public bool Equals(HashedPassword other)
@@ -18,7 +22,10 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
             }
         }
 
+        [PersistMember(0)]
         public string Name;
+
+        [PersistMember(1)]
         public HashedPassword Password;
 
         public bool Equals(MockAccount other)

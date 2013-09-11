@@ -13,17 +13,17 @@ namespace SocialToolBox.Core.Database
         /// Retrieves the integer associated with a serializable type
         /// in this dictionary. 
         /// </summary>
-        int FindIdentifier(Type t);
+        uint FindIdentifier(string persistentName);
 
         /// <summary>
-        /// Retrieves the type associated with an identifier.
+        /// Retrieves the type name associated with an identifier.
         /// </summary>
-        Type FindType(int id);
+        string FindType(uint id);
 
         /// <summary>
         /// For performance reasons, make sure the provided list of types
         /// has an associated identifier ahead of time. 
         /// </summary>
-        void AssignIdentifiers(Type[] types);
+        void AssignIdentifiers(string[] persistentNames);
     }
 }

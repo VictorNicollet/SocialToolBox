@@ -6,35 +6,35 @@ namespace SocialToolBox.Core.Mocks.Database
 {
     public class TypeDictionary : ITypeDictionary
     {
-        public readonly Dictionary<int, Type> TypeById;
-        public readonly Dictionary<Type, int> IdByType;
-        public int Next;
+        public readonly Dictionary<uint, string> TypeById;
+        public readonly Dictionary<string, uint> IdByType;
+        public uint Next;
 
         public TypeDictionary()
         {
             Next = 0;
-            TypeById = new Dictionary<int, Type>();
-            IdByType = new Dictionary<Type, int>();
+            TypeById = new Dictionary<uint, string>();
+            IdByType = new Dictionary<string, uint>();
         }
 
-        public int FindIdentifier(Type t)
+        public uint FindIdentifier(string persistentName)
         {
             // Assigning identifiers ensures the type is present
             // in the dictionary
-            AssignIdentifiers(new []{ t });
-            return IdByType[t];
+            AssignIdentifiers(new[] { persistentName });
+            return IdByType[persistentName];
         }
 
-        public Type FindType(int id)
+        public string FindType(uint id)
         {
-            Type t;
+            string t;
             TypeById.TryGetValue(id, out t);
             return t;
         }
 
-        public void AssignIdentifiers(Type[] types)
+        public void AssignIdentifiers(string[] persistentNames)
         {
-            foreach (var t in types)
+            foreach (var t in persistentNames)
             {
                 if (IdByType.ContainsKey(t)) continue;
                 IdByType.Add(t, Next);

@@ -53,6 +53,11 @@
     <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
     <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
+    <Compile Include="Database\Serialization\ICustomSerializer.cs" />
+    <Compile Include="Database\Serialization\PersistAttribute.cs" />
+    <Compile Include="Database\Serialization\PersistMemberAttribute.cs" />
+    <Compile Include="Database\Serialization\StandardCustomSerializers.cs" />
+    <Compile Include="Database\Serialization\StreamExtension.cs" />
     <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
     <Compile Include="Database\Serialization\UntypedSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

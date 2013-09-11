@@ -56,6 +56,15 @@ namespace SocialToolBox.Core.Database
             return new Id(source);
         }
 
+        /// <summary>
+        /// Parse a byte sequence as an identifier, throw an exception if parsing
+        /// fails.
+        /// </summary>
+        public static Id Parse(byte[] bytes)
+        {
+            return Parse(Encoding.ASCII.GetString(bytes));
+        }
+
         #region Generation 
 
         /// <summary>

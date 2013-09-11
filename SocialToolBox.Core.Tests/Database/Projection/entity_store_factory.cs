@@ -1,7 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Projection;
+using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database;
 
 namespace SocialToolBox.Core.Tests.Database.Projection
@@ -17,15 +17,23 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         public Id IdA = Id.Parse("aaaaaaaaaaa");
         public Id IdB = Id.Parse("bbbbbbbbbbb");
 
-        [Serializable]
+        [Persist("SocialToolBox.Core.Tests.Database.Projection.entity_store_factory.ConcatOrRemoveEvent")]
         private class ConcatOrRemoveEvent
         {
+            [PersistMember(0)]
             public readonly Id? Id;
+
+            [PersistMember(1)]
             public readonly string Value;
+
             public ConcatOrRemoveEvent(Id? id, string value)
             {
                 Id = id;
                 Value = value;
+            }
+
+            public ConcatOrRemoveEvent()
+            {
             }
         }
 

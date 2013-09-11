@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.EventStream;
+using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database;
 
 namespace SocialToolBox.Core.Tests.Database
@@ -14,6 +15,25 @@ namespace SocialToolBox.Core.Tests.Database
         public IEventStream A;
         public IEventStream B;
         public IClockRegistry Clocks;
+
+        [Persist("SocialToolBox.Core.Tests.Database.projection_engine.Event")]
+        public class Event
+        {
+            [PersistMember(0)]
+            public string Value;
+
+            public Event() { }
+
+            public Event(string value)
+            {
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return Value;
+            }
+        }
 
         [SetUp]
         public void SetUp()
@@ -31,7 +51,7 @@ namespace SocialToolBox.Core.Tests.Database
             Engine.Run();
         }
 
-        private class Projector : IProjector<string>
+        private class Projector : IProjector<Event>
         {
             public readonly StringBuilder Contents;
             private int _sinceLastCount;
@@ -43,7 +63,7 @@ namespace SocialToolBox.Core.Tests.Database
                 Contents = new StringBuilder();
             }
 
-            public void ProcessEvent(string ev)
+            public void ProcessEvent(Event ev)
             {
                 _sinceLastCount++;
                 Contents.Append(ev);
@@ -63,8 +83,8 @@ namespace SocialToolBox.Core.Tests.Database
         {
             var proj = new Projector { Name = "TEST" };
 
-            A.AddEvent("A1");
-            A.AddEvent("A2");
+            A.AddEvent(new Event("A1"));
+            A.AddEvent(new Event("A2"));
             Engine.Register(proj, new [] { A });
 
             Assert.AreEqual("", proj.Contents.ToString());
@@ -81,8 +101,8 @@ namespace SocialToolBox.Core.Tests.Database
 
             Clocks.SaveProjection("TEST", VectorClock.Unserialize("A:1")).Wait();
 
-            A.AddEvent("A1");
-            A.AddEvent("A2");
+            A.AddEvent(new Event("A1"));
+            A.AddEvent(new Event("A2"));
             Engine.Register(proj, new[] { A });
             Engine.Run();
 
@@ -95,13 +115,13 @@ namespace SocialToolBox.Core.Tests.Database
         {
             var proj = new Projector { Name = "TEST" };
 
-            A.AddEvent("A1");
-            A.AddEvent("A2");
-            A.AddEvent("A3");
-            A.AddEvent("A4");
-            A.AddEvent("A5");
-            A.AddEvent("A6");
-            A.AddEvent("A7");
+            A.AddEvent(new Event("A1"));
+            A.AddEvent(new Event("A2"));
+            A.AddEvent(new Event("A3"));
+            A.AddEvent(new Event("A4"));
+            A.AddEvent(new Event("A5"));
+            A.AddEvent(new Event("A6"));
+            A.AddEvent(new Event("A7"));
             Engine.Register(proj, new[] { A });
             Engine.Run();
 
@@ -115,8 +135,8 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector { Name = "TEST1" };
             var proj2 = new Projector { Name = "TEST2" };
 
-            A.AddEvent("A1");
-            A.AddEvent("A2");
+            A.AddEvent(new Event("A1"));
+            A.AddEvent(new Event("A2"));
             Engine.Register(proj1, new[] { A });
             Engine.Register(proj2, new[] { A });
             Engine.Run();
@@ -131,10 +151,10 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector { Name = "TEST1" };
             var proj2 = new Projector { Name = "TEST2" };
 
-            A.AddEvent("A1");
-            A.AddEvent("A2");
-            B.AddEvent("B1");
-            B.AddEvent("B2");
+            A.AddEvent(new Event("A1"));
+            A.AddEvent(new Event("A2"));
+            B.AddEvent(new Event("B1"));
+            B.AddEvent(new Event("B2"));
             Engine.Register(proj1, new[] { A });
             Engine.Register(proj2, new[] { A, B });
             Engine.Run();
