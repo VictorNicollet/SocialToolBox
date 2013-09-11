@@ -9,11 +9,11 @@ namespace SocialToolBox.Core.User.Projection
     /// Computes and stores the time when an user signed up.
     /// </summary>
     [Persist("SocialToolBox.Core.User.Projection.UserSignupTime")]
-    public class UserSignupTimeEx : EarliestTime<IUserEvent>
+    public class UserSignupTime : EarliestTime<IUserEvent>
     {
-        public UserSignupTimeEx() {}
+        public UserSignupTime() {}
 
-        public UserSignupTimeEx(DateTime? value) : base(value) {}
+        public UserSignupTime(DateTime? value) : base(value) {}
 
         public override bool AcceptEvent(IUserEvent ev)
         {
