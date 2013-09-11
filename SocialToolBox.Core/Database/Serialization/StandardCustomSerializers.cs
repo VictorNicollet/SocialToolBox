@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace SocialToolBox.Core.Database.Serialization
@@ -12,8 +14,45 @@ namespace SocialToolBox.Core.Database.Serialization
     {
         public static void RegisterAll()
         {
+            UntypedSerializer.RegisterCustomSerializer(ForDateTime.T, new ForDateTime());
             UntypedSerializer.RegisterCustomSerializer(ForId.T, new ForId());
             UntypedSerializer.RegisterCustomSerializer(ForNullable.T, new ForNullable());
+        }
+
+        /// <summary>
+        /// Custom serializatoin for <see cref="DateTime"/>
+        /// </summary>
+        public class ForDateTime : ICustomSerializer
+        {
+            public static readonly Type T = typeof (DateTime);
+
+            public const string Format = "yyyyMMddHHmmss";
+
+            public void Serialize(UntypedSerializer serializer, object serialized, Stream output, Type[] typeargs = null)
+            {
+                var date = (DateTime) serialized;
+                var utc = date.ToUniversalTime();
+                var asString = utc.ToString(Format);
+                var asBytes = Encoding.ASCII.GetBytes(asString);
+                output.Write(asBytes, 0, Format.Length);
+            }
+
+            public object Unserialize(UntypedSerializer serializer, Stream input, Type[] typeargs = null)
+            {
+                var bytes = new byte[Format.Length];
+                input.Read(bytes, 0, bytes.Length);
+                var asString = Encoding.ASCII.GetString(bytes);
+                DateTime result;
+                
+                if (!DateTime.TryParseExact(asString, Format,
+                    CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out result))
+                {
+                    throw new SerializationException(
+                        string.Format("Could not parse date '{0}'", asString));    
+                }
+
+                return result.ToUniversalTime();
+            }
         }
 
         /// <summary>

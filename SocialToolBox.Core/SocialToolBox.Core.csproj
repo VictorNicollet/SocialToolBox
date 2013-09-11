@@ -45,10 +45,12 @@
     <Compile Include="Database\IClockRegistry.cs" />
     <Compile Include="Database\Id.cs" />
     <Compile Include="Database\IDatabaseDriver.cs" />
+    <Compile Include="Database\IEventReader.cs" />
     <Compile Include="Database\IEventStream.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
+    <Compile Include="Database\Projection\EntityStoreFactoryExtensions.cs" />
     <Compile Include="Database\Projection\IEntityStore.cs" />
     <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
     <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
@@ -61,6 +63,9 @@
     <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
     <Compile Include="Database\Serialization\UntypedSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\Event\IUserEvent.cs" />
+    <Compile Include="User\Event\UserSignedUp.cs" />
+    <Compile Include="User\Projection\UserSignupTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

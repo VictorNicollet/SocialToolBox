@@ -4,8 +4,7 @@
     /// Implement this interface to configure a projection that
     /// keeps an entity store updated.
     /// </summary>
-    public interface IEntityStoreProjection<in TEvent,TEntity> : IIdExtractor<TEvent> 
-        where TEvent : class where TEntity : class
+    public interface IEntityStoreProjection<in TEvent,TEntity> : IIdExtractor<TEvent> where TEntity : class where TEvent : class
     {
         /// <summary>
         /// Updates an entity based on an event.

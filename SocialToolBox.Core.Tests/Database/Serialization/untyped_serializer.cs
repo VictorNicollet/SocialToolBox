@@ -17,6 +17,15 @@ namespace SocialToolBox.Core.Tests.Database.Serialization
             return stream.ToArray();
         }
 
+        public object ProcessWithType<T>(T value)
+        {
+            var t = typeof (T);
+            var stream = new MemoryStream();
+            _serializer.SerializeWithType(t, value, stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            return _serializer.UnserializeWithType(t, stream);
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -128,6 +137,30 @@ namespace SocialToolBox.Core.Tests.Database.Serialization
                     33, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97,
                         97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97, 97
                 }, bytes);
+        }
+
+        [Test]
+        public void serialize_date_time()
+        {
+            var bytes = SerializeWithType(typeof (DateTime), 
+                new DateTime(2010, 1, 5, 23, 11, 45, DateTimeKind.Utc));
+            
+            CollectionAssert.AreEqual(
+                new[] {
+                    0x32, 0x30, 0x31, 0x30,
+                    0x30, 0x31, 
+                    0x30, 0x35,
+                    0x32, 0x33, 
+                    0x31, 0x31, 
+                    0x34, 0x35
+                }, bytes);
+        }
+
+        [Test]
+        public void serialize_unserialize_date()
+        {
+            var datetime = new DateTime(2010, 2, 3);
+            Assert.AreEqual(datetime.ToUniversalTime(), ProcessWithType(datetime));
         }
 
         private UntypedSerializer _serializer;
