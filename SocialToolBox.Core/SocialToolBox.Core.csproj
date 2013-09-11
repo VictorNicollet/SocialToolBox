@@ -42,6 +42,8 @@
     <Compile Include="Database\EventStream\FromEventStream.cs" />
     <Compile Include="Database\EventStream\IMultiStreamIterator.cs" />
     <Compile Include="Database\EventStream\VectorClock.cs" />
+    <Compile Include="Database\Event\IEventWithId.cs" />
+    <Compile Include="Database\Event\IEventWithTime.cs" />
     <Compile Include="Database\IClockRegistry.cs" />
     <Compile Include="Database\Id.cs" />
     <Compile Include="Database\IDatabaseDriver.cs" />
@@ -55,6 +57,8 @@
     <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
     <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
+    <Compile Include="Database\Reader\EarliestTime.cs" />
+    <Compile Include="Database\Reader\EarliestTimeEx.cs" />
     <Compile Include="Database\Serialization\ICustomSerializer.cs" />
     <Compile Include="Database\Serialization\PersistAttribute.cs" />
     <Compile Include="Database\Serialization\PersistMemberAttribute.cs" />

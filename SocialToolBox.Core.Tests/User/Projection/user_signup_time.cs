@@ -7,12 +7,12 @@ using SocialToolBox.Core.User.Projection;
 namespace SocialToolBox.Core.Tests.User.Projection
 {
     [TestFixture]
-    public class user_signup_time : EventReaderFixture<IUserEvent,UserSignupTime>
+    public class user_signup_time : EventReaderFixture<IUserEvent,UserSignupTimeEx>
     {
         [Test]
         public void initial_is_empty()
         {
-            Assert.AreEqual(Value, new UserSignupTime(null));
+            Assert.AreEqual(Value, new UserSignupTimeEx(null));
         }
 
         [Test]
@@ -20,7 +20,7 @@ namespace SocialToolBox.Core.Tests.User.Projection
         {
             var date = new DateTime(2010, 2, 3, 0, 0, 0, DateTimeKind.Utc);
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date));
-            Assert.AreEqual(new UserSignupTime(date), Value);
+            Assert.AreEqual(new UserSignupTimeEx(date), Value);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace SocialToolBox.Core.Tests.User.Projection
             var date2 = new DateTime(2010, 2, 3, 0, 0, 1, DateTimeKind.Utc);
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date1));
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date2));
-            Assert.AreEqual(new UserSignupTime(date1), Value);
+            Assert.AreEqual(new UserSignupTimeEx(date1), Value);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace SocialToolBox.Core.Tests.User.Projection
             var date2 = new DateTime(2010, 2, 3, 0, 0, 1, DateTimeKind.Utc);
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date2));
             After(new UserSignedUp(Id.Parse("aaaaaaaaaaa"), date1));
-            Assert.AreEqual(new UserSignupTime(date1), Value);
+            Assert.AreEqual(new UserSignupTimeEx(date1), Value);
         }
     }
 }

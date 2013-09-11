@@ -14,7 +14,7 @@ namespace SocialToolBox.Core.User.Event
     public class UserSignedUp : IUserEvent
     {
         [PersistMember(0)]
-        public Id User { get; private set; }
+        public Id Id { get; private set; }
 
         [PersistMember(1)]
         public DateTime Time { get; private set; }
@@ -25,7 +25,7 @@ namespace SocialToolBox.Core.User.Event
 
         public UserSignedUp(Id user, DateTime time)
         {
-            User = user;
+            Id = user;
             Time = time;
         }
     }
