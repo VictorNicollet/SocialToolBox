@@ -38,9 +38,12 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
         private class Request : IWebRequest
         {
+            public HttpVerb Verb { get; private set; }
             public string Domain { get; private set; }
             public string Path { get; private set; }
+            public string MatchedPath { get; private set; }
             public string[] UnmatchedPath { get; private set; }
+            public IWebRequest UnmatchOne() { return this; }
             public string Cookie(string name) { return null; }
             public string Post(string name) { return null; }
             public string Get(string name) { return null; }

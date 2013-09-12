@@ -1,5 +1,4 @@
-﻿using System.IO;
-using SocialToolBox.Core.Web.Response;
+﻿using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
 {
@@ -8,6 +7,11 @@ namespace SocialToolBox.Core.Web
     /// </summary>
     public interface IWebRequest
     {
+        /// <summary>
+        /// The HTTP verb used by this request.
+        /// </summary>
+        HttpVerb Verb { get; }
+
         /// <summary>
         /// The domain name on which the request was received.
         /// </summary>
@@ -19,9 +23,20 @@ namespace SocialToolBox.Core.Web
         string Path { get; }
 
         /// <summary>
+        /// The initial path sequence which is matched by the request handler's prefix.
+        /// </summary>
+        string MatchedPath { get; }
+
+        /// <summary>
         /// The segments of the path that were not matched by the request handler's prefix.
         /// </summary>
         string[] UnmatchedPath { get; }
+
+        /// <summary>
+        /// Unmatches one additional segment of the path. Should return null if no more
+        /// segments were available for unmatching.
+        /// </summary>
+        IWebRequest UnmatchOne();
 
         /// <summary>
         /// Get the current value of a cookie.

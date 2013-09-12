@@ -63,6 +63,7 @@
     <Compile Include="Web\Response\web_response_json.cs" />
     <Compile Include="Web\Response\web_response_redirect.cs" />
     <Compile Include="Web\web_endpoint.cs" />
+    <Compile Include="Web\web_request.cs" />
     <Compile Include="Web\web_url.cs" />
   </ItemGroup>
   <ItemGroup>
