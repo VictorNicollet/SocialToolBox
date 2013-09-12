@@ -11,23 +11,13 @@ namespace SocialToolBox.Core.Tests.Web.Response
     {
         public ResponseVisitorHelper Visitor { get { return new ResponseVisitorHelper(); } }
 
-        private class RequestHandler : WebRequestHandler<string>
+        private class RequestHandler : WebRequestHandler<NoArgs>
         {
-            private readonly Func<WebRequestHandler<string>, WebResponse> _action;
+            private readonly Func<WebRequestHandler<NoArgs>, WebResponse> _action;
 
-            public RequestHandler(Func<WebRequestHandler<string>, WebResponse> action)
+            public RequestHandler(Func<WebRequestHandler<NoArgs>, WebResponse> action)
             {
                 _action = action;
-            }
-
-            protected override string Parse()
-            {
-                return "";
-            }
-
-            public override WebUrl Serialize(string t, WebUrl baseUrl)
-            {
-                return null;
             }
 
             protected override WebResponse Process()
@@ -58,7 +48,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
             Req = new Request { ResponseSender = visitor };   
         }
 
-        public void Do(Func<WebRequestHandler<string>, WebResponse> action)
+        public void Do(Func<WebRequestHandler<NoArgs>, WebResponse> action)
         {
             var handler = new RequestHandler(action);
             using (var response = handler.Process(Req, null))

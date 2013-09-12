@@ -73,10 +73,12 @@
     <Compile Include="User\Event\UserSignedUp.cs" />
     <Compile Include="User\Projection\UserCreationTime.cs" />
     <Compile Include="User\Projection\UserSignupTime.cs" />
+    <Compile Include="Web\AnyArgs.cs" />
     <Compile Include="Web\Dispatch\WebRequestDispatcher.cs" />
     <Compile Include="Web\Dispatch\WebRequestHandlerWrapper.cs" />
     <Compile Include="Web\IWebEndpoint.cs" />
     <Compile Include="Web\IWebUrlArgument.cs" />
+    <Compile Include="Web\NoArgs.cs" />
     <Compile Include="Web\Response\IWebResponseVisitor.cs" />
     <Compile Include="Web\Response\WebResponse.cs" />
     <Compile Include="Web\Response\WebResponseCookie.cs" />

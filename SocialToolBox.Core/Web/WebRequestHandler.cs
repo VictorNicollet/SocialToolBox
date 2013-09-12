@@ -20,20 +20,6 @@ namespace SocialToolBox.Core.Web
         public T Arguments { get; private set; }
 
         /// <summary>
-        /// Parse the current request, return the arguments (or null if not
-        /// handled).
-        /// </summary>
-        protected abstract T Parse();
-
-        public T Parse(IWebRequest request)
-        {
-            Request = request;
-            return Parse();
-        }
-
-        public abstract WebUrl Serialize(T t, WebUrl baseUrl);
-
-        /// <summary>
         /// Process the current response and arguments.
         /// </summary>
         /// <returns></returns>

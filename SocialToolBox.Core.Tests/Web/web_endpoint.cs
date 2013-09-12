@@ -18,11 +18,15 @@ namespace SocialToolBox.Core.Tests.Web
                 url.AddParameter("second", Second);
                 return url;
             }
+
+            public bool TryParse(IWebRequest request)
+            {
+                return true;
+            }
         }
 
         public class SimpleHandler : IWebRequestHandler<SimpleArgument>
         {
-            public SimpleArgument Parse(IWebRequest request) { return null; }
             public WebResponse Process(IWebRequest request, SimpleArgument args) { return null; }
         }
 

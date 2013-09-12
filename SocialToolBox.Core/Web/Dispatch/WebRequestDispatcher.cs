@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Policy;
+﻿using System.Collections.Generic;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.Dispatch
@@ -20,7 +18,7 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <summary>
         /// Registers a handler for a path.
         /// </summary>
-        public void Register(string path, WebRequestHandlerWrapper handler)
+        private void Register(string path, WebRequestHandlerWrapper handler)
         {
             List<WebRequestHandlerWrapper> handlersForPath;
             if (!_handlers.TryGetValue(path, out handlersForPath))
@@ -30,6 +28,15 @@ namespace SocialToolBox.Core.Web.Dispatch
             }
 
             handlersForPath.Add(handler);
+        }
+
+        /// <summary>
+        /// Registers a handler for a path and one or more verbs.
+        /// </summary>
+        public void Register<T>(string path, HttpVerb verbs, IWebRequestHandler<T> handler)
+            where T : class, IWebUrlArgument, new()
+        {
+            Register(path,WebRequestHandlerWrapper.Wrap(verbs, handler));
         }
 
         /// <summary>

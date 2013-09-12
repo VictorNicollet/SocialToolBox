@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Projection\user_creation_time.cs" />
     <Compile Include="User\Projection\user_signup_time.cs" />
+    <Compile Include="Web\Dispatch\web_request_dispatcher.cs" />
     <Compile Include="Web\Response\ResponseVisitorFixture.cs" />
     <Compile Include="Web\Response\ResponseVisitorHelper.cs" />
     <Compile Include="Web\Response\web_response.cs" />

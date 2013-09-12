@@ -7,7 +7,7 @@ namespace SocialToolBox.Core.Web.Dispatch
     /// Non-generic wrapper around a request handler. Used to store
     /// different request handlers in a single dispatcher.
     /// </summary>
-    public abstract class WebRequestHandlerWrapper
+    abstract class WebRequestHandlerWrapper
     {
         /// <summary>
         /// All verbs for which this handler is triggered.
@@ -30,13 +30,13 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// Wrap a request handler to make its generic type disappear.
         /// </summary>
         public static WebRequestHandlerWrapper Wrap<TArg>(HttpVerb verbs, IWebRequestHandler<TArg> handler)
-            where TArg : class, IWebUrlArgument
+            where TArg : class, IWebUrlArgument, new()
         {
             return new Implementation<TArg>(verbs, handler);
         }        
 
         private class Implementation<TArg> : WebRequestHandlerWrapper
-            where TArg : class, IWebUrlArgument
+            where TArg : class, IWebUrlArgument, new()
         {
             private readonly IWebRequestHandler<TArg> _handler; 
 
@@ -54,11 +54,13 @@ namespace SocialToolBox.Core.Web.Dispatch
                 // Handlers are not re-entrant, so lock them whenever they
                 // are used.
                 // TODO: solve the handler re-entrance performance issue
+
+
+                var args = new TArg();
+                if (!args.TryParse(request)) return null;
+   
                 lock (_handler)
                 {
-                    var args = _handler.Parse(request);
-                    if (null == args) return null;
-
                     response = _handler.Process(request, args);
                 }
 

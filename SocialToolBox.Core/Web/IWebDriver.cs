@@ -10,7 +10,7 @@
         /// Registers an endpoint accepting parameters of the specified type.
         /// </summary>
         WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, THandler handler)
-            where TArgs : class, IWebUrlArgument
+            where TArgs : class, IWebUrlArgument, new()
             where THandler : class, IWebRequestHandler<TArgs>;
     }
 }
