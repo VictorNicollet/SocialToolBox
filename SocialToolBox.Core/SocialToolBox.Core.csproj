@@ -73,6 +73,16 @@
     <Compile Include="User\Event\UserSignedUp.cs" />
     <Compile Include="User\Projection\UserCreationTime.cs" />
     <Compile Include="User\Projection\UserSignupTime.cs" />
+    <Compile Include="Web\IWebEndpoint.cs" />
+    <Compile Include="Web\IWebUrlArgument.cs" />
+    <Compile Include="Web\WebUrl.cs" />
+    <Compile Include="Web\HttpVerb.cs" />
+    <Compile Include="Web\IWebDriver.cs" />
+    <Compile Include="Web\IWebRequest.cs" />
+    <Compile Include="Web\IWebRequestHandler.cs" />
+    <Compile Include="Web\IWebResponse.cs" />
+    <Compile Include="Web\WebEndpoint.cs" />
+    <Compile Include="Web\WebRequestHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
