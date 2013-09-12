@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Projection\user_creation_time.cs" />
     <Compile Include="User\Projection\user_signup_time.cs" />
+    <Compile Include="Web\web_endpoint.cs" />
     <Compile Include="Web\web_url.cs" />
   </ItemGroup>
   <ItemGroup>

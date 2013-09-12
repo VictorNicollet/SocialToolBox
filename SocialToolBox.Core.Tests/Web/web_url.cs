@@ -49,6 +49,14 @@ namespace SocialToolBox.Core.Tests.Web
         }
 
         [Test]
+        public void equal()
+        {
+            var urla = new WebUrl("localhost", new[] { "a", "b", "c" });
+            var urlb = new WebUrl("localhost", new[] { "a", "b", "c" });
+            Assert.AreEqual(urla, urlb);
+        }
+
+        [Test]
         public void path_empty()
         {
             var url = new WebUrl("localhost", new[] {"a", "", "b", " "});

@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Web
     /// <summary>
     /// Argument serializer.
     /// </summary>
-    public class WebUrl
+    public class WebUrl : IEquatable<WebUrl>
     {
         private readonly List<string> _path = new List<string>();
         private readonly Dictionary<string, string> _get = new Dictionary<string, string>();
@@ -70,6 +70,30 @@ namespace SocialToolBox.Core.Web
                     string.Format("Duplicate key '{0}'.", key), "key");
         
             _get.Add(key, value);
+        }
+
+        public bool Equals(WebUrl other)
+        {
+            if (Domain != other.Domain) return false;
+            if (Port != other.Port) return false;
+            if (IsSecure != other.IsSecure) return false;
+
+            if (_path.Count != other._path.Count) return false;
+            for (var i = 0; i < _path.Count; ++i)
+                if (_path[i] != other._path[i]) return false;
+
+            if (_get.Count != other._get.Count) return false;
+            foreach (var kv in _get)
+            {
+                string o;
+                if (!other._get.TryGetValue(kv.Key, out o)) return false;
+                if (o != kv.Value) return false;
+            }
+
+            foreach (var key in other._get.Keys)
+                if (!_get.ContainsKey(key)) return false;
+
+            return true;
         }
 
         public override string ToString()

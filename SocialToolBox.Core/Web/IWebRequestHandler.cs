@@ -9,12 +9,7 @@
         T Parse(IWebRequest request);
 
         /// <summary>
-        /// Serialize the parameter to an argument config object.
-        /// </summary>
-        WebUrl Serialize(T t, WebUrl baseUrl);
-
-        /// <summary>
-        /// Process a request, return the response to be sent back.
+        /// Process a request, return the response to be sent back.C:\Users\admin\Documents\GitHub\SocialToolBox\SocialToolBox.Core\Web\IWebRequestHandler.cs
         /// </summary>
         IWebResponse Process(IWebRequest request, T args);
     }
