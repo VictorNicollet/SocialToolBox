@@ -71,6 +71,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         public void with_inexact_path()
         {
             Dispatcher.Register("a", HttpVerb.Post, new JsonEcho<NoArgs>("{}"));
+            Dispatcher.Register("", HttpVerb.Get, new JsonEcho<NoArgs>("[]"));
             Dispatcher.Register("", HttpVerb.Get, new JsonEcho<AnyArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
