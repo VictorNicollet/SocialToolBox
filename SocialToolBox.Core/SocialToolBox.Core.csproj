@@ -75,12 +75,18 @@
     <Compile Include="User\Projection\UserSignupTime.cs" />
     <Compile Include="Web\IWebEndpoint.cs" />
     <Compile Include="Web\IWebUrlArgument.cs" />
+    <Compile Include="Web\Response\IWebResponseVisitor.cs" />
+    <Compile Include="Web\Response\WebResponse.cs" />
+    <Compile Include="Web\Response\WebResponseCookie.cs" />
+    <Compile Include="Web\Response\WebResponseData.cs" />
+    <Compile Include="Web\Response\WebResponseHtml.cs" />
+    <Compile Include="Web\Response\WebResponseJson.cs" />
+    <Compile Include="Web\Response\WebResponseRedirect.cs" />
     <Compile Include="Web\WebUrl.cs" />
     <Compile Include="Web\HttpVerb.cs" />
     <Compile Include="Web\IWebDriver.cs" />
     <Compile Include="Web\IWebRequest.cs" />
     <Compile Include="Web\IWebRequestHandler.cs" />
-    <Compile Include="Web\IWebResponse.cs" />
     <Compile Include="Web\WebEndpoint.cs" />
     <Compile Include="Web\WebRequestHandler.cs" />
   </ItemGroup>

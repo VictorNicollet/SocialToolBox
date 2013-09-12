@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
 {
@@ -43,28 +44,8 @@ namespace SocialToolBox.Core.Web
         string Payload { get; }
 
         /// <summary>
-        /// A web response that redirects to the specified URL.
+        /// The visitor used to send responses.
         /// </summary>
-        IWebResponse Redirect(string url, int code = 303);
-
-        /// <summary>
-        /// A web response that returns an ASCII JSON payload.
-        /// </summary>
-        IWebResponse Json(string json, int code = 200);
-
-        /// <summary>
-        /// A web response that returns an UTF-8 HTML payload.
-        /// </summary>
-        IWebResponse Html(string html, int code = 200);
-
-        /// <summary>
-        /// A web response with an arbitrary data payload.
-        /// </summary>
-        IWebResponse Data(Stream data, string mime, int code = 200);
-
-        /// <summary>
-        /// A web response with an arbitrary attached data payload.
-        /// </summary>
-        IWebResponse File(Stream data, string filename, string mime, int code = 200);
+        IWebResponseVisitor ResponseSender { get; }
     }
 }

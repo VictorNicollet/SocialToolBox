@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SocialToolBox.Core.Web;
+using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Tests.Web
 {
@@ -22,7 +23,7 @@ namespace SocialToolBox.Core.Tests.Web
         public class SimpleHandler : IWebRequestHandler<SimpleArgument>
         {
             public SimpleArgument Parse(IWebRequest request) { return null; }
-            public IWebResponse Process(IWebRequest request, SimpleArgument args) { return null; }
+            public WebResponse Process(IWebRequest request, SimpleArgument args) { return null; }
         }
 
         public SimpleHandler Handler;

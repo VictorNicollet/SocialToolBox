@@ -55,6 +55,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Projection\user_creation_time.cs" />
     <Compile Include="User\Projection\user_signup_time.cs" />
+    <Compile Include="Web\Response\ResponseVisitorFixture.cs" />
+    <Compile Include="Web\Response\ResponseVisitorHelper.cs" />
+    <Compile Include="Web\Response\web_response.cs" />
+    <Compile Include="Web\Response\web_response_data.cs" />
+    <Compile Include="Web\Response\web_response_html.cs" />
+    <Compile Include="Web\Response\web_response_json.cs" />
+    <Compile Include="Web\Response\web_response_redirect.cs" />
     <Compile Include="Web\web_endpoint.cs" />
     <Compile Include="Web\web_url.cs" />
   </ItemGroup>

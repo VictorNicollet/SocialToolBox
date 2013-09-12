@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
 {
@@ -36,9 +37,9 @@ namespace SocialToolBox.Core.Web
         /// Process the current response and arguments.
         /// </summary>
         /// <returns></returns>
-        protected abstract IWebResponse Process();
+        protected abstract WebResponse Process();
 
-        public IWebResponse Process(IWebRequest request, T args)
+        public WebResponse Process(IWebRequest request, T args)
         {
             Request = request;
             Arguments = args;
@@ -48,43 +49,43 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// A web response that redirects to the specified URL.
         /// </summary>
-        protected IWebResponse Redirect(string url, int code = 303)
+        public WebResponse Redirect(string url, int code = 303)
         {
-            return Request.Redirect(url, code);
+            return new WebResponseRedirect(url, code, Request.ResponseSender);
         }
 
         /// <summary>
         /// A web response that returns an ASCII JSON payload.
         /// </summary>
-        protected IWebResponse Json(string json, int code = 200)
+        public WebResponse Json(string json, int code = 200)
         {
-            return Request.Json(json, code);
+            return new WebResponseJson(json, code, Request.ResponseSender);
         }
 
         /// <summary>
         /// A web response that returns an UTF-8 HTML payload.
         /// </summary>
-        protected IWebResponse Html(string html, int code = 200)
+        public WebResponse Html(string html, int code = 200)
         {
-            return Request.Html(html, code);
+            return new WebResponseHtml(html, code, Request.ResponseSender);
         }
 
         /// <summary>
         /// A web response with an arbitrary data payload. Will close the stream
         /// after sending.
         /// </summary>
-        protected IWebResponse Data(Stream data, string mime, int code = 200)
+        public WebResponse Data(Stream data, string mime, int code = 200)
         {
-            return Request.Data(data, mime, code);
+            return new WebResponseData(data, null, mime, code, Request.ResponseSender);
         }
 
         /// <summary>
         /// A web response with an arbitrary attached data payload. Will close
         /// the stream after sending.
         /// </summary>
-        protected IWebResponse File(Stream data, string filename, string mime, int code = 200)
+        public WebResponse File(Stream data, string filename, string mime, int code = 200)
         {
-            return Request.File(data, filename, mime, code);
+            return new WebResponseData(data, filename, mime, code, Request.ResponseSender);
         }
     }
 }

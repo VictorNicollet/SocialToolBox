@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Web
+﻿using SocialToolBox.Core.Web.Response;
+
+namespace SocialToolBox.Core.Web
 {
     public interface IWebRequestHandler<T> where T : class
     {
@@ -9,8 +11,8 @@
         T Parse(IWebRequest request);
 
         /// <summary>
-        /// Process a request, return the response to be sent back.C:\Users\admin\Documents\GitHub\SocialToolBox\SocialToolBox.Core\Web\IWebRequestHandler.cs
+        /// Process a request, return the response to be sent back.
         /// </summary>
-        IWebResponse Process(IWebRequest request, T args);
+        WebResponse Process(IWebRequest request, T args);
     }
 }
