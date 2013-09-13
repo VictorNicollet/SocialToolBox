@@ -49,6 +49,9 @@
     <Compile Include="Database\IDatabaseDriver.cs" />
     <Compile Include="Database\IEventReader.cs" />
     <Compile Include="Database\IEventStream.cs" />
+    <Compile Include="Database\Index\IndexFieldAttribute.cs" />
+    <Compile Include="Database\Index\IndexFieldType.cs" />
+    <Compile Include="Database\Index\IndexKeyAttribute.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />

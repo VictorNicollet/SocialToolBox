@@ -47,6 +47,7 @@
     <Compile Include="Database\EventStream\vector_clock.cs" />
     <Compile Include="Database\event_stream.cs" />
     <Compile Include="Database\id.cs" />
+    <Compile Include="Database\Index\index_field_type.cs" />
     <Compile Include="Database\Projection\entity_store_factory.cs" />
     <Compile Include="Database\projection_engine.cs" />
     <Compile Include="Database\Serialization\stream_extension.cs" />
