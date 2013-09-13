@@ -32,6 +32,11 @@ namespace SocialToolBox.Core.Mocks.Database
         /// </summary>
         public readonly EntityStoreFactory InnerEntityStore;
 
+        /// <summary>
+        /// The mock entity store factory.
+        /// </summary>
+        public readonly EntityIndexFactory InnerEntityIndex;
+
         public DatabaseDriver()
         {
             EventStreams = new Dictionary<string, EventStream>();
@@ -39,6 +44,7 @@ namespace SocialToolBox.Core.Mocks.Database
             InnerClockRegistry = new ClockRegistry();
             InnerProjectionEngine = new ProjectionEngine(this);
             InnerEntityStore = new EntityStoreFactory(this);
+            InnerEntityIndex = new EntityIndexFactory(this);
         }
 
         public IEventStream GetEventStream(string name, bool createIfMissing)
@@ -58,6 +64,8 @@ namespace SocialToolBox.Core.Mocks.Database
         public IClockRegistry ClockRegistry { get { return InnerClockRegistry; } }
         
         public IEntityStoreFactory EntityStore { get { return InnerEntityStore; } }
+        
+        public IEntityIndexFactory EntityIndex { get { return InnerEntityIndex; } }
 
         public ProjectionEngine Projections { get { return InnerProjectionEngine;  } }
         

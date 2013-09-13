@@ -36,6 +36,11 @@ namespace SocialToolBox.Core.Database
         IEntityStoreFactory EntityStore { get; }
 
         /// <summary>
+        /// A factory for creating entity indexes.
+        /// </summary>
+        IEntityIndexFactory EntityIndex { get; }
+
+        /// <summary>
         /// The projection engine for this database drive.
         /// </summary>
         ProjectionEngine Projections { get; }
