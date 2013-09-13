@@ -53,10 +53,15 @@
     <Compile Include="Database\Index\IndexFieldType.cs" />
     <Compile Include="Database\Index\IndexKeyAttribute.cs" />
     <Compile Include="Database\Index\IndexKeyComparer.cs" />
+    <Compile Include="Database\Index\NoKey.cs" />
+    <Compile Include="Database\Index\StringKey.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
     <Compile Include="Database\Projection\EntityStoreFactoryExtensions.cs" />
+    <Compile Include="Database\Projection\IEntityIndex.cs" />
+    <Compile Include="Database\Projection\IEntityIndexFactory.cs" />
+    <Compile Include="Database\Projection\IEntityIndexProjection.cs" />
     <Compile Include="Database\Projection\IEntityStore.cs" />
     <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
     <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
@@ -70,6 +75,8 @@
     <Compile Include="Database\Serialization\StreamExtension.cs" />
     <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
     <Compile Include="Database\Serialization\UntypedSerializer.cs" />
+    <Compile Include="IPair.cs" />
+    <Compile Include="Pair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />
