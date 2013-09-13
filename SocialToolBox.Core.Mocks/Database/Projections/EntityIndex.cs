@@ -99,12 +99,16 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
                 Index.RemoveAll(line => line.Id.Equals(id));
 
             Entities.Remove(id);
-            Entities.Add(id,entity);
 
-            foreach (var pair in Sets(id, entity))
+            if (entity != null)
             {
-                _isIndexSorted = false;
-                Index.Add(new IndexLine(id, pair.First, pair.Second));
+                Entities.Add(id, entity);
+
+                foreach (var pair in Sets(id, entity))
+                {
+                    _isIndexSorted = false;
+                    Index.Add(new IndexLine(id, pair.First, pair.Second));
+                }
             }
         }
 

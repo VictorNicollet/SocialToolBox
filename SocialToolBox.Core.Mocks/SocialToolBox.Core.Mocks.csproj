@@ -41,6 +41,7 @@
     <Compile Include="Database\DatabaseDriver.cs" />
     <Compile Include="Database\EventStream.cs" />
     <Compile Include="Database\Projections\EntityIndex.cs" />
+    <Compile Include="Database\Projections\EntityIndexFactory.cs" />
     <Compile Include="Database\Projections\EntityStore.cs" />
     <Compile Include="Database\Projections\EntityStoreFactory.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
