@@ -53,6 +53,12 @@ namespace SocialToolBox.Core.Tests.Database.Index
         }
 
         [Test]
+        public void equal_with_not_compared()
+        {
+            Assert.AreEqual(0, Comparer.Compare(new KeyMock{NotCompared = 1}, new KeyMock()));
+        }
+
+        [Test]
         public void int_inequality()
         {
             Assert.Less(0, Comparer.Compare(new KeyMock{Integer=3}, new KeyMock()));
