@@ -20,6 +20,11 @@ namespace SocialToolBox.Core
             new Dictionary<Type,VisitorAction>();
 
         /// <summary>
+        /// The action performed if no other action was found. 
+        /// </summary>
+        private VisitorAction _defaultAction;
+
+        /// <summary>
         /// Registers a new event handler for the specified event type.
         /// </summary>
         /// <remarks>
@@ -41,6 +46,14 @@ namespace SocialToolBox.Core
         }
 
         /// <summary>
+        /// Specifies a default action for the visitor.
+        /// </summary>
+        public void SetDefaultAction(Func<object, TInput, TOutput> f)
+        {
+            _defaultAction = (e,i) => f(e,i);
+        }
+
+        /// <summary>
         /// Finds the visitor action for a specified type.
         /// </summary>
         private void FindForType(Type t, out VisitorAction action)
@@ -49,6 +62,8 @@ namespace SocialToolBox.Core
 
             foreach (var i in t.GetInterfaces())
                 if (_funcs.TryGetValue(i, out action)) return;
+
+            action = _defaultAction;
         }
 
         /// <summary>

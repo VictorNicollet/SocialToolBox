@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Remoting.Messaging;
 using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database.Events;
 
