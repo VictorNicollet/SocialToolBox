@@ -27,6 +27,13 @@ namespace SocialToolBox.Crm.Contact.Projection
         {
             visitor.On<ContactCreated>((e,i) => new ContactAsEntityPage());
             visitor.On<ContactDeleted>((e,i) => null);
+
+            visitor.On<ContactNameUpdated>((e, i) =>
+            {
+                var old = i == null ? null : i as ContactAsEntityPage;
+                if (old != null) old.Name = e.Name;
+                return i;
+            });
         }
     }
 }

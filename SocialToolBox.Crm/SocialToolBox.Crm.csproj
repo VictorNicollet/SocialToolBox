@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Contact\Event\ContactCreated.cs" />
     <Compile Include="Contact\Event\ContactDeleted.cs" />
+    <Compile Include="Contact\Event\ContactNameUpdated.cs" />
     <Compile Include="Contact\Event\IContactEvent.cs" />
     <Compile Include="Contact\Projection\ContactAsEntityPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
