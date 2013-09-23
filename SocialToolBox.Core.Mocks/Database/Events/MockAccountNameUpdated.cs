@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 
 namespace SocialToolBox.Core.Mocks.Database.Events
 {
@@ -8,7 +9,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
     /// The name of a mock account was changed.
     /// </summary>
     [Persist("SocialToolBox.Core.Mocks.Database.Events.MockAccountNameUpdated")]
-    public class MockAccountNameUpdated : IMockEvent
+    public class MockAccountNameUpdated : IMockEvent, IEntityPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -27,5 +28,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
         }
 
         public MockAccountNameUpdated() {}
+
+        public Id EntityId { get { return Id; } }
     }
 }

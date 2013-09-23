@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 
 namespace SocialToolBox.Core.Mocks.Database.Events
 {
@@ -9,7 +10,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
     /// but no password.
     /// </summary>
     [Persist("SocialToolBox.Core.Mocks.Database.Events.MockAccountCreated")]
-    public class MockAccountCreated : IMockEvent
+    public class MockAccountCreated : IMockEvent, IEntityPageEvent
     {
         [PersistMember(0)]
         public string Name { get; private set; }
@@ -28,5 +29,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
         }        
 
         public MockAccountCreated() {}
+        
+        public Id EntityId { get { return Id; } }
     }
 }

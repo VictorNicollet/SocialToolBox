@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 
 namespace SocialToolBox.Core.Mocks.Database.Events
 {
@@ -8,7 +9,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
     /// A mock account was deleted.
     /// </summary>
     [Persist("SocialToolBox.Core.Mocks.Database.Events.MockAccountDeleted")]
-    public class MockAccountDeleted : IMockEvent
+    public class MockAccountDeleted : IMockEvent, IEntityPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -23,5 +24,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
         }
 
         public MockAccountDeleted() {}
+
+        public Id EntityId { get { return Id; } }
     }
 }

@@ -74,6 +74,10 @@
     <Compile Include="Database\Serialization\StreamExtension.cs" />
     <Compile Include="Database\Serialization\UnknownTypeIdException.cs" />
     <Compile Include="Database\Serialization\UntypedSerializer.cs" />
+    <Compile Include="Entity\EntityModule.cs" />
+    <Compile Include="Entity\Event\IEntityPageEvent.cs" />
+    <Compile Include="Entity\Event\IEventWithEntityId.cs" />
+    <Compile Include="Entity\Projection\IEntityPage.cs" />
     <Compile Include="IPair.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

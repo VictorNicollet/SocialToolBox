@@ -1,4 +1,5 @@
 ﻿using SocialToolBox.Core.Database.Event;
+using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Mocks.Database.Serialization;
 
 namespace SocialToolBox.Core.Mocks.Database.Events
