@@ -52,6 +52,7 @@
     <Compile Include="Database\Projection\entity_index.cs" />
     <Compile Include="Database\Projection\in_memory_store.cs" />
     <Compile Include="Database\Projection\multi_projector.cs" />
+    <Compile Include="Database\Projection\ProjectionExtensions\store_with_mutator_projection.cs" />
     <Compile Include="Database\Projection\store_projection.cs" />
     <Compile Include="Database\projection_engine.cs" />
     <Compile Include="Database\Serialization\stream_extension.cs" />
