@@ -17,7 +17,7 @@ namespace SocialToolBox.Core.Mocks.Database
         /// <summary>
         /// Whether this projection has already been compiled.
         /// </summary>
-        private bool _isCompiled = false;
+        private bool _isCompiled;
 
         /// <summary>
         /// The actual database, of its known "mock" type.
