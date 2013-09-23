@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace SocialToolBox.Core.Present
         /// <summary>
         /// The actual HTML string.
         /// </summary>
-        private string _value;
+        private readonly string _value;
 
         public override string ToString()
         {
@@ -76,6 +76,18 @@ namespace SocialToolBox.Core.Present
         public Task<HtmlString> Visit(IPageNodeVisitor visitor)
         {
             return visitor.Render(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as HtmlString;
+            if (other == null) return false;
+            return string.Equals(_value, other._value, StringComparison.InvariantCulture);
         }
     }
 }
