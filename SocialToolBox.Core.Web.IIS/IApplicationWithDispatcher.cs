@@ -1,6 +1,4 @@
-﻿using SocialToolBox.Core.Web.Dispatch;
-
-namespace SocialToolBox.Core.Web.IIS
+﻿namespace SocialToolBox.Core.Web.IIS
 {
     /// <summary>
     /// Marks an application as having a public request 
