@@ -71,7 +71,7 @@ namespace SocialToolBox.Core.Mocks.Database
             
             public void ProcessEvent(EventInStream<T> ev)
             {
-                _projection.Process(_store, ev);
+                _projection.Process(_store, ev).Wait();
             }
 
             public async Task Commit()

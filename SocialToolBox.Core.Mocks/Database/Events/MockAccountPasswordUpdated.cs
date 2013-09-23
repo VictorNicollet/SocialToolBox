@@ -26,5 +26,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
             Time = time;
             Password = pass;
         }
+
+        public MockAccountPasswordUpdated() {}
     }
 }

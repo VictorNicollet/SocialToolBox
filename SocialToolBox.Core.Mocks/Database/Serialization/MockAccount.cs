@@ -18,6 +18,8 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
 
             public bool Equals(HashedPassword other)
             {
+                if (other == null) return false;
+
                 return other.BcryptIterationCount == BcryptIterationCount
                        && other.Hash == Hash;
             }
@@ -32,7 +34,7 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
         public bool Equals(MockAccount other)
         {
             return other.Name == Name
-                   && Password.Equals(other.Password);
+                && (Password == null ? other.Password == null : Password.Equals(other.Password));
         }
 
         public static MockAccount Bob = new MockAccount

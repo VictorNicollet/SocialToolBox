@@ -25,5 +25,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
             Time = time;
             Name = name;
         }
+
+        public MockAccountNameUpdated() {}
     }
 }

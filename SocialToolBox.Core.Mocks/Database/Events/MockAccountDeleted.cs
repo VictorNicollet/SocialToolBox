@@ -21,5 +21,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
             Id = id;
             Time = time;
         }
+
+        public MockAccountDeleted() {}
     }
 }

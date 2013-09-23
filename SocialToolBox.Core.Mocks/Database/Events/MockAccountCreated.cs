@@ -1,6 +1,5 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
-using SocialToolBox.Core.Database.Event;
 using SocialToolBox.Core.Database.Serialization;
 
 namespace SocialToolBox.Core.Mocks.Database.Events
@@ -27,5 +26,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
             Name = name;
             Time = time;
         }        
+
+        public MockAccountCreated() {}
     }
 }
