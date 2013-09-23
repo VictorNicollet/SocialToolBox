@@ -20,9 +20,9 @@ namespace SocialToolBox.Core.Web.Response
         /// </summary>
         public IEnumerable<WebResponseCookie> Cookies { get { return _cookies; } }
 
-        public void AddCookie(string cookie, string domain, TimeSpan? expires)
+        public void AddCookie(string cookie, string domain, string value, TimeSpan? expires)
         {
-            _cookies.Add(new WebResponseCookie(cookie, domain, expires));
+            _cookies.Add(new WebResponseCookie(cookie, domain, value, expires));
         }
 
         /// <summary>

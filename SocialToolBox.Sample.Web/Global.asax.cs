@@ -1,44 +1,25 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
+using SocialToolBox.Core.Web;
+using SocialToolBox.Core.Web.IIS;
 
 namespace SocialToolBox.Sample.Web
 {
-    public class Global : HttpApplication
+    public class Global : HttpApplication, IApplicationWithDispatcher
     {
+        /// <summary>
+        /// Instantiate all modules in the application.
+        /// </summary>
+        private readonly Modules applicationModules = new Modules();
 
-        protected void Application_Start(object sender, EventArgs e)
+        /// <summary>
+        /// Returns the dispatcher from the application modules.
+        /// </summary>
+        public IWebDriver Dispatcher
         {
-
-        }
-
-        protected void Session_Start(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_Error(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Session_End(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_End(object sender, EventArgs e)
-        {
-
+            get
+            {
+                return applicationModules.Web;
+            }
         }
     }
 }

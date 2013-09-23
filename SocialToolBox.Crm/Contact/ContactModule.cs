@@ -24,5 +24,18 @@ namespace SocialToolBox.Crm.Contact
             Driver = driver;
             Stream = driver.GetEventStream(StreamName, true);
         }
+
+        /// <summary>
+        /// Has this module been compiled yet ? 
+        /// </summary>
+        public bool Compiled { get; private set; }
+
+        /// <summary>
+        /// Create and compile all projections in this module.
+        /// </summary>
+        public void Compile()
+        {
+            Compiled = true;
+        }
     }
 }

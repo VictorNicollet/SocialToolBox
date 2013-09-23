@@ -19,12 +19,12 @@ namespace SocialToolBox.Core.Tests.Web.Response
         public void add_one_cookie()
         {
             WithVisitor(Visitor.OnRedirect(r =>
-                CollectionAssert.AreEqual(new[] {new WebResponseCookie("NAME", "DOMAIN", TimeSpan.FromHours(2))},
+                CollectionAssert.AreEqual(new[] {new WebResponseCookie("NAME", "DOMAIN", "VALUE", TimeSpan.FromHours(2))},
                     r.Cookies)));
             Do(r =>
             {
                 var response = r.Redirect("");
-                response.AddCookie("NAME","DOMAIN",TimeSpan.FromHours(2));
+                response.AddCookie("NAME","DOMAIN","VALUE",TimeSpan.FromHours(2));
                 return response;
             });
         }

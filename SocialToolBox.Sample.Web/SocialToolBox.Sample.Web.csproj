@@ -38,18 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -59,6 +50,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,9 +62,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SocialToolBox.Core.Mocks\SocialToolBox.Core.Mocks.csproj">
+      <Project>{436b21da-8def-4e9e-8efe-3b01f83f8670}</Project>
+      <Name>SocialToolBox.Core.Mocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialToolBox.Core.Web.IIS\SocialToolBox.Core.Web.IIS.csproj">
+      <Project>{0e99281c-0785-4451-a1ed-55171c6f769a}</Project>
+      <Name>SocialToolBox.Core.Web.IIS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SocialToolBox.Core\SocialToolBox.Core.csproj">
       <Project>{4153afaf-2332-4873-9bbf-508f553d99b2}</Project>
       <Name>SocialToolBox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialToolBox.Crm\SocialToolBox.Crm.csproj">
+      <Project>{4105c235-b112-4eb3-83e9-586b2003721a}</Project>
+      <Name>SocialToolBox.Crm</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
