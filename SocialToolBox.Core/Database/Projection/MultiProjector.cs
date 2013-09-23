@@ -81,7 +81,7 @@ namespace SocialToolBox.Core.Database.Projection
                     {
                         var name = p.Streams[i].Name;
 
-                        for (var j = i + 1; i < p.Streams.Length; ++j)
+                        for (var j = i + 1; j < p.Streams.Length; ++j)
                             if (name != p.Streams[j].Name)
                                 streamsAfter.Add(new KeyValuePair<string, string>(name, p.Streams[j].Name));
                     }
