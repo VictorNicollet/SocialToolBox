@@ -80,6 +80,9 @@
     <Compile Include="Entity\Projection\IEntityPage.cs" />
     <Compile Include="IPair.cs" />
     <Compile Include="Pair.cs" />
+    <Compile Include="Present\HtmlString.cs" />
+    <Compile Include="Present\IPageNode.cs" />
+    <Compile Include="Present\IPageNodeVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />
