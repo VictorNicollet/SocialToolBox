@@ -14,6 +14,7 @@ namespace SocialToolBox.Crm.Contact.Projection
         /// <summary>
         /// The name of the contact.
         /// </summary>
+        [PersistMember(0)]
         public string Name { get; private set; }
 
         public ContactAsEntityPage() {}
