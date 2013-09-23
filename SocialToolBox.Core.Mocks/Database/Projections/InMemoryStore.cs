@@ -13,13 +13,13 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
     {
         public readonly Dictionary<Id, byte[]> Contents = new Dictionary<Id,byte[]>();
 
-        public IDatabaseDriver Database { get; private set; }
+        public IDatabaseDriver Driver { get; private set; }
 
         public readonly UntypedSerializer Serializer;
 
         public InMemoryStore(IDatabaseDriver driver)
         {
-            Database = driver;
+            Driver = driver;
             Serializer = new UntypedSerializer(driver.TypeDictionary);
         } 
 

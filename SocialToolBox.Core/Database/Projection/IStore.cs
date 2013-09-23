@@ -11,7 +11,7 @@ namespace SocialToolBox.Core.Database.Projection
         /// <summary>
         /// The database driver from which this store was spawned.
         /// </summary>
-        IDatabaseDriver Database { get; }
+        IDatabaseDriver Driver { get; }
 
         /// <summary>
         /// Get the item using its identifier. Returns null if no item
