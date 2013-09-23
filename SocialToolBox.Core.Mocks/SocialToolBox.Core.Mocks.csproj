@@ -43,6 +43,7 @@
     <Compile Include="Database\Projection.cs" />
     <Compile Include="Database\Projections\EntityIndex.cs" />
     <Compile Include="Database\Projections\EntityIndexFactory.cs" />
+    <Compile Include="Database\Projections\InMemoryStore.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
     <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

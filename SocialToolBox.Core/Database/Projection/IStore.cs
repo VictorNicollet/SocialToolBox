@@ -9,6 +9,11 @@ namespace SocialToolBox.Core.Database.Projection
     public interface IStore<T> where T : class
     {
         /// <summary>
+        /// The database driver from which this store was spawned.
+        /// </summary>
+        IDatabaseDriver Database { get; }
+
+        /// <summary>
         /// Get the item using its identifier. Returns null if no item
         /// was found.
         /// </summary>

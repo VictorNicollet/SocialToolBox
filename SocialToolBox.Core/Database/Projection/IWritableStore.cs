@@ -11,6 +11,6 @@ namespace SocialToolBox.Core.Database.Projection
         /// Writes an item to the store. If the specified item is null,
         /// the corresponding id is unbound instead.
         /// </summary>
-        Task Write(Id id, T item);
+        Task Set(Id id, T item);
     }
 }
