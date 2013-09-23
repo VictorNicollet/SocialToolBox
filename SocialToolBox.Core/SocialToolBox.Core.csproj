@@ -81,10 +81,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />
+    <Compile Include="Unit.cs" />
     <Compile Include="User\Event\IUserEvent.cs" />
     <Compile Include="User\Event\UserSignedUp.cs" />
     <Compile Include="User\Projection\UserCreationTime.cs" />
     <Compile Include="User\Projection\UserSignupTime.cs" />
+    <Compile Include="Visitor.cs" />
     <Compile Include="Web\AnyArgs.cs" />
     <Compile Include="Web\Dispatch\WebRequestDispatcher.cs" />
     <Compile Include="Web\Dispatch\WebRequestHandlerWrapper.cs" />

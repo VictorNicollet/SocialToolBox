@@ -40,6 +40,11 @@
     <Compile Include="Database\ClockRegistry.cs" />
     <Compile Include="Database\DatabaseDriver.cs" />
     <Compile Include="Database\EventStream.cs" />
+    <Compile Include="Database\Events\MockAccountCreated.cs" />
+    <Compile Include="Database\Events\IMockEvent.cs" />
+    <Compile Include="Database\Events\MockAccountDeleted.cs" />
+    <Compile Include="Database\Events\MockAccountNameUpdated.cs" />
+    <Compile Include="Database\Events\MockAccountPasswordUpdated.cs" />
     <Compile Include="Database\Projection.cs" />
     <Compile Include="Database\Projections\EntityIndex.cs" />
     <Compile Include="Database\Projections\EntityIndexFactory.cs" />
@@ -56,9 +61,7 @@
       <Name>SocialToolBox.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

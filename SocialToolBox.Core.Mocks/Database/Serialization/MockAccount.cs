@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Mocks.Database.Events;
 
 namespace SocialToolBox.Core.Mocks.Database.Serialization
 {
@@ -43,5 +45,28 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
                 Hash = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
             }
         };
+
+        public static readonly Visitor<MockAccount, MockAccount> ApplyEvent =
+            new Visitor<MockAccount, MockAccount>();
+
+        static MockAccount()
+        {
+            ApplyEvent.On<MockAccountCreated>((e,i) => new MockAccount{Name = e.Name});
+            ApplyEvent.On<MockAccountDeleted>((e,i) => null);
+            
+            ApplyEvent.On<MockAccountNameUpdated>((e, i) =>
+            {
+                if (i == null) return null;
+                i.Name = e.Name;
+                return i;
+            });
+
+            ApplyEvent.On<MockAccountPasswordUpdated>((e, i) =>
+            {
+                if (i == null) return null;
+                i.Password = e.Password;
+                return i;
+            });
+        }
     }
 }
