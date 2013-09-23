@@ -18,7 +18,7 @@ namespace SocialToolBox.Core.Mocks.Database
             Projector = new MultiProjector<T>(name);
         }
 
-        public IEntityStore<TEn> Create<TEn>(string name, IEntityStoreProjection<T, TEn> proj, IEventStream[] streams) where TEn : class
+        public IStore<TEn> Create<TEn>(string name, IStoreProjection<T, TEn> proj, IEventStream[] streams) where TEn : class
         {
             throw new System.NotImplementedException();
         }

@@ -30,11 +30,6 @@ namespace SocialToolBox.Core.Mocks.Database
         /// <summary>
         /// The mock entity store factory.
         /// </summary>
-        public readonly EntityStoreFactory InnerEntityStore;
-
-        /// <summary>
-        /// The mock entity store factory.
-        /// </summary>
         public readonly EntityIndexFactory InnerEntityIndex;
 
         public DatabaseDriver()
@@ -43,7 +38,6 @@ namespace SocialToolBox.Core.Mocks.Database
             InnerTypeDictionary = new TypeDictionary();
             InnerClockRegistry = new ClockRegistry();
             InnerProjectionEngine = new ProjectionEngine(this);
-            InnerEntityStore = new EntityStoreFactory(this);
             InnerEntityIndex = new EntityIndexFactory(this);
         }
 
@@ -62,8 +56,6 @@ namespace SocialToolBox.Core.Mocks.Database
         public ITypeDictionary TypeDictionary { get { return InnerTypeDictionary; } }
 
         public IClockRegistry ClockRegistry { get { return InnerClockRegistry; } }
-        
-        public IEntityStoreFactory EntityStore { get { return InnerEntityStore; } }
         
         public IEntityIndexFactory EntityIndex { get { return InnerEntityIndex; } }
 

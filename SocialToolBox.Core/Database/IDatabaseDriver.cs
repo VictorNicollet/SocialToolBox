@@ -32,11 +32,6 @@ namespace SocialToolBox.Core.Database
         IClockRegistry ClockRegistry { get; }
 
         /// <summary>
-        /// A factory for creating entity stores.
-        /// </summary>
-        IEntityStoreFactory EntityStore { get; }
-
-        /// <summary>
         /// A factory for creating entity indexes.
         /// </summary>
         IEntityIndexFactory EntityIndex { get; }

@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Database
     /// from an individual event. It also allows cross-view 
     /// queries within the same projection.
     /// </summary>
-    public interface IProjection<out T> where T : class
+    public interface IProjection<T> where T : class
     {
         /// <summary>
         /// The name of the projection, as defined when it was created.
@@ -18,7 +18,7 @@ namespace SocialToolBox.Core.Database
         /// <summary>
         /// Create an entity store using the specified projection.
         /// </summary>
-        IEntityStore<TEn> Create<TEn>(string name, IEntityStoreProjection<T, TEn> proj,
+        IStore<TEn> Create<TEn>(string name, IStoreProjection<T, TEn> proj,
             IEventStream[] streams)
             where TEn : class;
 

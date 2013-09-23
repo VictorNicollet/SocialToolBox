@@ -59,14 +59,13 @@
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
-    <Compile Include="Database\Projection\EntityStoreFactoryExtensions.cs" />
     <Compile Include="Database\Projection\IEntityIndex.cs" />
     <Compile Include="Database\Projection\IEntityIndexFactory.cs" />
     <Compile Include="Database\Projection\IEntityIndexProjection.cs" />
-    <Compile Include="Database\Projection\IEntityStore.cs" />
-    <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
-    <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
+    <Compile Include="Database\Projection\IStore.cs" />
+    <Compile Include="Database\Projection\IStoreProjection.cs" />
+    <Compile Include="Database\Projection\IWritableStore.cs" />
     <Compile Include="Database\Projection\MultiProjector.cs" />
     <Compile Include="Database\Reader\EarliestTime.cs" />
     <Compile Include="Database\Reader\EarliestTimeEx.cs" />
