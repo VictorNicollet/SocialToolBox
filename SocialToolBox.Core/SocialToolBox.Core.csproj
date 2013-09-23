@@ -59,9 +59,6 @@
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
-    <Compile Include="Database\Projection\IEntityIndex.cs" />
-    <Compile Include="Database\Projection\IEntityIndexFactory.cs" />
-    <Compile Include="Database\Projection\IEntityIndexProjection.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
     <Compile Include="Database\Projection\IStore.cs" />
     <Compile Include="Database\Projection\IStoreProjection.cs" />
