@@ -84,6 +84,7 @@
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="User\Event\IEventByUser.cs" />
     <Compile Include="User\Event\IUserEvent.cs" />
     <Compile Include="User\Event\UserSignedUp.cs" />
     <Compile Include="User\Projection\UserCreationTime.cs" />
