@@ -26,6 +26,7 @@ namespace SocialToolBox.Crm.Contact.Projection
         public static void ExtendVisitor(Visitor<IEntityPage, IEntityPage> visitor)
         {
             visitor.On<ContactCreated>((e,i) => new ContactAsEntityPage());
+            visitor.On<ContactDeleted>((e,i) => null);
         }
     }
 }
