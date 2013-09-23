@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using SocialToolBox.Core.Database.Projection;
-
-namespace SocialToolBox.Core.Database
+﻿namespace SocialToolBox.Core.Database
 {
     /// <summary>
     /// Database drivers describe how data can be written to and

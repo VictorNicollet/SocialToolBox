@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using SocialToolBox.Core.Database;
-using SocialToolBox.Core.Database.Projection;
-using SocialToolBox.Core.Mocks.Database.Projections;
 
 namespace SocialToolBox.Core.Mocks.Database
 {
