@@ -16,6 +16,11 @@ namespace SocialToolBox.Core.Database
         string Name { get; }
 
         /// <summary>
+        /// The database driver from which this projection was created.
+        /// </summary>
+        IDatabaseDriver Driver { get; }
+
+        /// <summary>
         /// Create an entity store using the specified projection.
         /// </summary>
         IStore<TEn> Create<TEn>(string name, IStoreProjection<T, TEn> proj,

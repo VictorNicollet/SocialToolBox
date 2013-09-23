@@ -63,8 +63,7 @@ namespace SocialToolBox.Core.Mocks.Database
 
         public IProjection<TEv> CreateProjection<TEv>(string name) where TEv : class
         {
-            var projection = new Projection<TEv>(name);
-            return projection;
+            return new Projection<TEv>(name, this);            
         }
     }
 }
