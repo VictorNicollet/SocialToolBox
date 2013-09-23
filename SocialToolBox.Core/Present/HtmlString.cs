@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace SocialToolBox.Core.Present
 {
@@ -7,6 +11,68 @@ namespace SocialToolBox.Core.Present
     /// </summary>
     public class HtmlString : IPageNode
     {
+        /// <summary>
+        /// The actual HTML string.
+        /// </summary>
+        private string _value;
+
+        public override string ToString()
+        {
+            return _value;
+        }
+
+        private HtmlString(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary>
+        /// Escape a piece of string, turning it into an HTML string.
+        /// </summary>
+        public static HtmlString Escape(string str)
+        {
+            return new HtmlString(HttpUtility.HtmlEncode(str));
+        }
+
+        /// <summary>
+        /// Keep a piece of string as-is.
+        /// </summary>
+        public static HtmlString Verbatim(string str)
+        {
+            return new HtmlString(str);
+        }
+
+        /// <summary>
+        /// Concatenate a sequence of HTML strings.
+        /// </summary>
+        public static HtmlString Concat(IEnumerable<HtmlString> strings)
+        {
+            return new HtmlString(string.Concat(strings.Select(h => h.ToString())));
+        }
+
+        /// <summary>
+        /// Concatenate a sequence of HTML strings.
+        /// </summary>
+        public static HtmlString Concat(params HtmlString[] strings)
+        {
+            return Concat((IEnumerable<HtmlString>)strings);
+        }
+
+        /// <summary>
+        /// A simple formatting tool. Does not handle anything beyond simple
+        /// ToString.
+        /// </summary>
+        public static HtmlString Format(string format, params object[] args)
+        {
+            var escaped = args.Select(s =>
+            {
+                if (s is HtmlString) return (object)s.ToString();
+                return (object)HttpUtility.HtmlEncode(s.ToString());
+            }).ToArray();
+
+            return new HtmlString(string.Format(format, escaped));
+        }
+
         public Task<HtmlString> Visit(IPageNodeVisitor visitor)
         {
             return visitor.Render(this);

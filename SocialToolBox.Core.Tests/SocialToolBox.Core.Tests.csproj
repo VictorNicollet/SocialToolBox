@@ -58,6 +58,7 @@
     <Compile Include="Database\Serialization\untyped_serializer.cs" />
     <Compile Include="Entity\entity_page.cs" />
     <Compile Include="EventReaderFixture.cs" />
+    <Compile Include="Present\html_string.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Projection\user_creation_time.cs" />
     <Compile Include="User\Projection\user_signup_time.cs" />
