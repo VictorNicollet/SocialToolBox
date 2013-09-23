@@ -40,6 +40,7 @@
     <Compile Include="Database\ClockRegistry.cs" />
     <Compile Include="Database\DatabaseDriver.cs" />
     <Compile Include="Database\EventStream.cs" />
+    <Compile Include="Database\Projection.cs" />
     <Compile Include="Database\Projections\EntityIndex.cs" />
     <Compile Include="Database\Projections\EntityIndexFactory.cs" />
     <Compile Include="Database\Projections\EntityStore.cs" />

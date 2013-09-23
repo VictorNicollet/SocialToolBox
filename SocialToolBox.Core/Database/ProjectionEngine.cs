@@ -44,20 +44,20 @@ namespace SocialToolBox.Core.Database
         /// Registers a projector with the engine. The projector reads from the specified
         /// streams using a vector clock associated with the specified name.
         /// </summary>
-        public void Register<TEv>(IProjector<TEv> proj, IEventStream[] streams)
+        public void Register<TEv>(IProjector<TEv> proj)
             where TEv : class
         {
-            _registeredProjectors.Add(() => Process(proj, streams));
+            _registeredProjectors.Add(() => Process(proj));
         }
 
         /// <summary>
         /// Process all events through a projector, asynchronously.
         /// </summary>
-        private async Task Process<TEv>(IProjector<TEv> proj, IEventStream[] streams)
+        private async Task Process<TEv>(IProjector<TEv> proj)
             where TEv : class
         {
             var vectorClock = await Driver.ClockRegistry.LoadProjection(proj.Name);
-            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, streams);
+            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, proj.Streams);
 
             var sinceLastCommit = 0;            
 

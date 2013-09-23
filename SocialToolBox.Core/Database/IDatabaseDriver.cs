@@ -1,4 +1,5 @@
-﻿using SocialToolBox.Core.Database.Projection;
+﻿using System.Diagnostics;
+using SocialToolBox.Core.Database.Projection;
 
 namespace SocialToolBox.Core.Database
 {
@@ -44,5 +45,11 @@ namespace SocialToolBox.Core.Database
         /// The projection engine for this database drive.
         /// </summary>
         ProjectionEngine Projections { get; }
+
+        /// <summary>
+        /// Create a new projection using the specified name, that accepts
+        /// the provided events.
+        /// </summary>
+        IProjection<TEv> CreateProjection<TEv>(string name) where TEv : class;
     }
 }

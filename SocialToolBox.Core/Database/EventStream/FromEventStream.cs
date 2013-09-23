@@ -55,7 +55,7 @@ namespace SocialToolBox.Core.Database.EventStream
                 _publicClock = clock.Clone();
             }
 
-            public async Task<T> NextAsync()
+            public async Task<EventInStream<T>> NextAsync()
             {
                 // If no cached events, try fetching some
                 if (_currentFetchedEvents.Count == 0)
@@ -86,15 +86,15 @@ namespace SocialToolBox.Core.Database.EventStream
                 var first = _currentFetchedEvents[_currentFetchedEvents.Count - 1];
                 _currentFetchedEvents.RemoveAt(_currentFetchedEvents.Count - 1);
                 _publicClock.Advance(first);
-                return first.Event;                
+                return first;
             }
 
-            public T Next()
+            public EventInStream<T> Next()
             {
                 return NextAsync().Result;                
             }
 
-            public IEnumerator<T> GetEnumerator()
+            public IEnumerator<EventInStream<T>> GetEnumerator()
             {
                 while (true)
                 {

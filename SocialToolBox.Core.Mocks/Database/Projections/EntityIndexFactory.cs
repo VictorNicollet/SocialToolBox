@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.EventStream;
 using SocialToolBox.Core.Database.Projection;
 
 namespace SocialToolBox.Core.Mocks.Database.Projections
@@ -25,8 +26,8 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
         public IEntityIndex<TSet, TSort, TEn> Create<TEv, TEn, TSet, TSort>(string name, IEntityIndexProjection<TEv, TEn, TSet, TSort> proj, IEventStream[] streams) where TEv : class where TEn : class where TSet : class where TSort : class
         {
             var store = new EntityIndex<TSet, TSort, TEn>(proj.Sets);
-            var projector = new Projector<TEv, TSet, TSort, TEn>(name, store, proj);
-            InnerDriver.Projections.Register(projector, streams);
+            var projector = new Projector<TEv, TSet, TSort, TEn>(name, store, proj, streams);
+            InnerDriver.Projections.Register(projector);
             return store;
         }
 
@@ -60,24 +61,30 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
             /// </summary>
             private readonly string _name;
 
+            /// <summary>
+            /// All event streams read by this projector.
+            /// </summary>
+            public IEventStream[] Streams { get; private set; }
+
             public Projector(string name, EntityIndex<TSet,TSort,TEn> entityIndex, 
-                IEntityIndexProjection<TEv, TEn, TSet, TSort> projection)
+                IEntityIndexProjection<TEv, TEn, TSet, TSort> projection, IEventStream[] streams)
             {
                 _name = name;
                 _entityIndex = entityIndex;
                 _projection = projection;
                 _pendingEvents = new List<IPair<Id, TEv>>();
+                Streams = streams;
             }
 
             public string Name { get { return _name; } }
 
             public bool CommitRecommended { get { return _pendingEvents.Count > 100; } }
 
-            public void ProcessEvent(TEv ev)
+            public void ProcessEvent(EventInStream<TEv> ev)
             {
-                var id = _projection.EventIdentifier(ev);
+                var id = _projection.EventIdentifier(ev.Event);
                 if (id == null) return;
-                _pendingEvents.Add(Pair.Make((Id)id, ev));
+                _pendingEvents.Add(Pair.Make((Id)id, ev.Event));
             }
 
             public async Task Commit()

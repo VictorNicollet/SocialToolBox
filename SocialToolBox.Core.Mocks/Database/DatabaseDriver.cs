@@ -68,6 +68,11 @@ namespace SocialToolBox.Core.Mocks.Database
         public IEntityIndexFactory EntityIndex { get { return InnerEntityIndex; } }
 
         public ProjectionEngine Projections { get { return InnerProjectionEngine;  } }
-        
+
+        public IProjection<TEv> CreateProjection<TEv>(string name) where TEv : class
+        {
+            var projection = new Projection<TEv>(name);
+            return projection;
+        }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="Database\Index\IndexKeyComparer.cs" />
     <Compile Include="Database\Index\NoKey.cs" />
     <Compile Include="Database\Index\StringKey.cs" />
+    <Compile Include="Database\IProjection.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Database\Projection\IEntityStoreFactory.cs" />
     <Compile Include="Database\Projection\IEntityStoreProjection.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
+    <Compile Include="Database\Projection\MultiProjector.cs" />
     <Compile Include="Database\Reader\EarliestTime.cs" />
     <Compile Include="Database\Reader\EarliestTimeEx.cs" />
     <Compile Include="Database\Serialization\ICustomSerializer.cs" />

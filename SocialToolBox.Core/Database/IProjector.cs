@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using SocialToolBox.Core.Database.EventStream;
 
 namespace SocialToolBox.Core.Database
 {
     /// <summary>
     /// Receives events for processing, commits results for persistence.
     /// </summary>
-    public interface IProjector<in T>
+    public interface IProjector<T> where T : class
     {
         /// <summary>
         /// The name of the projector. Used to save/load the vector clock
@@ -23,11 +24,16 @@ namespace SocialToolBox.Core.Database
         /// as long as those side-effecs are only made permanent 
         /// after <see cref="Commit()"/> is called.
         /// </summary>
-        void ProcessEvent(T ev);
+        void ProcessEvent(EventInStream<T> ev);
 
         /// <summary>
         /// Make all operations performed so far permanent.
         /// </summary>
         Task Commit();
+
+        /// <summary>
+        /// The streams from which this projector reads.
+        /// </summary>
+        IEventStream[] Streams { get; }
     }
 }

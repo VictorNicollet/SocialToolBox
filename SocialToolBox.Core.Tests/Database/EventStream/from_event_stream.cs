@@ -33,6 +33,11 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         public IEventStream B;
         public VectorClock Clock;
 
+        private string Next<T>(IMultiStreamIterator<T> iter) where T : class
+        {
+            return iter.Next().Event.ToString();
+        }
+
         [SetUp]
         public void SetUp()
         {
@@ -56,8 +61,8 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             A.AddEvent(new Event("A1"));
             A.AddEvent(new Event("A2"));
 
-            Assert.AreEqual("A1", iter.Next().ToString());
-            Assert.AreEqual("A2", iter.Next().ToString());
+            Assert.AreEqual("A1", Next(iter));
+            Assert.AreEqual("A2", Next(iter));
             Assert.IsNull(iter.Next());
         }
 
@@ -69,7 +74,7 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             A.AddEvent(MockAccount.Bob);
             A.AddEvent(new Event("A2"));
 
-            Assert.AreEqual(MockAccount.Bob, iter.Next());
+            Assert.AreEqual(MockAccount.Bob, iter.Next().Event);
             Assert.IsNull(iter.Next());
         }
 
@@ -82,10 +87,10 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             A.AddEvent(new Event("A1"));
             A.AddEvent(new Event("A2"));
 
-            Assert.AreEqual("A1", iter.Next().ToString());
-            Assert.AreEqual("A2", iter.Next().ToString()); 
-            Assert.AreEqual("B1", iter.Next().ToString());
-            Assert.AreEqual("B2", iter.Next().ToString());
+            Assert.AreEqual("A1", Next(iter));
+            Assert.AreEqual("A2", Next(iter)); 
+            Assert.AreEqual("B1", Next(iter));
+            Assert.AreEqual("B2", Next(iter));
             Assert.IsNull(iter.Next());
         }
 
@@ -96,14 +101,14 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             B.AddEvent(new Event("B1"));
             A.AddEvent(new Event("A1"));
 
-            Assert.AreEqual("A1", iter.Next().ToString());
-            Assert.AreEqual("B1", iter.Next().ToString());
+            Assert.AreEqual("A1", Next(iter));
+            Assert.AreEqual("B1", Next(iter));
             
             B.AddEvent(new Event("B2"));
             A.AddEvent(new Event("A2"));
 
-            Assert.AreEqual("A2", iter.Next().ToString());
-            Assert.AreEqual("B2", iter.Next().ToString());
+            Assert.AreEqual("A2", Next(iter));
+            Assert.AreEqual("B2", Next(iter));
             Assert.IsNull(iter.Next());
         }
     }

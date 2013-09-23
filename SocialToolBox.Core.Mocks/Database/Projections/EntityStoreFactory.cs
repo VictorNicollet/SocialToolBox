@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.EventStream;
 using SocialToolBox.Core.Database.Projection;
 
 namespace SocialToolBox.Core.Mocks.Database.Projections
@@ -23,8 +24,8 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
             where TEv : class where TEn : class
         {
             var store = new EntityStore<TEn>();
-            var projector = new Projector<TEv, TEn>(name, store, proj);
-            InnerDriver.Projections.Register(projector, streams);
+            var projector = new Projector<TEv, TEn>(name, store, proj, streams);
+            InnerDriver.Projections.Register(projector);
             return store;
         }
 
@@ -54,23 +55,29 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
             /// </summary>
             private readonly string _name;
 
-            public Projector(string name, EntityStore<TEn> entityStore, IEntityStoreProjection<TEv, TEn> projection)
+            /// <summary>
+            /// All streams used by this projector.
+            /// </summary>
+            public IEventStream[] Streams { get; private set; }
+
+            public Projector(string name, EntityStore<TEn> entityStore, IEntityStoreProjection<TEv, TEn> projection, IEventStream[] streams)
             {
                 _name = name;
                 _entityStore = entityStore;
                 _projection = projection;
                 _pendingEvents = new List<KeyValuePair<Id, TEv>>();
+                Streams = streams;
             }
 
             public string Name { get { return _name; } }
 
             public bool CommitRecommended { get { return _pendingEvents.Count > 100; } }
 
-            public void ProcessEvent(TEv ev)
+            public void ProcessEvent(EventInStream<TEv> ev)
             {
-                var id = _projection.EventIdentifier(ev);
+                var id = _projection.EventIdentifier(ev.Event);
                 if (id == null) return;
-                _pendingEvents.Add(new KeyValuePair<Id, TEv>((Id)id, ev));
+                _pendingEvents.Add(new KeyValuePair<Id, TEv>((Id)id, ev.Event));
             }
 
             public async Task Commit()
