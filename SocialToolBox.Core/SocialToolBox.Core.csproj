@@ -86,6 +86,7 @@
     <Compile Include="User\Event\UserSignedUp.cs" />
     <Compile Include="User\Projection\UserCreationTime.cs" />
     <Compile Include="User\Projection\UserSignupTime.cs" />
+    <Compile Include="VisitingExtractor.cs" />
     <Compile Include="Visitor.cs" />
     <Compile Include="Web\AnyArgs.cs" />
     <Compile Include="Web\Dispatch\WebRequestDispatcher.cs" />
