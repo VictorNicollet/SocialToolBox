@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
@@ -75,6 +76,14 @@ namespace SocialToolBox.Core.Web
         public WebResponse File(Stream data, string filename, string mime, int code = 200)
         {
             return new WebResponseData(data, filename, mime, code, Request.ResponseSender);
+        }
+
+        /// <summary>
+        /// A web response with a page and its associated renderer.
+        /// </summary>
+        public WebResponse Page(IPageNode node, IPageNodeVisitor renderer, int code = 200)
+        {
+            return new WebResponsePage(node, renderer, code, Request.ResponseSender);
         }
     }
 }

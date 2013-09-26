@@ -74,6 +74,7 @@
     <Compile Include="Web\Response\web_response_data.cs" />
     <Compile Include="Web\Response\web_response_html.cs" />
     <Compile Include="Web\Response\web_response_json.cs" />
+    <Compile Include="Web\Response\web_response_page.cs" />
     <Compile Include="Web\Response\web_response_redirect.cs" />
     <Compile Include="Web\web_endpoint.cs" />
     <Compile Include="Web\web_request.cs" />

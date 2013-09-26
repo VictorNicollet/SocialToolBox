@@ -72,5 +72,21 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
             _onData(data);
         }
+
+        private Action<WebResponsePage> _onPage;
+
+        public ResponseVisitorHelper OnPage(Action<WebResponsePage> f)
+        {
+            _onPage = f;
+            return this;
+        }
+
+        public void Visit(WebResponsePage page)
+        {
+            if (null == _onPage)
+                Assert.Fail("Encountered object {0}", page);
+
+            _onPage(page);
+        }
     }
 }

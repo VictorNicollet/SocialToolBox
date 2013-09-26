@@ -51,6 +51,7 @@
     <Compile Include="Database\Serialization\MockAccountAsEntityPage.cs" />
     <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Entity\EntityModuleMock.cs" />
+    <Compile Include="Present\NodeRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\WebRequest.cs" />
   </ItemGroup>

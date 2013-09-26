@@ -112,6 +112,7 @@
     <Compile Include="Web\Response\WebResponseData.cs" />
     <Compile Include="Web\Response\WebResponseHtml.cs" />
     <Compile Include="Web\Response\WebResponseJson.cs" />
+    <Compile Include="Web\Response\WebResponsePage.cs" />
     <Compile Include="Web\Response\WebResponseRedirect.cs" />
     <Compile Include="Web\WebDriver.cs" />
     <Compile Include="Web\WebEndpointBuilder.cs" />

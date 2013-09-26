@@ -6,5 +6,6 @@
         void Visit(WebResponseJson json);
         void Visit(WebResponseHtml html);
         void Visit(WebResponseData data);
+        void Visit(WebResponsePage page);
     }
 }

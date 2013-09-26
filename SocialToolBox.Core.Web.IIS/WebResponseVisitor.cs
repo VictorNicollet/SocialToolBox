@@ -78,5 +78,14 @@ namespace SocialToolBox.Core.Web.IIS
             data.Stream.CopyTo(Response.OutputStream);
             Response.Flush();
         }
+
+        public void Visit(WebResponsePage page)
+        {
+            var html = page.Page.Visit(page.Renderer).Result;
+            Response.ContentType = "text/html";
+            var bytes = Encoding.UTF8.GetBytes(html.ToString());
+            Response.BinaryWrite(bytes);
+            Response.Flush();
+        }
     }
 }

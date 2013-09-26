@@ -164,9 +164,10 @@ namespace SocialToolBox.Core.Mocks.Web
         private class NullResponseSender : IWebResponseVisitor
         {
             public void Visit(WebResponseRedirect redirect) {}
-            public void Visit(WebResponseJson redirect) {}
-            public void Visit(WebResponseHtml redirect) {}
-            public void Visit(WebResponseData redirect) {}
+            public void Visit(WebResponseJson json) {}
+            public void Visit(WebResponseHtml html) {}
+            public void Visit(WebResponseData data) {}
+            public void Visit(WebResponsePage page) {}
         }
     }
 }
