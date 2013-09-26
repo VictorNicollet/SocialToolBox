@@ -73,7 +73,7 @@ namespace SocialToolBox.Core.Present
             return new HtmlString(string.Format(format, escaped));
         }
 
-        public Task<HtmlString> Visit(IPageNodeVisitor visitor)
+        public Task<HtmlString> RenderWith(INodeRenderer visitor)
         {
             return visitor.Render(this);
         }

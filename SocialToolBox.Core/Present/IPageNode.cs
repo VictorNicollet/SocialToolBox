@@ -8,6 +8,6 @@ namespace SocialToolBox.Core.Present
     /// </summary>
     public interface IPageNode
     {
-        Task<HtmlString> Visit(IPageNodeVisitor visitor);
+        Task<HtmlString> RenderWith(INodeRenderer visitor);
     }
 }

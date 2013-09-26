@@ -1,5 +1,6 @@
-﻿using System.Runtime;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using SocialToolBox.Core.Mocks.Present;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Response;
@@ -46,7 +47,7 @@ namespace SocialToolBox.Core.Tests.Web
         [SetUp]
         public void SetUp()
         {
-            Driver = new WebDriver();
+            Driver = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
         }
 
         /// <summary>

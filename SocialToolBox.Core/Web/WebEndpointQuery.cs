@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
@@ -23,10 +24,10 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// A currently empty query.
         /// </summary>
-        public WebEndpointQuery(Func<IWebRequest, WebResponse> run)
+        public WebEndpointQuery(IWebDriver driver, Func<IWebRequest, WebResponse> run)
         {
             _run = run;
-            _request = new WebRequest();
+            _request = new WebRequest(driver);
         }
 
         /// <summary>
@@ -65,7 +66,10 @@ namespace SocialToolBox.Core.Web
             /// <summary>
             /// Creates an empty web request.
             /// </summary>
-            public WebRequest() {}
+            public WebRequest(IWebDriver driver)
+            {
+                Driver = driver;
+            }
 
             /// <summary>
             /// Creates an independent copy of a web request.
@@ -80,8 +84,10 @@ namespace SocialToolBox.Core.Web
                 PostData = Copy(other.PostData);
                 GetData = Copy(other.GetData);
                 Payload = other.Payload;
+                Driver = other.Driver;
             }
 
+            public IWebDriver Driver { get; set; }
             public HttpVerb Verb { get; set; }
             public string Domain { get; set; }
             public string Path { get { return MatchedPath + "/" + string.Join("/", UnmatchedPath); } }
@@ -116,6 +122,10 @@ namespace SocialToolBox.Core.Web
             public string Payload { get; set; }
 
             public IWebResponseVisitor ResponseSender { get { return null; } }
+            public void SetDriver(IWebDriver webDriver)
+            {
+                Debug.Assert(false, "This request should never be passed to a driver.");
+            }
         }
     }
 }

@@ -79,10 +79,12 @@ namespace SocialToolBox.Core.Web
         }
 
         /// <summary>
-        /// A web response with a page and its associated renderer.
+        /// A web response with a page and its associated renderer. If no renderer is 
+        /// provided, uses the driver's rendering strategy for obtaining one.
         /// </summary>
-        public WebResponse Page(IPageNode node, IPageNodeVisitor renderer, int code = 200)
+        public WebResponse Page(IPageNode node, INodeRenderer renderer = null, int code = 200)
         {
+            if (renderer == null && Request.Driver != null) renderer = Request.Driver.Rendering.PickRenderer(Request);
             return new WebResponsePage(node, renderer, code, Request.ResponseSender);
         }
     }

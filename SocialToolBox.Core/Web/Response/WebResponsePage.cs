@@ -15,9 +15,9 @@ namespace SocialToolBox.Core.Web.Response
         /// <summary>
         /// The renderer recommended for rendering to HTML.
         /// </summary>
-        public readonly IPageNodeVisitor Renderer;
+        public readonly INodeRenderer Renderer;
 
-        public WebResponsePage(IPageNode page, IPageNodeVisitor renderer, int code, IWebResponseVisitor sender) : base(code, sender)
+        public WebResponsePage(IPageNode page, INodeRenderer renderer, int code, IWebResponseVisitor sender) : base(code, sender)
         {
             Page = page;
             Renderer = renderer;

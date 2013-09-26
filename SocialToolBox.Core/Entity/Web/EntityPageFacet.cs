@@ -1,4 +1,5 @@
-﻿using SocialToolBox.Core.Web;
+﻿using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Facets;
 using SocialToolBox.Core.Web.Response;
@@ -33,7 +34,7 @@ namespace SocialToolBox.Core.Entity.Web
 
             protected override WebResponse Process()
             {
-                return Html(Arguments.Ident.ToString());
+                return Page(HtmlString.Escape(Arguments.Ident.ToString()));
             }
         }
     }

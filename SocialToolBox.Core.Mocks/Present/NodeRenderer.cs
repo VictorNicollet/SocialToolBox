@@ -6,7 +6,7 @@ namespace SocialToolBox.Core.Mocks.Present
     /// <summary>
     /// A very simple node renderer.
     /// </summary>
-    public class NodeRenderer : IPageNodeVisitor
+    public class NodeRenderer : INodeRenderer
     {
         public Task<HtmlString> Render(HtmlString html)
         {

@@ -1,4 +1,7 @@
 ﻿using System;
+using NUnit.Framework;
+using SocialToolBox.Core.Mocks.Present;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Response;
@@ -29,6 +32,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
         private class Request : IWebRequest
         {
+            public IWebDriver Driver { get; private set; }
             public HttpVerb Verb { get; private set; }
             public string Domain { get; private set; }
             public string Path { get; private set; }
@@ -40,6 +44,15 @@ namespace SocialToolBox.Core.Tests.Web.Response
             public string Get(string name) { return null; }
             public string Payload { get; private set; }
             public IWebResponseVisitor ResponseSender { get; set; }
+            public void SetDriver(IWebDriver webDriver) { Driver = webDriver; }
+        }
+
+        public IWebDriver Driver;
+
+        [SetUp]
+        public void SetUp()
+        {
+            Driver = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
         }
 
         public IWebRequest Req;
@@ -47,6 +60,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
         public void WithVisitor(ResponseVisitorHelper visitor)
         {
             Req = new Request { ResponseSender = visitor };   
+            Req.SetDriver(Driver);
         }
 
         public void Do(Func<WebRequestHandler<NoArgs>, WebResponse> action)

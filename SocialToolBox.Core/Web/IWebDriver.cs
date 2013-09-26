@@ -1,4 +1,5 @@
-﻿using SocialToolBox.Core.Web.Response;
+﻿using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
 {
@@ -15,6 +16,12 @@ namespace SocialToolBox.Core.Web
             where TArgs : class, IWebUrlArgument, new()
             where THandler : class, IWebRequestHandler<TArgs>;
 
+        /// <summary>
+        /// The rendering strategy, dependent on the web request (for instance, for 
+        /// detecting whether client is mobile or desktop).
+        /// </summary>
+        IRenderingStrategy<IWebRequest> Rendering { get; }
+            
         /// <summary>
         /// Dispatch and handle a web request.
         /// </summary>

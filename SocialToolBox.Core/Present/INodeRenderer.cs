@@ -6,7 +6,7 @@ namespace SocialToolBox.Core.Present
     /// Visits nodes inside a page that is being rendered, and
     /// hopefully turns them into clean HTML.
     /// </summary>
-    public interface IPageNodeVisitor
+    public interface INodeRenderer
     {
         Task<HtmlString> Render(HtmlString html);
     }

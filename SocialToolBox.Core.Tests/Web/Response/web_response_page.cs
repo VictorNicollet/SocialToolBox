@@ -16,22 +16,31 @@ namespace SocialToolBox.Core.Tests.Web.Response
         }
 
         [Test]
+        public void contains_correct_default_renderer()
+        {
+            INodeRenderer renderer = null;
+            WithVisitor(Visitor.OnPage(p => Assert.AreEqual(renderer, p.Renderer)));
+            Do(r =>
+            {
+                renderer = r.Request.Driver.Rendering.PickRenderer(r.Request);
+                return r.Page(HtmlString.Escape(""));
+            });
+        }
+
+        [Test]
         public void contains_correct_page()
         {
             var page = HtmlString.Escape("<&>");
             WithVisitor(Visitor.OnPage(p => Assert.AreEqual(page, p.Page)));
-
-            var renderer = new NodeRenderer();
-            Do(r => r.Page(page, renderer));
+            Do(r => r.Page(page));
         }
+
         [Test]
         public void contains_correct_code()
         {
             var page = HtmlString.Escape("<&>");
             WithVisitor(Visitor.OnPage(p => Assert.AreEqual(200, p.Code)));
-
-            var renderer = new NodeRenderer();
-            Do(r => r.Page(page, renderer));
+            Do(r => r.Page(page));
         }
 
         [Test]
@@ -39,9 +48,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
         {
             var page = HtmlString.Escape("<&>");
             WithVisitor(Visitor.OnPage(p => Assert.AreEqual(404, p.Code)));
-
-            var renderer = new NodeRenderer();
-            Do(r => r.Page(page, renderer, 404));
+            Do(r => r.Page(page, null, 404));
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SocialToolBox.Core.Mocks.Web
     /// </summary>
     public class WebRequest : IWebRequest
     {
+        public IWebDriver Driver { get; private set; }
         public HttpVerb Verb { get; set; }
         public string Domain { get; set; }
 
@@ -157,6 +158,11 @@ namespace SocialToolBox.Core.Mocks.Web
         public string Payload { get; set; }
 
         public IWebResponseVisitor ResponseSender { get { return new NullResponseSender(); } }
+
+        public void SetDriver(IWebDriver webDriver)
+        {
+            Driver = webDriver;
+        }
 
         /// <summary>
         /// A web response visitor that does nothing with the response.

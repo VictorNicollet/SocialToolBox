@@ -44,6 +44,8 @@ namespace SocialToolBox.Core.Web.IIS
             _matchedSegments = matched;
         }
 
+        public IWebDriver Driver { get; private set; }
+
         public HttpVerb Verb
         {
             get
@@ -115,5 +117,10 @@ namespace SocialToolBox.Core.Web.IIS
         }
 
         public IWebResponseVisitor ResponseSender { get { return new WebResponseVisitor(Context); } }
+        
+        public void SetDriver(IWebDriver webDriver)
+        {
+            Driver = webDriver;
+        }
     }
 }

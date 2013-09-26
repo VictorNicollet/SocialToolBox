@@ -3,6 +3,8 @@ using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Entity;
+using SocialToolBox.Core.Mocks.Present;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web;
 
 namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage
@@ -34,7 +36,7 @@ namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage
             Module.Compile();
             driver.Projections.Run();
 
-            var web = new WebDriver();
+            var web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
             Facet = new EntityPageFacet(web, Module);
         }
     }

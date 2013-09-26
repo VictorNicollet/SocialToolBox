@@ -11,6 +11,11 @@ namespace SocialToolBox.Core.Web
         where THandler : class, IWebRequestHandler<TArgs>
     {
         /// <summary>
+        /// The web driver to which this endpoint is bound.
+        /// </summary>
+        public readonly IWebDriver Driver;
+
+        /// <summary>
         /// The domain on which this endpoint runs.
         /// </summary>
         public readonly string Domain;
@@ -37,7 +42,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public readonly THandler RequestHandler; 
 
-        public WebEndpoint(THandler handler, HttpVerb verbs, string domain, IEnumerable<string> path, bool secure, int port)
+        public WebEndpoint(IWebDriver driver, THandler handler, HttpVerb verbs, string domain, IEnumerable<string> path, bool secure, int port)
         {
             Domain = domain;
             BasePath = path.ToArray();
@@ -57,7 +62,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebEndpointQuery Query(TArgs args)
         {
-            return new WebEndpointQuery(req => RequestHandler.Process(req, args));
+            return new WebEndpointQuery(Driver, req => RequestHandler.Process(req, args));
         }
     }
 }

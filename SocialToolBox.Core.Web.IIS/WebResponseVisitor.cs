@@ -81,7 +81,7 @@ namespace SocialToolBox.Core.Web.IIS
 
         public void Visit(WebResponsePage page)
         {
-            var html = page.Page.Visit(page.Renderer).Result;
+            var html = page.Page.RenderWith(page.Renderer).Result;
             Response.ContentType = "text/html";
             var bytes = Encoding.UTF8.GetBytes(html.ToString());
             Response.BinaryWrite(bytes);
