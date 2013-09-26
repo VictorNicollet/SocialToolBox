@@ -3,8 +3,8 @@
     public interface IWebResponseVisitor
     {
         void Visit(WebResponseRedirect redirect);
-        void Visit(WebResponseJson redirect);
-        void Visit(WebResponseHtml redirect);
-        void Visit(WebResponseData redirect);
+        void Visit(WebResponseJson json);
+        void Visit(WebResponseHtml html);
+        void Visit(WebResponseData data);
     }
 }
