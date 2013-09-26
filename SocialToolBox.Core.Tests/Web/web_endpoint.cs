@@ -37,7 +37,7 @@ namespace SocialToolBox.Core.Tests.Web
         public void SetUp()
         {
             Handler = new SimpleHandler();
-            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, "foobar.com", new[]{"a", "b"}, false, 80);
+            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, HttpVerb.Get, "foobar.com", new[] { "a", "b" }, false, 80);
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace SocialToolBox.Core.Tests.Web
         public void has_secure()
         {
             Assert.IsFalse(Endpoint.IsSecure);
-            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, "", new string[]{}, true, 443);
+            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, HttpVerb.Get, "", new string[] { }, true, 443);
             Assert.IsTrue(Endpoint.IsSecure);
         }
 
@@ -70,9 +70,9 @@ namespace SocialToolBox.Core.Tests.Web
         public void has_port()
         {
             Assert.AreEqual(80, Endpoint.Port);
-            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, "", new string[] { }, true, 8080);
+            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, HttpVerb.Get, "", new string[] { }, true, 8080);
             Assert.AreEqual(8080, Endpoint.Port);
-            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, "", new string[] { }, false, 8088);
+            Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(Handler, HttpVerb.Get, "", new string[] { }, false, 8088);
             Assert.AreEqual(8088, Endpoint.Port);
         }
 

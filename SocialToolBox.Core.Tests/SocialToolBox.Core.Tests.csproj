@@ -65,6 +65,7 @@
     <Compile Include="visiting_extractor.cs" />
     <Compile Include="visitor.cs" />
     <Compile Include="Web\Dispatch\web_request_dispatcher.cs" />
+    <Compile Include="Web\facet.cs" />
     <Compile Include="Web\Response\ResponseVisitorFixture.cs" />
     <Compile Include="Web\Response\ResponseVisitorHelper.cs" />
     <Compile Include="Web\Response\web_response.cs" />

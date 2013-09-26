@@ -30,18 +30,21 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public readonly int Port;
 
+        public readonly HttpVerb Verbs;
+
         /// <summary>
         /// The handler for requests on this endpoint.
         /// </summary>
         public readonly THandler RequestHandler; 
 
-        public WebEndpoint(THandler handler, string domain, IEnumerable<string> path, bool secure, int port)
+        public WebEndpoint(THandler handler, HttpVerb verbs, string domain, IEnumerable<string> path, bool secure, int port)
         {
             Domain = domain;
             BasePath = path.ToArray();
             IsSecure = secure;
             Port = port;
             RequestHandler = handler;
+            Verbs = verbs;
         }
 
         public WebUrl Url(TArgs args)

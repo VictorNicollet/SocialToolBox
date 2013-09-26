@@ -43,7 +43,7 @@ namespace SocialToolBox.Core.Web
         {
             var segs = url.Split('/').Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
             _dispatcher.Register(string.Join("/", segs), verb, handler);
-            return new WebEndpoint<TArgs, THandler>(handler, Domain, segs, IsSecure, Port);
+            return new WebEndpoint<TArgs, THandler>(handler, verb, Domain, segs, IsSecure, Port);
         }
 
         public WebResponse Dispatch(IWebRequest request)
