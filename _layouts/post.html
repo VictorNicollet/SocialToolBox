@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include head.html %}
+    <title>{{ page.title | xml_escape }}</title>
+  </head>	      
+  <body>
+    {% include navbar.html %}
+    <div class="container" style="max-width: 900px">
+      
+      <div class="jumbotron" style="
+        background:url({{ site.url }}/images/toolbox.jpg) center -250px no-repeat;
+      "></div>
+
+      <div class="page-header">
+	<h1>{{ page.title }} 
+	  <small>{{ page.date | date_to_string }}</small>
+	</h1>
+      </div>
+
+      <div class="rows">
+	<div class="col-md-9">
+	  {{ content }}
+	</div>      
+
+	<div class="col-md-3">
+	  <h2>Archives</h2>
+	  <ul class="list-unstyled">
+	    {% for post in site.posts %}	    
+	    <li>
+	      <a href="{{ post.url }}">{{ post.title }}</a>
+	    </li>
+  	    {% endfor %}
+	  </ul>
+	</div>
+      </div>
+
+    </div>
+
+    {% include foot.html %}
+  </body>
+</html>

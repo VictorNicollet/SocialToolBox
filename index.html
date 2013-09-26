@@ -21,4 +21,13 @@ title: SocialToolBox
   </div>
 </div>
 
-
+<h2>Blog archives</h2>
+<dl class="dl-horizontal">
+  {% for post in site.posts %}
+    <dt>{{ post.date | date_to_string }}</dt>
+    <dd>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+      <p>{{ post.excerpt }}</p>
+    </dd>
+  {% endfor %}
+</dl>
