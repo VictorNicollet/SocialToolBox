@@ -1,5 +1,6 @@
 ﻿using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Entity;
+using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Crm.Contact;
@@ -31,6 +32,11 @@ namespace SocialToolBox.Sample.Web
         /// </summary>
         public readonly EntityModule Entities;
 
+        /// <summary>
+        /// Registered web endpoints for entity pages.
+        /// </summary>
+        public readonly EntityPageFacet EntityPages;
+
         public Modules()
         {
             Database = new DatabaseDriver();
@@ -46,6 +52,9 @@ namespace SocialToolBox.Sample.Web
             // Compile all modules
             Contacts.Compile();
             Entities.Compile();
+
+            // Install facets
+            EntityPages = new EntityPageFacet(Web, Entities);
 
             // Initialize modules
             InitialData.AddTo(this);
