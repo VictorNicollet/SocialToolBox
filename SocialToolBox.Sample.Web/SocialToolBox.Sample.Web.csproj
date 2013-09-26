@@ -50,6 +50,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InitialData.cs" />
     <Compile Include="Modules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

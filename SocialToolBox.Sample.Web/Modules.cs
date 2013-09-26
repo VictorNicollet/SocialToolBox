@@ -46,6 +46,9 @@ namespace SocialToolBox.Sample.Web
             // Compile all modules
             Contacts.Compile();
             Entities.Compile();
+
+            // Initialize modules
+            InitialData.AddTo(this);
         }
     }
 }
