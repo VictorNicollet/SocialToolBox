@@ -48,6 +48,7 @@ namespace SocialToolBox.Core.Web.IIS
         {
             Prepare(redirect);            
             Response.Redirect(redirect.Url, true);
+            Response.Flush();
         }
 
         public void Visit(WebResponseJson json)
@@ -55,8 +56,8 @@ namespace SocialToolBox.Core.Web.IIS
             Prepare(json);
             Response.ContentType = "application/json";
             var bytes = Encoding.UTF8.GetBytes(json.Json);
-            Response.OutputStream.Write(bytes, 0, bytes.Length);
-            Response.Close();
+            Response.BinaryWrite(bytes);
+            Response.Flush();
         }
 
         public void Visit(WebResponseHtml html)
@@ -64,8 +65,8 @@ namespace SocialToolBox.Core.Web.IIS
             Prepare(html);
             Response.ContentType = "text/html";
             var bytes = Encoding.UTF8.GetBytes(html.Html);
-            Response.OutputStream.Write(bytes, 0, bytes.Length);
-            Response.Close();
+            Response.BinaryWrite(bytes);
+            Response.Flush();
         }
 
         public void Visit(WebResponseData data)
@@ -75,7 +76,7 @@ namespace SocialToolBox.Core.Web.IIS
             if (data.Filename != null) 
                 Response.AddHeader("Content-Disposition","attachment; filename=" + data.Filename);
             data.Stream.CopyTo(Response.OutputStream);
-            Response.Close();
+            Response.Flush();
         }
     }
 }

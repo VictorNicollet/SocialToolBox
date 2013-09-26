@@ -65,12 +65,12 @@ namespace SocialToolBox.Core.Web.IIS
 
         public string Path
         {
-            get { return string.Concat("/", _pathSegments); }
+            get { return string.Join("/", _pathSegments); }
         }
 
         public string MatchedPath
         {
-            get { return string.Concat("/", _pathSegments.Take(_matchedSegments)); }
+            get { return string.Join("/", _pathSegments.Take(_matchedSegments)); }
         }
 
         public string[] UnmatchedPath
@@ -114,6 +114,6 @@ namespace SocialToolBox.Core.Web.IIS
             }
         }
 
-        public IWebResponseVisitor ResponseSender { get; private set; }
+        public IWebResponseVisitor ResponseSender { get { return new WebResponseVisitor(Context); } }
     }
 }
