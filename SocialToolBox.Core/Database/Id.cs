@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -140,11 +141,13 @@ namespace SocialToolBox.Core.Database
             return string.Compare(Value, other.Value, StringComparison.InvariantCulture);
         }
 
+        [Pure]
         public IdArgs ToArgs()
         {
             return new IdArgs(this);
         }
 
+        [Pure]
         public override string ToString()
         {
             return Value;

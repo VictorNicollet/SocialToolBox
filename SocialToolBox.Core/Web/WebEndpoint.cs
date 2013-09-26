@@ -51,5 +51,13 @@ namespace SocialToolBox.Core.Web
         {
             return args.AddTo(new WebUrl(Domain, BasePath, IsSecure, Port));
         }
+
+        /// <summary>
+        /// Builds a query for unit testing the endpoint.
+        /// </summary>
+        public WebEndpointQuery Query(TArgs args)
+        {
+            return new WebEndpointQuery(req => RequestHandler.Process(req, args));
+        }
     }
 }

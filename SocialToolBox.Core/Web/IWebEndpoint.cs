@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Web
+﻿using SocialToolBox.Core.Web.Response;
+
+namespace SocialToolBox.Core.Web
 {
     /// <summary>
     /// A generic web endpoint, generates URLs from arguments.
@@ -9,5 +11,10 @@
         /// Using the arguments, generate an URL.
         /// </summary>
         WebUrl Url(T args);
+
+        /// <summary>
+        /// Perform a simulated query. Run as when testing.
+        /// </summary>
+        WebEndpointQuery Query(T args);
     }
 }

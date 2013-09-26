@@ -115,6 +115,7 @@
     <Compile Include="Web\Response\WebResponseRedirect.cs" />
     <Compile Include="Web\WebDriver.cs" />
     <Compile Include="Web\WebEndpointBuilder.cs" />
+    <Compile Include="Web\WebEndpointQuery.cs" />
     <Compile Include="Web\WebUrl.cs" />
     <Compile Include="Web\HttpVerb.cs" />
     <Compile Include="Web\IWebDriver.cs" />

@@ -27,9 +27,12 @@ namespace SocialToolBox.Core.Web
 
         public WebResponse Process(IWebRequest request, T args)
         {
-            Request = request;
-            Arguments = args;
-            return Process();
+            lock (this) // Because we're using member variables to carry values
+            {
+                Request = request;
+                Arguments = args;
+                return Process();
+            }
         }
 
         /// <summary>
