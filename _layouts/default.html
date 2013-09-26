@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include head.html %}
+    <title>{{ page.title | xml_escape }}</title>
+  </head>	      
+  <body>
+    {% include navbar.html %}
+    <div class="container" style="max-width: 900px">
+      {{ content }}
+    </div>
+    {% include foot.html %}
+  </body>
+</html>
