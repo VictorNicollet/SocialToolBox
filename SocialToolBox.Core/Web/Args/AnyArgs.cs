@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SocialToolBox.Core.Web
+namespace SocialToolBox.Core.Web.Args
 {
     /// <summary>
     /// An Url argument object that reads all unmatched values.

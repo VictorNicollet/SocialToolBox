@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using SocialToolBox.Core.Web;
+using SocialToolBox.Core.Web.Args;
 
 namespace SocialToolBox.Core.Database
 {
@@ -10,7 +12,7 @@ namespace SocialToolBox.Core.Database
     /// is 11 characters long.
     /// </summary>
     [Serializable]
-    public struct Id : IEquatable<Id>, IComparable<Id>, ISerializable
+    public struct Id : IEquatable<Id>, IComparable<Id>, ISerializable, IConvertibleToArgs<IdArgs>
     {
         /// <summary>
         /// The number of characters in an identifier.
@@ -136,6 +138,11 @@ namespace SocialToolBox.Core.Database
         public int CompareTo(Id other)
         {
             return string.Compare(Value, other.Value, StringComparison.InvariantCulture);
+        }
+
+        public IdArgs ToArgs()
+        {
+            return new IdArgs(this);
         }
 
         public override string ToString()

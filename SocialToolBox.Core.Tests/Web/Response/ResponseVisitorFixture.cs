@@ -1,5 +1,6 @@
 ﻿using System;
 using SocialToolBox.Core.Web;
+using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Tests.Web.Response

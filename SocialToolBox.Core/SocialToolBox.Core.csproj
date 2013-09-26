@@ -79,6 +79,7 @@
     <Compile Include="Entity\Event\IEntityPageEvent.cs" />
     <Compile Include="Entity\Event\IEventWithEntityId.cs" />
     <Compile Include="Entity\Projection\IEntityPage.cs" />
+    <Compile Include="Entity\Web\EntityPageFacet.cs" />
     <Compile Include="IPair.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Present\HtmlString.cs" />
@@ -95,12 +96,16 @@
     <Compile Include="User\Projection\UserSignupTime.cs" />
     <Compile Include="VisitingExtractor.cs" />
     <Compile Include="Visitor.cs" />
-    <Compile Include="Web\AnyArgs.cs" />
+    <Compile Include="Web\Args\AnyArgs.cs" />
+    <Compile Include="Web\Args\IConvertibleToArgs.cs" />
     <Compile Include="Web\Dispatch\WebRequestDispatcher.cs" />
     <Compile Include="Web\Dispatch\WebRequestHandlerWrapper.cs" />
+    <Compile Include="Web\Facet.cs" />
+    <Compile Include="Web\Args\IdArgs.cs" />
+    <Compile Include="Web\Facets\FacetHandler.cs" />
     <Compile Include="Web\IWebEndpoint.cs" />
     <Compile Include="Web\IWebUrlArgument.cs" />
-    <Compile Include="Web\NoArgs.cs" />
+    <Compile Include="Web\Args\NoArgs.cs" />
     <Compile Include="Web\Response\IWebResponseVisitor.cs" />
     <Compile Include="Web\Response\WebResponse.cs" />
     <Compile Include="Web\Response\WebResponseCookie.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="Web\Response\WebResponseJson.cs" />
     <Compile Include="Web\Response\WebResponseRedirect.cs" />
     <Compile Include="Web\WebDriver.cs" />
+    <Compile Include="Web\WebEndpointBuilder.cs" />
     <Compile Include="Web\WebUrl.cs" />
     <Compile Include="Web\HttpVerb.cs" />
     <Compile Include="Web\IWebDriver.cs" />
