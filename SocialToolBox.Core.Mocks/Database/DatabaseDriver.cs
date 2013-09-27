@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.Serialization;
 
 namespace SocialToolBox.Core.Mocks.Database
 {
@@ -61,9 +62,14 @@ namespace SocialToolBox.Core.Mocks.Database
             return new ReadTransaction();
         }
 
-        public IProjectTransaction StartReadWriteTransaction()
+        public IProjectTransaction StartProjectorTransaction()
         {
             return new ProjectTransaction();
+        }
+
+        public ITransaction StartReadWriteTransaction()
+        {
+            return new Transaction();
         }
     }
 }

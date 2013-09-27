@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Database
+﻿using SocialToolBox.Core.Database.Serialization;
+
+namespace SocialToolBox.Core.Database
 {
     /// <summary>
     /// Database drivers describe how data can be written to and
@@ -46,9 +48,15 @@
         IReadTransaction StartReadTransaction();
 
         /// <summary>
-        /// Start a new read-write transaction compatible with all objects on
-        /// this database driver.
+        /// Start a new read-write transaction compatible with all projection
+        /// objects on this database driver, and which can read from streams.
         /// </summary>
-        IProjectTransaction StartReadWriteTransaction();
+        IProjectTransaction StartProjectorTransaction();
+
+        /// <summary>
+        /// Starts a new read-write transaction that can read from all objects
+        /// on this database server, and can write to streams.
+        /// </summary>
+        ITransaction StartReadWriteTransaction();
     }
 }
