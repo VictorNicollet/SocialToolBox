@@ -1,4 +1,5 @@
-﻿using SocialToolBox.Core.Present;
+﻿using System;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
@@ -12,7 +13,7 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// Registers an endpoint accepting parameters of the specified type.
         /// </summary>
-        WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, THandler handler)
+        WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, Func<THandler> handler)
             where TArgs : class, IWebUrlArgument, new()
             where THandler : class, IWebRequestHandler<TArgs>;
 
@@ -23,8 +24,10 @@ namespace SocialToolBox.Core.Web
         IRenderingStrategy<IWebRequest> Rendering { get; }
             
         /// <summary>
-        /// Dispatch and handle a web request.
+        /// Dispatch and handle a web request. Since the web request should carry
+        /// the driver which is dispatching it, this expects a request-building
+        /// function instead of a request.
         /// </summary>
-        WebResponse Dispatch(IWebRequest request);
+        WebResponse Dispatch(Func<IWebDriver,IWebRequest> request);
     }
 }

@@ -53,10 +53,10 @@ namespace SocialToolBox.Core.Mocks.Database
             return new Task(() => {});
         }
 
+// ReSharper disable CSharpWarnings::CS1998
         public async Task<EventInStream<T>> GetEvent<T>(long position) where T : class
+// ReSharper restore CSharpWarnings::CS1998
         {
-            await Task.Yield();
-
             // It is acceptable to cast the position to an int, since this happens in-memory
             if (position >= SerializedEventList.Count) return null;
             
@@ -66,10 +66,10 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventInStream<T>(this, ev, position);
         }
 
+// ReSharper disable CSharpWarnings::CS1998
         public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count) where T : class
+// ReSharper restore CSharpWarnings::CS1998
         {
-            await Task.Yield();
-
             // It is acceptable to cast the position to an int, since this happens in-memory
             var start = (int) startPosition;
             var list = new List<EventInStream<T>>();
@@ -85,10 +85,10 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventListInStream<T>(list, pos, pos - start);
         }
 
+// ReSharper disable CSharpWarnings::CS1998
         public async Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count) where T : class
+// ReSharper restore CSharpWarnings::CS1998
         {
-            await Task.Yield();
-
             // It is acceptable to cast the position to an int, since this happens in-memory
             var start = (int)startPosition;
             var list = new List<EventInStream<T>>();

@@ -25,7 +25,7 @@ namespace SocialToolBox.Core.Entity.Web
         public EntityPageFacet(IWebDriver driver, EntityModule module) : base(driver, "entity")
         {
             Module = module;
-            View = OnGet<IdArgs>("").Use(new ViewPageHandler(this));
+            View = OnGet<IdArgs>("").Use(() => new ViewPageHandler(this));
         }
 
         private class ViewPageHandler : FacetHandler<EntityPageFacet,IdArgs>
@@ -34,7 +34,12 @@ namespace SocialToolBox.Core.Entity.Web
 
             protected override WebResponse Process()
             {
-                return Page(new NotFound());
+                var pageT = Facet.Module.Pages.Get(Arguments.Ident);
+
+                var page = pageT.Result;
+                if (page == null) return Page(new NotFound());
+
+                return Page(HtmlString.Escape(page.Title));
             }
         }
     }

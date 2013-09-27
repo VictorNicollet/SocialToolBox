@@ -48,7 +48,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_exact_path()
         {
-            Dispatcher.Register("a", HttpVerb.Get, new JsonEcho<NoArgs>("null"));
+            Dispatcher.Register("a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 
@@ -59,8 +59,8 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_exact_path_and_verb()
         {
-            Dispatcher.Register("a", HttpVerb.Post, new JsonEcho<NoArgs>("{}"));
-            Dispatcher.Register("a", HttpVerb.Get, new JsonEcho<NoArgs>("null"));
+            Dispatcher.Register("a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
+            Dispatcher.Register("a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 
@@ -71,9 +71,9 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_inexact_path()
         {
-            Dispatcher.Register("a", HttpVerb.Post, new JsonEcho<NoArgs>("{}"));
-            Dispatcher.Register("", HttpVerb.Get, new JsonEcho<NoArgs>("[]"));
-            Dispatcher.Register("", HttpVerb.Get, new JsonEcho<AnyArgs>("null"));
+            Dispatcher.Register("a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
+            Dispatcher.Register("", HttpVerb.Get, () => new JsonEcho<NoArgs>("[]"));
+            Dispatcher.Register("", HttpVerb.Get,() =>  new JsonEcho<AnyArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 

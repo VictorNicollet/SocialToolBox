@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Web.UI.WebControls;
 
 namespace SocialToolBox.Core.Web
@@ -34,7 +35,7 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// Registers the provided handler.
         /// </summary>
-        public WebEndpoint<TArgs, THandler> Use<THandler>(THandler handler)
+        public WebEndpoint<TArgs, THandler> Use<THandler>(Func<THandler> handler)
             where THandler : class, IWebRequestHandler<TArgs>
         {
             return Driver.Register<TArgs, THandler>(Verb, Url, handler);

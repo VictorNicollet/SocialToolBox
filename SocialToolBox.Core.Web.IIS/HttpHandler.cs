@@ -26,8 +26,7 @@ namespace SocialToolBox.Core.Web.IIS
                 _dispatcher = appWithDispatcher.Dispatcher;
             }
 
-            var request = new WebRequest(context);
-            var response = _dispatcher.Dispatch(request);
+            var response = _dispatcher.Dispatch(driver => new WebRequest(driver,context));
             if (response != null) response.Send();
         }
 

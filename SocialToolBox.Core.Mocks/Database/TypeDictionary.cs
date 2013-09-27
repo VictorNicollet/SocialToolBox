@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SocialToolBox.Core.Database;
 
 namespace SocialToolBox.Core.Mocks.Database

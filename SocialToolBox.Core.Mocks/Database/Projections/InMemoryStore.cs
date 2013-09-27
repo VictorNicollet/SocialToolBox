@@ -23,20 +23,20 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
             Serializer = new UntypedSerializer(driver.TypeDictionary);
         } 
 
+// ReSharper disable CSharpWarnings::CS1998
         public async Task<T> Get(Id id)
+// ReSharper restore CSharpWarnings::CS1998
         {
-            await Task.Yield();
-            
             byte[] value;
             if (!Contents.TryGetValue(id, out value)) return null;
 
             return Serializer.Unserialize<T>(value);
         }
 
+// ReSharper disable CSharpWarnings::CS1998
         public async Task Set(Id id, T item)
+// ReSharper restore CSharpWarnings::CS1998
         {
-            await Task.Yield();
-
             Contents.Remove(id);
             if (item == null) return;
             Contents.Add(id,Serializer.Serialize(item));

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Dispatch;
 using SocialToolBox.Core.Web.Response;
@@ -40,7 +41,7 @@ namespace SocialToolBox.Core.Web
             Rendering = rendering;
         }
 
-        public WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, THandler handler) 
+        public WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, Func<THandler> handler) 
             where TArgs : class, IWebUrlArgument, new() 
             where THandler : class, IWebRequestHandler<TArgs>
         {
@@ -51,10 +52,9 @@ namespace SocialToolBox.Core.Web
 
         public IRenderingStrategy<IWebRequest> Rendering { get; private set; }
 
-        public WebResponse Dispatch(IWebRequest request)
+        public WebResponse Dispatch(Func<IWebDriver,IWebRequest> requestBuilder)
         {
-            request.SetDriver(this);
-            return _dispatcher.Dispatch(request);
+            return _dispatcher.Dispatch(requestBuilder(this));
         }
     }
 }

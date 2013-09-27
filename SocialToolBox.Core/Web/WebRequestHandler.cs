@@ -84,7 +84,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebResponse Page(IPageNode node, INodeRenderer renderer = null, int code = 200)
         {
-            if (renderer == null && Request.Driver != null) renderer = Request.Driver.Rendering.PickRenderer(Request);
+            if (renderer == null) renderer = Request.Driver.Rendering.PickRenderer(Request);
             return new WebResponsePage(node, renderer, code, Request.ResponseSender);
         }
     }

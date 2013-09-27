@@ -67,10 +67,5 @@ namespace SocialToolBox.Core.Web
         /// The visitor used to send responses.
         /// </summary>
         IWebResponseVisitor ResponseSender { get; }
-
-        /// <summary>
-        /// Mark this request as being dispatched by the specified web driver.
-        /// </summary>
-        void SetDriver(IWebDriver webDriver);
     }
 }

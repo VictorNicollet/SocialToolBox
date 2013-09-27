@@ -42,6 +42,8 @@ namespace SocialToolBox.Core.Tests.Web
             {
                 return Html("");
             }
+
+            public static MockHandler Make() { return new MockHandler(); }
         }
 
         [SetUp]
@@ -97,7 +99,7 @@ namespace SocialToolBox.Core.Tests.Web
         public void get_endpoint()
         {
             var facet = Mock();
-            var endpoint = facet.OnGet<AnyArgs>("get").Use(new MockHandler());
+            var endpoint = facet.OnGet<AnyArgs>("get").Use(MockHandler.Make);
             CollectionAssert.AreEqual(new[]{"base","get"}, endpoint.BasePath);
             Assert.AreEqual(HttpVerb.Get, endpoint.Verbs);
         }
@@ -106,7 +108,7 @@ namespace SocialToolBox.Core.Tests.Web
         public void post_endpoint()
         {
             var facet = Mock();
-            var endpoint = facet.OnPost<AnyArgs>("post").Use(new MockHandler());
+            var endpoint = facet.OnPost<AnyArgs>("post").Use(MockHandler.Make);
             CollectionAssert.AreEqual(new[]{"base","post"}, endpoint.BasePath);
             Assert.AreEqual(HttpVerb.Post, endpoint.Verbs);
         }

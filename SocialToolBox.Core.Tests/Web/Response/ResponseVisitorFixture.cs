@@ -32,7 +32,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
         private class Request : IWebRequest
         {
-            public IWebDriver Driver { get; private set; }
+            public IWebDriver Driver { get; set; }
             public HttpVerb Verb { get; private set; }
             public string Domain { get; private set; }
             public string Path { get; private set; }
@@ -44,7 +44,6 @@ namespace SocialToolBox.Core.Tests.Web.Response
             public string Get(string name) { return null; }
             public string Payload { get; private set; }
             public IWebResponseVisitor ResponseSender { get; set; }
-            public void SetDriver(IWebDriver webDriver) { Driver = webDriver; }
         }
 
         public IWebDriver Driver;
@@ -59,8 +58,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
         public void WithVisitor(ResponseVisitorHelper visitor)
         {
-            Req = new Request { ResponseSender = visitor };   
-            Req.SetDriver(Driver);
+            Req = new Request { ResponseSender = visitor, Driver = Driver };   
         }
 
         public void Do(Func<WebRequestHandler<NoArgs>, WebResponse> action)

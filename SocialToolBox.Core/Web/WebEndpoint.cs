@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SocialToolBox.Core.Web
@@ -40,10 +41,11 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// The handler for requests on this endpoint.
         /// </summary>
-        public readonly THandler RequestHandler; 
+        public readonly Func<THandler> RequestHandler; 
 
-        public WebEndpoint(IWebDriver driver, THandler handler, HttpVerb verbs, string domain, IEnumerable<string> path, bool secure, int port)
+        public WebEndpoint(IWebDriver driver, Func<THandler> handler, HttpVerb verbs, string domain, IEnumerable<string> path, bool secure, int port)
         {
+            Driver = driver;
             Domain = domain;
             BasePath = path.ToArray();
             IsSecure = secure;
@@ -62,7 +64,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebEndpointQuery Query(TArgs args)
         {
-            return new WebEndpointQuery(Driver, req => RequestHandler.Process(req, args));
+            return new WebEndpointQuery(Driver, req => RequestHandler().Process(req, args));
         }
     }
 }

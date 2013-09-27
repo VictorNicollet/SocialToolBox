@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.Dispatch
@@ -33,7 +34,7 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <summary>
         /// Registers a handler for a path and one or more verbs.
         /// </summary>
-        public void Register<T>(string path, HttpVerb verbs, IWebRequestHandler<T> handler)
+        public void Register<T>(string path, HttpVerb verbs, Func<IWebRequestHandler<T>> handler)
             where T : class, IWebUrlArgument, new()
         {
             Register(path,WebRequestHandlerWrapper.Wrap(verbs, handler));

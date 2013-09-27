@@ -27,9 +27,10 @@ namespace SocialToolBox.Core.Web.IIS
         /// </summary>
         private readonly int _matchedSegments;
 
-        public WebRequest(HttpContext context)
+        public WebRequest(IWebDriver driver, HttpContext context)
         {
             Context = context;
+            Driver = driver;
             _pathSegments = context.Request.Path.Split('/').Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
             _matchedSegments = _pathSegments.Length;
         }
@@ -37,8 +38,9 @@ namespace SocialToolBox.Core.Web.IIS
         /// <summary>
         /// Construct a sub-request, used when unmatching segments.
         /// </summary>
-        private WebRequest(HttpContext context, string[] segments, int matched)
+        private WebRequest(IWebDriver driver, HttpContext context, string[] segments, int matched)
         {
+            Driver = driver;
             Context = context;
             _pathSegments = segments;
             _matchedSegments = matched;
@@ -83,7 +85,7 @@ namespace SocialToolBox.Core.Web.IIS
         public IWebRequest UnmatchOne()
         {
             if (_matchedSegments == 0) return null;
-            return new WebRequest(Context, _pathSegments, _matchedSegments - 1);
+            return new WebRequest(Driver, Context, _pathSegments, _matchedSegments - 1);
         }
 
         public string Cookie(string name)

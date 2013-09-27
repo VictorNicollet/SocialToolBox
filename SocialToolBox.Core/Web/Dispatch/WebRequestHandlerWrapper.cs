@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.Dispatch
@@ -29,7 +30,7 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <summary>
         /// Wrap a request handler to make its generic type disappear.
         /// </summary>
-        public static WebRequestHandlerWrapper Wrap<TArg>(HttpVerb verbs, IWebRequestHandler<TArg> handler)
+        public static WebRequestHandlerWrapper Wrap<TArg>(HttpVerb verbs, Func<IWebRequestHandler<TArg>> handler)
             where TArg : class, IWebUrlArgument, new()
         {
             return new Implementation<TArg>(verbs, handler);
@@ -38,35 +39,28 @@ namespace SocialToolBox.Core.Web.Dispatch
         private class Implementation<TArg> : WebRequestHandlerWrapper
             where TArg : class, IWebUrlArgument, new()
         {
-            private readonly IWebRequestHandler<TArg> _handler; 
+            private readonly Func<IWebRequestHandler<TArg>> _getHandler; 
 
-            public Implementation(HttpVerb verbs, IWebRequestHandler<TArg> handler) : base(verbs)
+            public Implementation(HttpVerb verbs, Func<IWebRequestHandler<TArg>> handler) : base(verbs)
             {
-                _handler = handler;
+                _getHandler = handler;
             }
 
             public override WebResponse Process(IWebRequest request)
             {
                 if ((request.Verb & AcceptableVerbs) == 0) return null;
 
-                WebResponse response;
-
-                // Handlers are not re-entrant, so lock them whenever they
-                // are used.
-                // TODO: solve the handler re-entrance performance issue
-
-
                 var args = new TArg();
                 if (!args.TryParse(request)) return null;
-   
-                lock (_handler)
-                {
-                    response = _handler.Process(request, args);
-                }
+
+                IWebRequestHandler<TArg> handler;
+                lock (_getHandler) handler = _getHandler();
+
+                var response = handler.Process(request, args);
 
                 if (null == response) 
                     throw new NoNullAllowedException(
-                        string.Format("{0}.Process should not return null.", _handler.GetType()));
+                        string.Format("{0}.Process should not return null.", handler.GetType()));
 
                 return response;
             }
