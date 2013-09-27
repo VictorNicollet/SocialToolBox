@@ -65,6 +65,7 @@
     <Compile Include="Database\Projection\IStoreProjection.cs" />
     <Compile Include="Database\Projection\IWritableStore.cs" />
     <Compile Include="Database\Projection\MultiProjector.cs" />
+    <Compile Include="Database\Projection\ProjectionEngineThread.cs" />
     <Compile Include="Database\Projection\ProjectionExtensions.cs" />
     <Compile Include="Database\Reader\EarliestTime.cs" />
     <Compile Include="Database\Reader\EarliestTimeEx.cs" />

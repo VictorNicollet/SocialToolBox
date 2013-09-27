@@ -15,7 +15,7 @@ namespace SocialToolBox.Sample.Web
         /// <summary>
         /// Generates sample data.
         /// </summary>
-        public static void AddTo(Modules modules)
+        public static void AddTo(SocialModules modules)
         {
             AddContactsTo(modules);
         }
@@ -23,7 +23,7 @@ namespace SocialToolBox.Sample.Web
         /// <summary>
         /// Generates sample contacts.
         /// </summary>
-        private static void AddContactsTo(Modules modules)
+        private static void AddContactsTo(SocialModules modules)
         {
             foreach (var ev in new IContactEvent[]
             {

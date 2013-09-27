@@ -12,7 +12,7 @@ namespace SocialToolBox.Sample.Web
     /// <summary>
     /// All the modules enabled on this project.
     /// </summary>
-    public class Modules
+    public class SocialModules
     {
         /// <summary>
         /// The database driver used by all modules.
@@ -39,7 +39,7 @@ namespace SocialToolBox.Sample.Web
         /// </summary>
         public readonly EntityPageFacet EntityPages;
 
-        public Modules()
+        private SocialModules()
         {
             Database = new DatabaseDriver();
             Web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
@@ -51,9 +51,11 @@ namespace SocialToolBox.Sample.Web
             // Set up bridges between modules
             Contacts.RegisterContactsAsEntities(Entities);
 
-            // Compile all modules
+            // Compile all modules, start background thread
             Contacts.Compile();
             Entities.Compile();
+
+            Database.Projections.StartBackgroundThread();
 
             // Install facets
             EntityPages = new EntityPageFacet(Web, Entities);
@@ -61,5 +63,7 @@ namespace SocialToolBox.Sample.Web
             // Initialize modules
             InitialData.AddTo(this);
         }
+
+        public static SocialModules Instance = new SocialModules();
     }
 }

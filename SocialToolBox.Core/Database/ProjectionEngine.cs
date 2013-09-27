@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database.EventStream;
+using SocialToolBox.Core.Database.Projection;
 
 namespace SocialToolBox.Core.Database
 {
@@ -22,10 +24,16 @@ namespace SocialToolBox.Core.Database
         /// </summary>
         private readonly List<Func<Task>> _registeredProjectors;
 
+        /// <summary>
+        /// Responsible for running <see cref="Run"/> in a loop.
+        /// </summary>
+        private readonly ProjectionEngineThread _thread;
+
         public ProjectionEngine(IDatabaseDriver driver)
         {
             Driver = driver;
             _registeredProjectors = new List<Func<Task>>();
+            _thread = new ProjectionEngineThread(this);
         }
 
         /// <summary>
@@ -38,6 +46,14 @@ namespace SocialToolBox.Core.Database
         public void Run()
         {
             Task.WaitAll(_registeredProjectors.Select(f => f()).ToArray());
+        }
+
+        /// <summary>
+        /// Spawns a thread that calls 
+        /// </summary>
+        public void StartBackgroundThread()
+        {
+            _thread.Start();
         }
 
         /// <summary>

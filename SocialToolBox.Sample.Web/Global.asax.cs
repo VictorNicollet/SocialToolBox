@@ -9,7 +9,7 @@ namespace SocialToolBox.Sample.Web
         /// <summary>
         /// Instantiate all modules in the application.
         /// </summary>
-        private readonly Modules _applicationModules = new Modules();
+        private readonly SocialModules _applicationModules = SocialModules.Instance;
 
         /// <summary>
         /// Returns the dispatcher from the application modules.
