@@ -1,0 +1,18 @@
+.highlight pre 
+{ color: #eee8d5; background-color: #002B36; border-color: #000 }
+
+.highlight .k, .highlight .kt 
+{ color: #268bd2; font-weight: bold } 
+
+.highlight .c1 
+{ color: #859900 } 
+ 
+.highlight .s 
+{ color: #dc322f }
+
+.highlight .nf 
+{ color: #2AA198 }
+
+.highlight .p 
+{ color: #AAA }
+
