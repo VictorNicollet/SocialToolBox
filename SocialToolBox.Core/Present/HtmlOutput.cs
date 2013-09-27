@@ -99,16 +99,6 @@ namespace SocialToolBox.Core.Present
         }
 
         /// <summary>
-        /// Used by <see cref="Insert"/> to block the rendering queue until the 
-        /// inserted task is finished.
-        /// </summary>
-        private async Task<Action<StringBuilder>> RunInsertImmediately(Func<HtmlOutput, Task> renderer)
-        {
-            await renderer(this);
-            return DoNothing;
-        }
-
-        /// <summary>
         /// Used by <see cref="Insert"/> to delegate rendering to a distinct builder, 
         /// which is then inserted when the task finishes. This starts running the inner task
         /// immediately.
@@ -116,7 +106,7 @@ namespace SocialToolBox.Core.Present
         private async Task<Action<StringBuilder>> RunInsertLater(Func<HtmlOutput, Task> renderer)
         {
             var newOutput = new HtmlOutput();
-            await renderer(newOutput);
+            await StartTask(renderer(newOutput));
             // ReSharper disable RedundantLambdaParameterType
             return (StringBuilder b) => b.Append(newOutput._builder);
             // ReSharper restore RedundantLambdaParameterType
@@ -127,28 +117,28 @@ namespace SocialToolBox.Core.Present
         /// </summary>
         public void Insert(Func<HtmlOutput,Task> renderer)
         {
-            if (IsSync) _pending.Enqueue(RunInsertImmediately(renderer));
-            else _pending.Enqueue(RunInsertLater(renderer));
+            _pending.Enqueue(RunInsertLater(renderer));
         }
 
         /// <summary>
         /// Build the concatenation HTML string.
         /// </summary>
         /// <returns></returns>
-        public async Task<HtmlString> Build()
+        public HtmlString Build()
         {
             while (_pending.Count > 0)
-                _builder.Append(await _pending.Dequeue());
+                _pending.Dequeue().Result(_builder);
 
             return HtmlString.Verbatim(_builder.ToString());
         }
 
-        // ReSharper disable UnusedParameter.Local
         /// <summary>
-        /// Used by <see cref="RunInsertImmediately"/> to return an action that
-        /// does nothing.
+        /// Makes sure a task is either running or completed, and returns it.
         /// </summary>
-        private static void DoNothing(StringBuilder builder) {}
-        // ReSharper restore UnusedParameter.Local
+        private static Task StartTask(Task t)
+        {
+            if (t.Status == TaskStatus.Created) t.Start();
+            return t;
+        }
     }
 }
