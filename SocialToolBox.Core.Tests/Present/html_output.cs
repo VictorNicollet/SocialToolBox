@@ -76,5 +76,18 @@ namespace SocialToolBox.Core.Tests.Present
             a.Second();        
             Is("AB");
         }
+
+        [Test]
+        public void with_pending_tasks()
+        {
+            var a = Waiter();
+            var b = Waiter();
+            Output.Insert(async o => { await a.First; o.Add("A"); });
+            Output.Insert(async o => { await b.First; o.Add("B"); });
+
+            b.Second();
+            a.Second();
+            Is("AB");
+        }
     }
 }
