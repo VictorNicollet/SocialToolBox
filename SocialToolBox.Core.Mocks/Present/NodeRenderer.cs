@@ -12,5 +12,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             return Task.FromResult(html);
         }
+
+        public Task<HtmlString> Render(NotFound notFound)
+        {
+            return Task.FromResult(HtmlString.Escape("Not Found !"));
+        }
     }
 }

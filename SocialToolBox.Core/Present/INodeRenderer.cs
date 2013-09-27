@@ -9,5 +9,6 @@ namespace SocialToolBox.Core.Present
     public interface INodeRenderer
     {
         Task<HtmlString> Render(HtmlString html);
+        Task<HtmlString> Render(NotFound notFound);
     }
 }

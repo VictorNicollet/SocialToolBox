@@ -86,7 +86,8 @@
     <Compile Include="Present\IPageNode.cs" />
     <Compile Include="Present\INodeRenderer.cs" />
     <Compile Include="Present\IRenderingStrategy.cs" />
-    <Compile Include="Present\NaiveRenderingStrategy.cs" />
+    <Compile Include="Present\NotFound.cs" />
+    <Compile Include="Present\RenderingStrategy\NaiveRenderingStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />
