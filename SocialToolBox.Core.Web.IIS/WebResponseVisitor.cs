@@ -85,7 +85,7 @@ namespace SocialToolBox.Core.Web.IIS
             var output = new HtmlOutput();
             page.Page.RenderWith(page.Renderer, output);
             Response.ContentType = "text/html";
-            var bytes = Encoding.UTF8.GetBytes(output.Build().Result.ToString());
+            var bytes = Encoding.UTF8.GetBytes(output.Build().ToString());
             Response.BinaryWrite(bytes);
             Response.Flush();
         }
