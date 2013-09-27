@@ -25,10 +25,10 @@
 
 	<div class="col-md-3">
 	  <h2>Archives</h2>
-	  <ul class="list-unstyled">
+	  <ul class="nav nav-pills nav-stacked" style="font-size:0.9em">
 	    {% for post in site.posts %}	    
 	    <li>
-	      <a href="{{ post.url }}">{{ post.title }}</a>
+	      <a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
 	    </li>
   	    {% endfor %}
 	  </ul>
