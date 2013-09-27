@@ -55,5 +55,15 @@ namespace SocialToolBox.Core.Mocks.Database
         {
             return new Projection<TEv>(name, this);            
         }
+
+        public IReadTransaction StartReadTransaction()
+        {
+            return new ReadTransaction();
+        }
+
+        public ITransaction StartReadWriteTransaction()
+        {
+            return new Transaction();
+        }
     }
 }

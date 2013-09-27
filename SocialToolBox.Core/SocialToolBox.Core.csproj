@@ -57,6 +57,8 @@
     <Compile Include="Database\Index\NoKey.cs" />
     <Compile Include="Database\Index\StringKey.cs" />
     <Compile Include="Database\IProjection.cs" />
+    <Compile Include="Database\IReadTransaction.cs" />
+    <Compile Include="Database\ITransaction.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />

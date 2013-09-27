@@ -47,8 +47,10 @@
     <Compile Include="Database\Events\MockAccountPasswordUpdated.cs" />
     <Compile Include="Database\Projection.cs" />
     <Compile Include="Database\Projections\InMemoryStore.cs" />
+    <Compile Include="Database\ReadTransaction.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
     <Compile Include="Database\Serialization\MockAccountAsEntityPage.cs" />
+    <Compile Include="Database\Transaction.cs" />
     <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Entity\EntityModuleMock.cs" />
     <Compile Include="Present\NodeRenderer.cs" />

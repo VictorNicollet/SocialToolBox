@@ -38,5 +38,17 @@
         /// the provided events.
         /// </summary>
         IProjection<TEv> CreateProjection<TEv>(string name) where TEv : class;
+
+        /// <summary>
+        /// Start a new read transaction compatible with all readable objects
+        /// on this database driver.
+        /// </summary>
+        IReadTransaction StartReadTransaction();
+
+        /// <summary>
+        /// Start a new read-write transaction compatible with all objects on
+        /// this database driver.
+        /// </summary>
+        ITransaction StartReadWriteTransaction();
     }
 }
