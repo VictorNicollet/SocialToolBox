@@ -86,6 +86,7 @@
     <Compile Include="Present\HtmlString.cs" />
     <Compile Include="Present\IPage.cs" />
     <Compile Include="Present\INodeRenderer.cs" />
+    <Compile Include="Present\IPageNode.cs" />
     <Compile Include="Present\IRenderingStrategy.cs" />
     <Compile Include="Present\NotFound.cs" />
     <Compile Include="Present\RenderingStrategy\NaiveRenderingStrategy.cs" />

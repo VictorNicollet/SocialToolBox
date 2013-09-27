@@ -1,13 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace SocialToolBox.Core.Present
+﻿namespace SocialToolBox.Core.Present
 {
     /// <summary>
-    /// A page node. Describes what appears on the page, but
-    /// not what HTML should be used to render it.
+    /// A page. Described the page root, but not how it should be 
+    /// rendered.
     /// </summary>
-    public interface IPage
+    public interface IPage : IPageNode
     {
-        Task<HtmlString> RenderWith(INodeRenderer visitor);
     }
 }
