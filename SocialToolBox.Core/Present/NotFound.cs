@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SocialToolBox.Core.Present
+﻿namespace SocialToolBox.Core.Present
 {
     /// <summary>
     /// A node that explains something could not be found. Often 
@@ -8,9 +6,9 @@ namespace SocialToolBox.Core.Present
     /// </summary>
     public class NotFound : IPage
     {
-        public Task<HtmlString> RenderWith(INodeRenderer visitor)
+        public void RenderWith(INodeRenderer visitor, HtmlOutput output)
         {
-            return visitor.Render(this);
+            visitor.Render(this, output);
         }
     }
 }

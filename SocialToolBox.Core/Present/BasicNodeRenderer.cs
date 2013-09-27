@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SocialToolBox.Core.Present
 {
@@ -11,9 +12,9 @@ namespace SocialToolBox.Core.Present
         /// Rendering an <see cref="HtmlString"/> should always return the argument
         /// as-is.
         /// </summary>
-        public Task<HtmlString> Render(HtmlString html)
+        public void Render(HtmlString html, HtmlOutput o)
         {
-            return Task.FromResult(html);
+            o.Add(html);
         }
 
         /// <summary>
@@ -28,12 +29,12 @@ namespace SocialToolBox.Core.Present
         /// <summary>
         /// Wraps the actual body with the default layout. 
         /// </summary>
-        protected virtual HtmlString DefaultLayout(HtmlString body)
+        protected virtual Action<HtmlOutput> DefaultLayout(Action<HtmlOutput> body)
         {
             return body;
         }
 
-        public abstract Task<HtmlString> Render(NotFound notFound);
-        public abstract Task<HtmlString> Render(ColumnPage page);
+        public abstract void Render(NotFound notFound, HtmlOutput o);
+        public abstract void Render(ColumnPage page, HtmlOutput o);
     }
 }

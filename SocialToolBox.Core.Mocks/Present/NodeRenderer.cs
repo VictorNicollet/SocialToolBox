@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using SocialToolBox.Core.Present;
+﻿using SocialToolBox.Core.Present;
 
 namespace SocialToolBox.Core.Mocks.Present
 {
@@ -8,19 +7,19 @@ namespace SocialToolBox.Core.Mocks.Present
     /// </summary>
     public class NodeRenderer : INodeRenderer
     {
-        public Task<HtmlString> Render(HtmlString html)
+        public void Render(HtmlString html, HtmlOutput output)
         {
-            return Task.FromResult(html);
+            output.Add(html);
         }
 
-        public Task<HtmlString> Render(NotFound notFound)
+        public void Render(NotFound notFound, HtmlOutput output)
         {
-            return Task.FromResult(HtmlString.Escape("Not Found !"));
+            output.Add("Not Found !");
         }
 
-        public Task<HtmlString> Render(ColumnPage page)
+        public void Render(ColumnPage page, HtmlOutput output)
         {
-            return Task.FromResult(HtmlString.Escape("Page !"));
+            output.Add("Page !");
         }
     }
 }

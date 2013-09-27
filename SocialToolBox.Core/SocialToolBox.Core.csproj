@@ -84,8 +84,9 @@
     <Compile Include="IPair.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Present\BasicNodeRenderer.cs" />
-    <Compile Include="Present\Builders\AsyncHtmlStringBuilder.cs" />
+    <Compile Include="Present\HtmlOutput.cs" />
     <Compile Include="Present\Builders\ColumnPageBuilder.cs" />
+    <Compile Include="Present\NodeRendererExtensions.cs" />
     <Compile Include="Present\HtmlString.cs" />
     <Compile Include="Present\IPage.cs" />
     <Compile Include="Present\INodeRenderer.cs" />

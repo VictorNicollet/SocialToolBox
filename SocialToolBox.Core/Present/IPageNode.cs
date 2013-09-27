@@ -9,6 +9,6 @@ namespace SocialToolBox.Core.Present
     /// </summary>
     public interface IPageNode
     {
-        Task<HtmlString> RenderWith(INodeRenderer visitor);
+        void RenderWith(INodeRenderer visitor, HtmlOutput output);
     }
 }

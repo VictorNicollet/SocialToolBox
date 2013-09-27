@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Web;
+using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.IIS
@@ -81,9 +82,10 @@ namespace SocialToolBox.Core.Web.IIS
 
         public void Visit(WebResponsePage page)
         {
-            var html = page.Page.RenderWith(page.Renderer).Result;
+            var output = new HtmlOutput();
+            page.Page.RenderWith(page.Renderer, output);
             Response.ContentType = "text/html";
-            var bytes = Encoding.UTF8.GetBytes(html.ToString());
+            var bytes = Encoding.UTF8.GetBytes(output.Build().Result.ToString());
             Response.BinaryWrite(bytes);
             Response.Flush();
         }

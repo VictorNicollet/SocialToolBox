@@ -29,9 +29,9 @@ namespace SocialToolBox.Core.Present
                 .ToArray();
         }
 
-        public Task<HtmlString> RenderWith(INodeRenderer visitor)
+        public void RenderWith(INodeRenderer visitor, HtmlOutput output)
         {
-            return visitor.Render(this);
+            visitor.Render(this, output);
         }
 
         /// <summary>

@@ -82,9 +82,9 @@ namespace SocialToolBox.Core.Present
             return new HtmlString(string.Format(format, escaped));
         }
 
-        public Task<HtmlString> RenderWith(INodeRenderer visitor)
+        public void RenderWith(INodeRenderer visitor, HtmlOutput output)
         {
-            return visitor.Render(this);
+            visitor.Render(this, output);
         }
 
         public override int GetHashCode()

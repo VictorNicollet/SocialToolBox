@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SocialToolBox.Core.Present.Builders;
 
 namespace SocialToolBox.Core.Present.Bootstrap3
 {
@@ -50,27 +47,24 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// <summary>
         /// Render a list of columns
         /// </summary>
-        public static Task<HtmlString> Render(
+        public static void Render(
             IEnumerable<IEnumerable<IPageNode>> columns, 
             int[] sizes, 
-            INodeRenderer renderer)
+            INodeRenderer renderer, 
+            HtmlOutput output)
         {
-            var builder = new AsyncHtmlStringBuilder();
-
-            builder.Add(StartRow);
+            output.Add(StartRow);
             
             var i = 0;
             foreach (var column in columns)
             {
                 if (i >= sizes.Length) break;
-                builder.Add(StartColumn[sizes[i++]]);
-                builder.AddRange(column.Select(cell => cell.RenderWith(renderer)));
-                builder.Add(EndColumn);                
+                output.Add(StartColumn[sizes[i++]]);
+                output.InsertNodes(column, renderer);
+                output.Add(EndColumn);                
             }
 
-            builder.Add(EndRow);
-
-            return builder.Build();
+            output.Add(EndRow);
         }
     }
 }

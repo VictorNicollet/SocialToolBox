@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using System;
 
 namespace SocialToolBox.Core.Present.Bootstrap3
 {
@@ -20,33 +17,33 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// Renders a wrapper around the provided body, including bootstrap
         /// code along.
         /// </summary>
-        protected virtual HtmlString RenderHtml(string title, HtmlString body)
+        protected virtual Action<HtmlOutput> RenderHtml(string title, Action<HtmlOutput> body)
         {
-            var head = HtmlString.Format(
-                "<!DOCTYPE html><html><head>" +
-                "<meta charset='utf-8'/>" +
-                "<title>{0}</title>" +
-                "<link rel='stylesheet' href='{1}'/></head><body>",
-                title, 
-                BootstrapCssUrl);
-
-            var foot = HtmlString.Format(
-                "<script src='{0}'></script></body></html>",
-                BootstrapJsUrl
-                );
-
-            return HtmlString.Concat(head, body, foot);
+            return output =>
+            {
+                output.AddVerbatim("<!DOCTYPE html><html><head><meta charset='utf-8'/><title>");
+                output.Add(title);
+                output.AddVerbatim("</title><link rel='stylesheet' href='");
+                output.Add(BootstrapCssUrl);
+                output.AddVerbatim("</head><body>");
+                body(output);
+                output.AddVerbatim("<script src='");
+                output.Add(BootstrapJsUrl);
+                output.AddVerbatim("'></script></body></html>");                
+            };
         }
 
         /// <summary>
         /// The default layout includes a centered container.
         /// </summary>
-        protected override HtmlString DefaultLayout(HtmlString body)
+        protected override Action<HtmlOutput> DefaultLayout(Action<HtmlOutput> body)
         {
-            return HtmlString.Concat(
-                HtmlString.Verbatim("<div class='container'>"),
-                body,
-                HtmlString.Verbatim("</div>"));
+            return output =>
+            {
+                output.AddVerbatim("<div class='container'>");
+                body(output);
+                output.AddVerbatim("</div>");
+            };
         }
 
         /// <summary>
@@ -59,10 +56,12 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// </summary>
         public HtmlString NotFoundBody { get; set; }
 
-        public override Task<HtmlString> Render(NotFound notFound)
+        public override void Render(NotFound notFound, HtmlOutput output)
         {
-            return Task.FromResult(RenderHtml(
-                FormatTitle(NotFoundTitle), DefaultLayout(NotFoundBody)));
+            RenderHtml(
+                FormatTitle(NotFoundTitle),
+                DefaultLayout(o => o.Add(NotFoundBody)))
+                (output);
         }
 
         /// <summary>
@@ -71,17 +70,18 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// </summary>
         public int[][] ColumnSizes { get; set; }
 
-        public override async Task<HtmlString> Render(ColumnPage page)
+        public override async void Render(ColumnPage page, HtmlOutput output)
         {
             var nColumns = page.Columns.Length;
-            if (nColumns == 0) return HtmlString.Verbatim("");
+            if (nColumns == 0) return;
             if (nColumns >  3) nColumns = 3;
 
             var sizes = ColumnSizes[nColumns];
 
-            var body = await ColumnRenderer.Render(page.Columns, sizes, this);
-
-            return RenderHtml(FormatTitle(page.Title), DefaultLayout(body));
+            RenderHtml(
+                FormatTitle(page.Title), 
+                DefaultLayout(o => ColumnRenderer.Render(page.Columns, sizes, this, o)))
+                (output);
         }
 
         public PageNodeRenderer()

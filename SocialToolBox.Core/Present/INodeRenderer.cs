@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SocialToolBox.Core.Present
+﻿namespace SocialToolBox.Core.Present
 {
     /// <summary>
     /// Visits nodes inside a page that is being rendered, and
@@ -8,8 +6,8 @@ namespace SocialToolBox.Core.Present
     /// </summary>
     public interface INodeRenderer
     {
-        Task<HtmlString> Render(HtmlString html);
-        Task<HtmlString> Render(NotFound notFound);
-        Task<HtmlString> Render(ColumnPage page);
+        void Render(HtmlString html, HtmlOutput o);
+        void Render(NotFound notFound, HtmlOutput o);
+        void Render(ColumnPage page, HtmlOutput o);
     }
 }
