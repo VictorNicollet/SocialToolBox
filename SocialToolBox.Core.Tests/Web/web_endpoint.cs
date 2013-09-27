@@ -39,13 +39,15 @@ namespace SocialToolBox.Core.Tests.Web
         {
             Driver = new WebDriver(null);
             Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(
-                Driver, () => new SimpleHandler(), HttpVerb.Get, "foobar.com", new[] { "a", "b" }, false, 80);
+                Driver, () => Handler, HttpVerb.Get, "foobar.com", new[] { "a", "b" }, false, 80);
+            // The above lambda always returns "Handler" for testing purposes,
+            // this would actually break down and die in a real situation
         }
 
         [Test]
         public void has_handler()
         {
-            Assert.AreSame(Handler, Endpoint.RequestHandler);
+            Assert.AreSame(Handler, Endpoint.RequestHandler());
         }
 
         [Test]

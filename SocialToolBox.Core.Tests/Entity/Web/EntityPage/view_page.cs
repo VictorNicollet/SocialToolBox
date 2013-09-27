@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Mocks.Entity;
 using SocialToolBox.Core.Present;
@@ -20,8 +21,10 @@ namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage
         public void get_bob()
         {
             var response = (WebResponsePage) Facet.View.Query(EntityModuleMock.IdBob.ToArgs()).Run();
-            Assert.IsTrue(response.Page is HtmlString);
-            Assert.AreEqual(EntityModuleMock.NameBob, response.Page.ToString());
+            var page = response.Page as ColumnPage;
+            Assert.IsNotNull(page);
+            Assert.AreEqual(1, page.Columns.Length);
+            Assert.AreEqual(EntityModuleMock.NameBob, page.Columns[0].First().ToString());
         }
     }
 }
