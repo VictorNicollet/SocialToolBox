@@ -34,7 +34,7 @@ namespace SocialToolBox.Core.Entity.Web
 
             protected override WebResponse Process()
             {
-                return Page(HtmlString.Escape(Arguments.Ident.ToString()));
+                return Page(new NotFound());
             }
         }
     }
