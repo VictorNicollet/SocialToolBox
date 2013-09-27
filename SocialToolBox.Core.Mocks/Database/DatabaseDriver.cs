@@ -61,9 +61,9 @@ namespace SocialToolBox.Core.Mocks.Database
             return new ReadTransaction();
         }
 
-        public ITransaction StartReadWriteTransaction()
+        public IProjectTransaction StartReadWriteTransaction()
         {
-            return new Transaction();
+            return new ProjectTransaction();
         }
     }
 }

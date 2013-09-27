@@ -49,6 +49,6 @@
         /// Start a new read-write transaction compatible with all objects on
         /// this database driver.
         /// </summary>
-        ITransaction StartReadWriteTransaction();
+        IProjectTransaction StartReadWriteTransaction();
     }
 }
