@@ -39,7 +39,10 @@ namespace SocialToolBox.Core.Entity.Web
                 var page = pageT.Result;
                 if (page == null) return Page(new NotFound());
 
-                return Page(HtmlString.Escape(page.Title));
+                return Page(ColumnPage
+                    .WithTitle(page.Title)
+                    .AddPrimary(HtmlString.Escape(page.Title))
+                    .Build());
             }
         }
     }

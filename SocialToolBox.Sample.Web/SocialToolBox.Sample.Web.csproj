@@ -67,6 +67,10 @@
       <Project>{436b21da-8def-4e9e-8efe-3b01f83f8670}</Project>
       <Name>SocialToolBox.Core.Mocks</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SocialToolBox.Core.Present.Bootstrap3\SocialToolBox.Core.Present.Bootstrap3.csproj">
+      <Project>{943dfc6f-f717-4e24-9122-40099a1fea22}</Project>
+      <Name>SocialToolBox.Core.Present.Bootstrap3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SocialToolBox.Core.Web.IIS\SocialToolBox.Core.Web.IIS.csproj">
       <Project>{0e99281c-0785-4451-a1ed-55171c6f769a}</Project>
       <Name>SocialToolBox.Core.Web.IIS</Name>

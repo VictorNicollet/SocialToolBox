@@ -2,7 +2,7 @@
 using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
-using SocialToolBox.Core.Mocks.Present;
+using SocialToolBox.Core.Present.Bootstrap3;
 using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Crm.Contact;
@@ -42,7 +42,7 @@ namespace SocialToolBox.Sample.Web
         private SocialModules()
         {
             Database = new DatabaseDriver();
-            Web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
+            Web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new PageNodeRenderer()));
 
             // Instantiate all modules
             Contacts = new ContactModule(Database);

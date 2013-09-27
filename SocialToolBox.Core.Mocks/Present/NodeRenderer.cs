@@ -17,5 +17,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             return Task.FromResult(HtmlString.Escape("Not Found !"));
         }
+
+        public Task<HtmlString> Render(ColumnPage page)
+        {
+            return Task.FromResult(HtmlString.Escape("Page !"));
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace SocialToolBox.Core.Present
     {
         Task<HtmlString> Render(HtmlString html);
         Task<HtmlString> Render(NotFound notFound);
+        Task<HtmlString> Render(ColumnPage page);
     }
 }

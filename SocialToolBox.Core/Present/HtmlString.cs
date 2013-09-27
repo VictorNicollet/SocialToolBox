@@ -41,6 +41,15 @@ namespace SocialToolBox.Core.Present
         {
             return new HtmlString(str);
         }
+        
+        /// <summary>
+        /// Keep a piece of string as-is.
+        /// </summary>
+        public static HtmlString Verbatim(params string[] str)
+        {
+            return new HtmlString(string.Join("\n",str));
+        }
+
 
         /// <summary>
         /// Concatenate a sequence of HTML strings.
