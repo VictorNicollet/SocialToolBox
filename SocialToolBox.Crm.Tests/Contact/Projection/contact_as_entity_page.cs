@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Crm.Contact;
@@ -15,6 +16,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         public ContactModule Contacts;
         public EntityModule Entities;
         public ProjectionEngine Projections;
+        public ITransaction Transaction;
 
         public Id IdA = Id.Parse("aaaaaaaaaaa");
         public Id IdUser = Id.Parse("user123user");
@@ -27,6 +29,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
             Entities = new EntityModule(driver);
             Contacts.RegisterContactsAsEntities(Entities);
             Projections = driver.Projections;
+            Transaction = driver.StartReadWriteTransaction();
             
             Entities.Compile();
         }
@@ -39,7 +42,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         [Test]
         public void create_provides_title()
         {
-            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser));
+            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser), Transaction);
             Projections.Run();
 
             Assert.AreEqual(typeof(ContactAsEntityPage), Entities.Pages.Get(IdA).Result.GetType());
@@ -49,8 +52,8 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         [Test]
         public void update_changes_title()
         {
-            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser));
-            Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"));
+            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser), Transaction);
+            Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"), Transaction);
             Projections.Run();
 
             Assert.AreEqual("Victor Nicollet", Entities.Pages.Get(IdA).Result.Title);
@@ -59,8 +62,8 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         [Test]
         public void delete_removes_page()
         {
-            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser));
-            Contacts.Stream.AddEvent(new ContactDeleted(IdA, DateTime.Parse("2011/05/14"), IdUser));
+            Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser), Transaction);
+            Contacts.Stream.AddEvent(new ContactDeleted(IdA, DateTime.Parse("2011/05/14"), IdUser), Transaction);
             Projections.Run();
 
             Assert.IsNull(Entities.Pages.Get(IdA).Result);
@@ -69,7 +72,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         [Test]
         public void missing_without_create()
         {
-            Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"));
+            Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"), Transaction);
             Projections.Run();
 
             Assert.IsNull(Entities.Pages.Get(IdA).Result);

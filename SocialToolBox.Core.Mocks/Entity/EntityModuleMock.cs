@@ -24,9 +24,11 @@ namespace SocialToolBox.Core.Mocks.Entity
         
             MockAccountAsEntityPage.ExtendVisitor(module.PageEventVisitor);
 
-            stream.AddEvent(new MockAccountCreated(IdAlice, NameAlice, Creation));
-            stream.AddEvent(new MockAccountCreated(IdBob, "", Creation));
-            stream.AddEvent(new MockAccountNameUpdated(IdBob, Creation, NameBob));
+            var t = driver.StartReadWriteTransaction();
+
+            stream.AddEvent(new MockAccountCreated(IdAlice, NameAlice, Creation), t);
+            stream.AddEvent(new MockAccountCreated(IdBob, "", Creation), t);
+            stream.AddEvent(new MockAccountNameUpdated(IdBob, Creation, NameBob), t);
         }
 
         public static readonly Id IdAuthor = Id.Parse("author00000");

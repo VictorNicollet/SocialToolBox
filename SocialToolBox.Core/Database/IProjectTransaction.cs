@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Database
+﻿using System.Threading.Tasks;
+
+namespace SocialToolBox.Core.Database
 {
     /// <summary>
     /// A transaction which supports both read and write operations, used
@@ -10,7 +12,7 @@
         /// Commits the operations performed under the current 
         /// transaction.
         /// </summary>
-        void Commit();
+        Task Commit();
 
         /// <summary>
         /// The load on this transaction, approximating the number of

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database.EventStream;
 using SocialToolBox.Core.Database.Projection;
@@ -14,6 +13,11 @@ namespace SocialToolBox.Core.Database
     public class ProjectionEngine
     {
         /// <summary>
+        /// The maximum transaction load before a commit is forced.
+        /// </summary>
+        public int MaxLoad = 100;
+
+        /// <summary>
         /// The database driver to which this projection engine is bound.
         /// </summary>
         public readonly IDatabaseDriver Driver;
@@ -23,6 +27,11 @@ namespace SocialToolBox.Core.Database
         /// projector and commits it.
         /// </summary>
         private readonly List<Func<Task>> _registeredProjectors;
+
+        /// <summary>
+        /// The transaction used for projection.
+        /// </summary>
+        private IProjectTransaction _transaction;
 
         /// <summary>
         /// Responsible for running <see cref="Run"/> in a loop.
@@ -45,7 +54,9 @@ namespace SocialToolBox.Core.Database
         /// </remarks>
         public void Run()
         {
+            if (_transaction == null) _transaction = Driver.StartProjectorTransaction();
             Task.WaitAll(_registeredProjectors.Select(f => f()).ToArray());
+            _transaction.Commit();
         }
 
         /// <summary>
@@ -53,6 +64,7 @@ namespace SocialToolBox.Core.Database
         /// </summary>
         public void StartBackgroundThread()
         {
+            _transaction = Driver.StartProjectorTransaction();
             _thread.Start();
         }
 
@@ -73,25 +85,21 @@ namespace SocialToolBox.Core.Database
             where TEv : class
         {
             var vectorClock = await Driver.ClockRegistry.LoadProjection(proj.Name);
-            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, proj.Streams);
-
-            var sinceLastCommit = 0;            
+            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, _transaction, proj.Streams);
 
             while (true)
             {
                 var ev = await iterator.NextAsync();
                 
-                if (ev == null && sinceLastCommit > 0 || proj.CommitRecommended)
+                if (ev == null || _transaction.Load >= MaxLoad)
                 {
                     await Driver.ClockRegistry.SaveProjection(proj.Name, iterator.VectorClock);
-                    await proj.Commit();
-                    sinceLastCommit = 0;                    
+                    await _transaction.Commit();          
                 }
 
                 if (ev == null) break;
 
-                proj.ProcessEvent(ev);
-                sinceLastCommit++;
+                await proj.ProcessEvent(ev, _transaction);
             }
         }
     }

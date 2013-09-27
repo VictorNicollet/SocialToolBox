@@ -15,6 +15,7 @@ namespace SocialToolBox.Core.Tests.Database
         public IEventStream A;
         public IEventStream B;
         public IClockRegistry Clocks;
+        public ITransaction Transaction;
 
         [Persist("SocialToolBox.Core.Tests.Database.projection_engine.Event")]
         public class Event
@@ -43,6 +44,7 @@ namespace SocialToolBox.Core.Tests.Database
             A = driver.GetEventStream("A", true);
             B = driver.GetEventStream("B", true);
             Clocks = driver.ClockRegistry;
+            Transaction = driver.StartReadWriteTransaction();
         }
 
         [Test]
@@ -54,9 +56,7 @@ namespace SocialToolBox.Core.Tests.Database
         private class Projector : IProjector<Event>
         {
             public readonly StringBuilder Contents;
-            private int _sinceLastCount;
             public string Name { get; set; }            
-            public bool CommitRecommended { get { return _sinceLastCount >= 5; } }
             public IEventStream[] Streams { get; set; }
 
             public Projector(params IEventStream[] streams)
@@ -65,17 +65,18 @@ namespace SocialToolBox.Core.Tests.Database
                 Streams = streams;
             }
 
-            public void ProcessEvent(EventInStream<Event> ev)
+            // ReSharper disable CSharpWarnings::CS1998
+            public async Task ProcessEvent(EventInStream<Event> ev, IProjectTransaction t)
+            // ReSharper restore CSharpWarnings::CS1998
             {
-                _sinceLastCount++;
                 Contents.Append(ev.Event);
                 Contents.Append('\n');
+
+                ProjectTransaction.RegisterCommit(t, Name, Commit);
             }
 
-            public async Task Commit()
+            private void Commit()
             {
-                await Task.Yield();
-                _sinceLastCount = 0;
                 Contents.Append("[COMMIT]\n");
             }
         }
@@ -85,8 +86,8 @@ namespace SocialToolBox.Core.Tests.Database
         {
             var proj = new Projector(A) { Name = "TEST" };
 
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
             Engine.Register(proj);
 
             Assert.AreEqual("", proj.Contents.ToString());
@@ -103,8 +104,8 @@ namespace SocialToolBox.Core.Tests.Database
 
             Clocks.SaveProjection("TEST", VectorClock.Unserialize("A:1")).Wait();
 
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
             Engine.Register(proj);
             Engine.Run();
 
@@ -115,15 +116,17 @@ namespace SocialToolBox.Core.Tests.Database
         [Test]
         public void simple_projection_autocommit()
         {
+            Engine.MaxLoad = 5;
+
             var proj = new Projector(A) { Name = "TEST" };
 
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
-            A.AddEvent(new Event("A3"));
-            A.AddEvent(new Event("A4"));
-            A.AddEvent(new Event("A5"));
-            A.AddEvent(new Event("A6"));
-            A.AddEvent(new Event("A7"));
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
+            A.AddEvent(new Event("A3"), Transaction);
+            A.AddEvent(new Event("A4"), Transaction);
+            A.AddEvent(new Event("A5"), Transaction);
+            A.AddEvent(new Event("A6"), Transaction);
+            A.AddEvent(new Event("A7"), Transaction);
             Engine.Register(proj);
             Engine.Run();
 
@@ -137,8 +140,8 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector(A) { Name = "TEST1" };
             var proj2 = new Projector(A) { Name = "TEST2" };
 
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
             Engine.Register(proj1);
             Engine.Register(proj2);
             Engine.Run();
@@ -153,10 +156,10 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector(A) { Name = "TEST1" };
             var proj2 = new Projector(A,B) { Name = "TEST2" };
 
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
-            B.AddEvent(new Event("B1"));
-            B.AddEvent(new Event("B2"));
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
+            B.AddEvent(new Event("B1"), Transaction);
+            B.AddEvent(new Event("B2"), Transaction);
             Engine.Register(proj1);
             Engine.Register(proj2);
             Engine.Run();

@@ -66,17 +66,12 @@ namespace SocialToolBox.Core.Mocks.Database
             private readonly IStoreProjection<T, TEn> _projection;
 
             private readonly IWritableStore<TEn> _store; 
-
-            public bool CommitRecommended { get { return false; } }
             
-            public void ProcessEvent(EventInStream<T> ev)
+            // ReSharper disable CSharpWarnings::CS1998
+            public async Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t)
+            // ReSharper restore CSharpWarnings::CS1998
             {
                 _projection.Process(_store, ev).Wait();
-            }
-
-            public async Task Commit()
-            {
-                await Task.Yield();
             }
 
             public IEventStream[] Streams { get; set; }

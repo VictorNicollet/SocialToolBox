@@ -117,34 +117,14 @@ namespace SocialToolBox.Core.Database.Projection
         }
 
         /// <summary>
-        /// Recommends a commit if any of the inner projectors recommend a commit.
-        /// </summary>
-        public bool CommitRecommended
-        {
-            get
-            {
-                return _projectors.Exists(p => p.CommitRecommended);
-            }
-        }
-
-        /// <summary>
         /// Pass the event to all projectors, in order, as long as they have been 
         /// registered to receive events from that stream.
         /// </summary>
-        public void ProcessEvent(EventInStream<T> ev)
+        public async Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t)
         {
             foreach (var p in _projectors) 
                 if (p.Streams.Any(s => s == ev.Stream))
-                    p.ProcessEvent(ev);
-        }
-
-        /// <summary>
-        /// Commits all projectors, in order.
-        /// </summary>
-        public async Task Commit()
-        {
-            foreach (var p in _projectors)
-                await p.Commit();
+                    await p.ProcessEvent(ev, t);
         }
     }
 }

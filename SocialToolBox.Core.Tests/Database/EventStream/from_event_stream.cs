@@ -32,6 +32,8 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         public IEventStream A;
         public IEventStream B;
         public VectorClock Clock;
+        public IProjectTransaction PTransaction;
+        public ITransaction Transaction;
 
         private string Next<T>(IMultiStreamIterator<T> iter) where T : class
         {
@@ -45,21 +47,23 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
             A = driver.GetEventStream("A", true);
             B = driver.GetEventStream("B", true);
             Clock = new VectorClock();
+            PTransaction = driver.StartProjectorTransaction();
+            Transaction = driver.StartReadWriteTransaction();
         }
 
         [Test]
         public void empty_does_nothing()
         {
-            var iter = FromEventStream.EachOfType<string>(Clock, A, B);
+            var iter = FromEventStream.EachOfType<string>(Clock, PTransaction, A, B);
             Assert.IsNull(iter.Next());
         }
 
         [Test]
         public void one_stream()
         {
-            var iter = FromEventStream.EachOfType<Event>(Clock, A);
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
+            var iter = FromEventStream.EachOfType<Event>(Clock, PTransaction, A);
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
 
             Assert.AreEqual("A1", Next(iter));
             Assert.AreEqual("A2", Next(iter));
@@ -69,10 +73,10 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         [Test]
         public void one_stream_bad_type()
         {
-            var iter = FromEventStream.EachOfType<MockAccount>(Clock, A);
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(MockAccount.Bob);
-            A.AddEvent(new Event("A2"));
+            var iter = FromEventStream.EachOfType<MockAccount>(Clock, PTransaction, A);
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(MockAccount.Bob, Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
 
             Assert.AreEqual(MockAccount.Bob, iter.Next().Event);
             Assert.IsNull(iter.Next());
@@ -81,11 +85,11 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         [Test]
         public void two_streams()
         {
-            var iter = FromEventStream.EachOfType<Event>(Clock, A, B);
-            B.AddEvent(new Event("B1"));
-            B.AddEvent(new Event("B2"));
-            A.AddEvent(new Event("A1"));
-            A.AddEvent(new Event("A2"));
+            var iter = FromEventStream.EachOfType<Event>(Clock, PTransaction, A, B);
+            B.AddEvent(new Event("B1"), Transaction);
+            B.AddEvent(new Event("B2"), Transaction);
+            A.AddEvent(new Event("A1"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
 
             Assert.AreEqual("A1", Next(iter));
             Assert.AreEqual("A2", Next(iter)); 
@@ -97,15 +101,15 @@ namespace SocialToolBox.Core.Tests.Database.EventStream
         [Test]
         public void two_streams_reinsert()
         {
-            var iter = FromEventStream.EachOfType<Event>(Clock, A, B);
-            B.AddEvent(new Event("B1"));
-            A.AddEvent(new Event("A1"));
+            var iter = FromEventStream.EachOfType<Event>(Clock, PTransaction, A, B);
+            B.AddEvent(new Event("B1"), Transaction);
+            A.AddEvent(new Event("A1"), Transaction);
 
             Assert.AreEqual("A1", Next(iter));
             Assert.AreEqual("B1", Next(iter));
             
-            B.AddEvent(new Event("B2"));
-            A.AddEvent(new Event("A2"));
+            B.AddEvent(new Event("B2"), Transaction);
+            A.AddEvent(new Event("A2"), Transaction);
 
             Assert.AreEqual("A2", Next(iter));
             Assert.AreEqual("B2", Next(iter));

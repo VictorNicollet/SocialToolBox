@@ -15,21 +15,9 @@ namespace SocialToolBox.Core.Database
         string Name { get; }
 
         /// <summary>
-        /// Given the current state of the projector, a commit is recommended.
+        /// Process one event. 
         /// </summary>
-        bool CommitRecommended { get; }
-
-        /// <summary>
-        /// Process one event. This is allowed to have side-effects,
-        /// as long as those side-effecs are only made permanent 
-        /// after <see cref="Commit()"/> is called.
-        /// </summary>
-        void ProcessEvent(EventInStream<T> ev);
-
-        /// <summary>
-        /// Make all operations performed so far permanent.
-        /// </summary>
-        Task Commit();
+        Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t);
 
         /// <summary>
         /// The streams from which this projector reads.

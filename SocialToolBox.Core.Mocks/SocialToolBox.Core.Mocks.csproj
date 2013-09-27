@@ -50,6 +50,7 @@
     <Compile Include="Database\ReadTransaction.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
     <Compile Include="Database\Serialization\MockAccountAsEntityPage.cs" />
+    <Compile Include="Database\ProjectTransaction.cs" />
     <Compile Include="Database\Transaction.cs" />
     <Compile Include="Database\TypeDictionary.cs" />
     <Compile Include="Entity\EntityModuleMock.cs" />

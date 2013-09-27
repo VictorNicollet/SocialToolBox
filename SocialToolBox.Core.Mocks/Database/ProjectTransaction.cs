@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
 
 namespace SocialToolBox.Core.Mocks.Database
@@ -15,7 +16,9 @@ namespace SocialToolBox.Core.Mocks.Database
         private readonly Dictionary<object, Action> _committers =
             new Dictionary<object, Action>(); 
 
-        public void Commit()
+// ReSharper disable CSharpWarnings::CS1998
+        public async Task Commit()
+// ReSharper restore CSharpWarnings::CS1998
         {
             foreach (var v in _committers.Values) v();
             _committers.Clear();

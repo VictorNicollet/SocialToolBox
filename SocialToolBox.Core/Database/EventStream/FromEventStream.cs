@@ -34,6 +34,11 @@ namespace SocialToolBox.Core.Database.EventStream
             private readonly VectorClock _publicClock;
 
             /// <summary>
+            /// The transaction through which events are read.
+            /// </summary>
+            private readonly IProjectTransaction _transaction; 
+
+            /// <summary>
             /// The number of events fetched by each query.
             /// </summary>
             private const int FetchCount = 1000;
@@ -47,12 +52,13 @@ namespace SocialToolBox.Core.Database.EventStream
 
             public VectorClock VectorClock { get { return _publicClock; } }
 
-            public FilterIterator(VectorClock clock, IEventStream[] streams)
+            public FilterIterator(VectorClock clock, IProjectTransaction t, IEventStream[] streams)
             {
                 _currentFetchedEvents = new List<EventInStream<T>>();
                 _streams = streams;
                 _clock = clock;
                 _publicClock = clock.Clone();
+                _transaction = t;
             }
 
             public async Task<EventInStream<T>> NextAsync()
@@ -64,7 +70,8 @@ namespace SocialToolBox.Core.Database.EventStream
                     {
                         while (_currentFetchedEvents.Count == 0)
                         {
-                            var events = await stream.GetEventsOfType<T>(_clock.GetNextInStream(stream), FetchCount);
+                            var events = await stream.GetEventsOfType<T>(
+                                _clock.GetNextInStream(stream), FetchCount, _transaction);
                             
                             // No more events left in stream : give up and try next stream
                             if (events.RealCount == 0) break;
@@ -118,9 +125,10 @@ namespace SocialToolBox.Core.Database.EventStream
         /// Streams are traversed in order. That is, stream 0 will be entirely processed
         /// before stream 1 starts being processed, and so on.
         /// </remarks>
-        public static IMultiStreamIterator<T> EachOfType<T>(VectorClock clock, params IEventStream[] streams) where T : class
+        public static IMultiStreamIterator<T> EachOfType<T>(
+            VectorClock clock, IProjectTransaction t, params IEventStream[] streams) where T : class
         {
-            return new FilterIterator<T>(clock, streams);    
+            return new FilterIterator<T>(clock, t, streams);    
         }
     }
 }

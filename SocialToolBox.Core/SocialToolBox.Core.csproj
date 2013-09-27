@@ -58,7 +58,7 @@
     <Compile Include="Database\Index\StringKey.cs" />
     <Compile Include="Database\IProjection.cs" />
     <Compile Include="Database\IReadTransaction.cs" />
-    <Compile Include="Database\ITransaction.cs" />
+    <Compile Include="Database\IProjectTransaction.cs" />
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Database\Reader\EarliestTime.cs" />
     <Compile Include="Database\Reader\EarliestTimeEx.cs" />
     <Compile Include="Database\Serialization\ICustomSerializer.cs" />
+    <Compile Include="Database\Serialization\ITransaction.cs" />
     <Compile Include="Database\Serialization\PersistAttribute.cs" />
     <Compile Include="Database\Serialization\PersistMemberAttribute.cs" />
     <Compile Include="Database\Serialization\StandardCustomSerializers.cs" />
