@@ -4,7 +4,7 @@ using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Entity;
 using SocialToolBox.Core.Mocks.Present;
-using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
 
 namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage

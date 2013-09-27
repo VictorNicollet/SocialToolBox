@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SocialToolBox.Core.Mocks.Present;
-using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Response;

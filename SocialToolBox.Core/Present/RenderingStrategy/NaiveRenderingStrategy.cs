@@ -1,4 +1,4 @@
-﻿namespace SocialToolBox.Core.Present
+﻿namespace SocialToolBox.Core.Present.RenderingStrategy
 {
     /// <summary>
     /// A rendering strategy that always returns the same renderer regardless

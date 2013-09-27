@@ -3,7 +3,7 @@ using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Present;
-using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Crm.Contact;
 
