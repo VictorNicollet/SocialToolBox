@@ -36,7 +36,7 @@ namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage
             Module.Compile();
             driver.Projections.Run();
 
-            var web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
+            var web = new WebDriver(driver, new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
             Facet = new EntityPageFacet(web, Module);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Present;
 using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
@@ -49,7 +50,9 @@ namespace SocialToolBox.Core.Tests.Web
         [SetUp]
         public void SetUp()
         {
-            Driver = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
+            Driver = new WebDriver(
+                new DatabaseDriver(), 
+                new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
         }
 
         /// <summary>

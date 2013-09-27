@@ -8,11 +8,6 @@ namespace SocialToolBox.Core.Web
     public interface IWebRequest
     {
         /// <summary>
-        /// The web driver through which this request has been routed.
-        /// </summary>
-        IWebDriver Driver { get; }
-
-        /// <summary>
         /// The HTTP verb used by this request.
         /// </summary>
         HttpVerb Verb { get; }

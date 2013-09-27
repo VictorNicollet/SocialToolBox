@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Dispatch;
 using SocialToolBox.Core.Web.Response;
@@ -32,29 +33,32 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public readonly int Port;
 
-        public WebDriver(IRenderingStrategy<IWebRequest> rendering, 
+        public WebDriver(IDatabaseDriver db, IRenderingStrategy<IWebRequest> rendering, 
             string domain = "localhost", bool isSecure = true, int port = 443)
         {
             Domain = domain;
             IsSecure = isSecure;
             Port = port;
             Rendering = rendering;
+            Database = db;
         }
 
         public WebEndpoint<TArgs, THandler> Register<TArgs, THandler>(HttpVerb verb, string url, Func<THandler> handler) 
             where TArgs : class, IWebUrlArgument, new() 
-            where THandler : class, IWebRequestHandler<TArgs>
+            where THandler : WebRequestHandler<TArgs>
         {
             var segs = url.Split('/').Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-            _dispatcher.Register(string.Join("/", segs), verb, handler);
+            _dispatcher.Register(this, string.Join("/", segs), verb, handler);
             return new WebEndpoint<TArgs, THandler>(this, handler, verb, Domain, segs, IsSecure, Port);
         }
 
         public IRenderingStrategy<IWebRequest> Rendering { get; private set; }
 
-        public WebResponse Dispatch(Func<IWebDriver,IWebRequest> requestBuilder)
+        public IDatabaseDriver Database { get; private set; }
+
+        public WebResponse Dispatch(IWebRequest request)
         {
-            return _dispatcher.Dispatch(requestBuilder(this));
+            return _dispatcher.Dispatch(request);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace SocialToolBox.Core.Web
         /// Registers the provided handler.
         /// </summary>
         public WebEndpoint<TArgs, THandler> Use<THandler>(Func<THandler> handler)
-            where THandler : class, IWebRequestHandler<TArgs>
+            where THandler : WebRequestHandler<TArgs>
         {
             return Driver.Register<TArgs, THandler>(Verb, Url, handler);
         }

@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Web.IIS
     /// all the dispatching automatically, using a dispatcher
     /// obtained on the first request from the application.
     /// </summary>
-    public class HttpHandler : IHttpHandler
+    public class HttpHandler : IHttpAsyncHandler
     {
         /// <summary>
         /// The dispatcher used by this HTTP handler to dispatch 
@@ -18,18 +18,19 @@ namespace SocialToolBox.Core.Web.IIS
 
         public void ProcessRequest(HttpContext context)
         {
-            if (_dispatcher == null)
-            {
-                var appWithDispatcher = context.ApplicationInstance as IApplicationWithDispatcher;
-                if (appWithDispatcher == null)
-                    throw new MissingMemberException("Application does not implement IApplicationWithDispatcher");
-                _dispatcher = appWithDispatcher.Dispatcher;
-            }
-
-            var response = _dispatcher.Dispatch(driver => new WebRequest(driver,context));
-            if (response != null) response.Send();
         }
 
         public bool IsReusable { get { return true; } }
+
+        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+        {
+            var action = new AsyncHttpAction(_dispatcher, context, cb, extraData);
+            action.Start();
+            return action;
+        }
+
+        public void EndProcessRequest(IAsyncResult result)
+        {
+        }
     }
 }

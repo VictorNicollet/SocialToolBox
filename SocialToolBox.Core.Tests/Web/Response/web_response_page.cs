@@ -22,7 +22,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
             WithVisitor(Visitor.OnPage(p => Assert.AreEqual(renderer, p.Renderer)));
             Do(r =>
             {
-                renderer = r.Request.Driver.Rendering.PickRenderer(r.Request);
+                renderer = r.Web.Rendering.PickRenderer(r.Request);
                 return r.Page(HtmlString.Escape(""));
             });
         }

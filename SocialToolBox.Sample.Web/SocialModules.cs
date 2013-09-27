@@ -42,7 +42,9 @@ namespace SocialToolBox.Sample.Web
         private SocialModules()
         {
             Database = new DatabaseDriver();
-            Web = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new PageNodeRenderer()));
+
+            var renderingStrategy = new NaiveRenderingStrategy<IWebRequest>(new PageNodeRenderer());
+            Web = new WebDriver(Database, renderingStrategy);
 
             // Instantiate all modules
             Contacts = new ContactModule(Database);

@@ -1,19 +1,29 @@
 ﻿using System.IO;
+using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
 {
     /// <summary>
-    /// Implementation of see <see cref="IWebRequestHandler{T}"/> that provides
-    /// useful base functions.
+    /// All request handlers must extend this class.
     /// </summary>
-    public abstract class WebRequestHandler<T> : IWebRequestHandler<T> where T : class
+    public abstract class WebRequestHandler<T> where T : class
     {
         /// <summary>
         /// The web request being handled right now.
         /// </summary>
         public IWebRequest Request { get; private set; }
+
+        /// <summary>
+        /// The web driver to be used to handle this request.
+        /// </summary>
+        public IWebDriver Web { get; private set; }
+
+        /// <summary>
+        /// The database driver to be used to handle this request.
+        /// </summary>
+        public IDatabaseDriver Database { get { return Web.Database; } }
 
         /// <summary>
         /// The arguments from the current web request.
@@ -23,17 +33,17 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// Process the current response and arguments.
         /// </summary>
-        /// <returns></returns>
         protected abstract WebResponse Process();
 
-        public WebResponse Process(IWebRequest request, T args)
+        /// <summary>
+        /// Processes the provided request. Not re-entrant.
+        /// </summary>
+        public WebResponse Process(IWebDriver webDriver, IWebRequest request, T args)
         {
-            lock (this) // Because we're using member variables to carry values
-            {
-                Request = request;
-                Arguments = args;
-                return Process();
-            }
+            Request = request;
+            Web = webDriver;
+            Arguments = args;
+            return Process();
         }
 
         /// <summary>
@@ -84,7 +94,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebResponse Page(IPage node, INodeRenderer renderer = null, int code = 200)
         {
-            if (renderer == null) renderer = Request.Driver.Rendering.PickRenderer(Request);
+            if (renderer == null) renderer = Web.Rendering.PickRenderer(Request);
             return new WebResponsePage(node, renderer, code, Request.ResponseSender);
         }
     }

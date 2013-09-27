@@ -30,20 +30,22 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <summary>
         /// Wrap a request handler to make its generic type disappear.
         /// </summary>
-        public static WebRequestHandlerWrapper Wrap<TArg>(HttpVerb verbs, Func<IWebRequestHandler<TArg>> handler)
+        public static WebRequestHandlerWrapper Wrap<TArg>(IWebDriver driver, HttpVerb verbs, Func<WebRequestHandler<TArg>> handler)
             where TArg : class, IWebUrlArgument, new()
         {
-            return new Implementation<TArg>(verbs, handler);
+            return new Implementation<TArg>(driver, verbs, handler);
         }        
 
         private class Implementation<TArg> : WebRequestHandlerWrapper
             where TArg : class, IWebUrlArgument, new()
         {
-            private readonly Func<IWebRequestHandler<TArg>> _getHandler; 
+            private readonly Func<WebRequestHandler<TArg>> _getHandler;
+            private readonly IWebDriver _driver;
 
-            public Implementation(HttpVerb verbs, Func<IWebRequestHandler<TArg>> handler) : base(verbs)
+            public Implementation(IWebDriver driver, HttpVerb verbs, Func<WebRequestHandler<TArg>> handler) : base(verbs)
             {
                 _getHandler = handler;
+                _driver = driver;
             }
 
             public override WebResponse Process(IWebRequest request)
@@ -53,10 +55,9 @@ namespace SocialToolBox.Core.Web.Dispatch
                 var args = new TArg();
                 if (!args.TryParse(request)) return null;
 
-                IWebRequestHandler<TArg> handler;
+                WebRequestHandler<TArg> handler;
                 lock (_getHandler) handler = _getHandler();
-
-                var response = handler.Process(request, args);
+                var response = handler.Process(_driver, request, args);
 
                 if (null == response) 
                     throw new NoNullAllowedException(

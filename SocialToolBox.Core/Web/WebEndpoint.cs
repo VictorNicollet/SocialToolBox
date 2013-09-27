@@ -9,7 +9,7 @@ namespace SocialToolBox.Core.Web
     /// </summary>
     public class WebEndpoint<TArgs,THandler> : IWebEndpoint<TArgs> 
         where TArgs : class, IWebUrlArgument
-        where THandler : class, IWebRequestHandler<TArgs>
+        where THandler : WebRequestHandler<TArgs>
     {
         /// <summary>
         /// The web driver to which this endpoint is bound.
@@ -64,7 +64,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebEndpointQuery Query(TArgs args)
         {
-            return new WebEndpointQuery(Driver, req => RequestHandler().Process(req, args));
+            return new WebEndpointQuery(req => RequestHandler().Process(Driver, req, args));
         }
     }
 }

@@ -25,9 +25,9 @@ namespace SocialToolBox.Core.Tests.Web
             }
         }
 
-        public class SimpleHandler : IWebRequestHandler<SimpleArgument>
+        public class SimpleHandler : WebRequestHandler<SimpleArgument>
         {
-            public WebResponse Process(IWebRequest request, SimpleArgument args) { return null; }
+            protected override WebResponse Process() { return null; }
         }
 
         public IWebDriver Driver;
@@ -37,7 +37,7 @@ namespace SocialToolBox.Core.Tests.Web
         [SetUp]
         public void SetUp()
         {
-            Driver = new WebDriver(null);
+            Driver = new WebDriver(null,null);
             Endpoint = new WebEndpoint<SimpleArgument, SimpleHandler>(
                 Driver, () => Handler, HttpVerb.Get, "foobar.com", new[] { "a", "b" }, false, 80);
             // The above lambda always returns "Handler" for testing purposes,

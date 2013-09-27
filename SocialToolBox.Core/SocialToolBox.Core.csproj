@@ -131,7 +131,6 @@
     <Compile Include="Web\HttpVerb.cs" />
     <Compile Include="Web\IWebDriver.cs" />
     <Compile Include="Web\IWebRequest.cs" />
-    <Compile Include="Web\IWebRequestHandler.cs" />
     <Compile Include="Web\WebEndpoint.cs" />
     <Compile Include="Web\WebRequestHandler.cs" />
   </ItemGroup>

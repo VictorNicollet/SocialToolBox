@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Present;
 using SocialToolBox.Core.Present.RenderingStrategy;
 using SocialToolBox.Core.Web;
@@ -51,20 +52,22 @@ namespace SocialToolBox.Core.Tests.Web.Response
         [SetUp]
         public void SetUp()
         {
-            Driver = new WebDriver(new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
+            Driver = new WebDriver(
+                new DatabaseDriver(), 
+                new NaiveRenderingStrategy<IWebRequest>(new NodeRenderer()));
         }
 
         public IWebRequest Req;
 
         public void WithVisitor(ResponseVisitorHelper visitor)
         {
-            Req = new Request { ResponseSender = visitor, Driver = Driver };   
+            Req = new Request { ResponseSender = visitor };   
         }
 
         public void Do(Func<WebRequestHandler<NoArgs>, WebResponse> action)
         {
             var handler = new RequestHandler(action);
-            using (var response = handler.Process(Req, null))
+            using (var response = handler.Process(Driver, Req, null))
                 response.Send();            
         }
     }

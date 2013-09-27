@@ -13,6 +13,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         public WebUrl A = new WebUrl("localhost", new[]{ "a" });
 
         public WebRequestDispatcher Dispatcher;
+        public IWebDriver Driver;
 
         /// <summary>
         /// A request handler that simply echoes its payload as JSON.
@@ -36,6 +37,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         public void SetUp()
         {
             Dispatcher = new WebRequestDispatcher();
+            Driver = new WebDriver(null, null);
         }
 
         [Test]
@@ -48,7 +50,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_exact_path()
         {
-            Dispatcher.Register("a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
+            Dispatcher.Register(Driver, "a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 
@@ -59,8 +61,8 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_exact_path_and_verb()
         {
-            Dispatcher.Register("a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
-            Dispatcher.Register("a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
+            Dispatcher.Register(Driver, "a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
+            Dispatcher.Register(Driver, "a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 
@@ -71,9 +73,9 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void with_inexact_path()
         {
-            Dispatcher.Register("a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
-            Dispatcher.Register("", HttpVerb.Get, () => new JsonEcho<NoArgs>("[]"));
-            Dispatcher.Register("", HttpVerb.Get,() =>  new JsonEcho<AnyArgs>("null"));
+            Dispatcher.Register(Driver, "a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
+            Dispatcher.Register(Driver, "", HttpVerb.Get, () => new JsonEcho<NoArgs>("[]"));
+            Dispatcher.Register(Driver, "", HttpVerb.Get,() =>  new JsonEcho<AnyArgs>("null"));
             var response = Dispatcher.Dispatch(WebRequest.Get(A));
             var asJson = response as WebResponseJson;
 

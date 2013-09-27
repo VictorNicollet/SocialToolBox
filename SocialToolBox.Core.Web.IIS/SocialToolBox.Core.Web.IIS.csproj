@@ -35,6 +35,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncHttpAction.cs" />
     <Compile Include="HttpHandler.cs" />
     <Compile Include="IApplicationWithDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

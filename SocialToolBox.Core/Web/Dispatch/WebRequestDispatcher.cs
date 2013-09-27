@@ -34,10 +34,10 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <summary>
         /// Registers a handler for a path and one or more verbs.
         /// </summary>
-        public void Register<T>(string path, HttpVerb verbs, Func<IWebRequestHandler<T>> handler)
+        public void Register<T>(IWebDriver driver, string path, HttpVerb verbs, Func<WebRequestHandler<T>> handler)
             where T : class, IWebUrlArgument, new()
         {
-            Register(path,WebRequestHandlerWrapper.Wrap(verbs, handler));
+            Register(path,WebRequestHandlerWrapper.Wrap(driver, verbs, handler));
         }
 
         /// <summary>

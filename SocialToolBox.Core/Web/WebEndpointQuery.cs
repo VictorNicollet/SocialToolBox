@@ -24,10 +24,10 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// A currently empty query.
         /// </summary>
-        public WebEndpointQuery(IWebDriver driver, Func<IWebRequest, WebResponse> run)
+        public WebEndpointQuery(Func<IWebRequest, WebResponse> run)
         {
             _run = run;
-            _request = new WebRequest(driver);
+            _request = new WebRequest();
         }
 
         /// <summary>
@@ -66,10 +66,7 @@ namespace SocialToolBox.Core.Web
             /// <summary>
             /// Creates an empty web request.
             /// </summary>
-            public WebRequest(IWebDriver driver)
-            {
-                Driver = driver;
-            }
+            public WebRequest() {}
 
             /// <summary>
             /// Creates an independent copy of a web request.
@@ -84,10 +81,8 @@ namespace SocialToolBox.Core.Web
                 PostData = Copy(other.PostData);
                 GetData = Copy(other.GetData);
                 Payload = other.Payload;
-                Driver = other.Driver;
             }
 
-            public IWebDriver Driver { get; set; }
             public HttpVerb Verb { get; set; }
             public string Domain { get; set; }
             public string Path { get { return MatchedPath + "/" + string.Join("/", UnmatchedPath); } }
