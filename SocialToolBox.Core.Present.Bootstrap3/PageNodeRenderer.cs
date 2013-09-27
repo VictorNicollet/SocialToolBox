@@ -25,7 +25,7 @@ namespace SocialToolBox.Core.Present.Bootstrap3
                 output.Add(title);
                 output.AddVerbatim("</title><link rel='stylesheet' href='");
                 output.Add(BootstrapCssUrl);
-                output.AddVerbatim("</head><body>");
+                output.AddVerbatim("'/></head><body>");
                 body(output);
                 output.AddVerbatim("<script src='");
                 output.Add(BootstrapJsUrl);
