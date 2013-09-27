@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Mocks.Database
     /// <summary>
     /// A read-write transaction that handles committing changes.
     /// </summary>
-    public class ProjectTransaction : IProjectTransaction
+    public class ProjectCursor : IProjectCursor
     {
         /// <summary>
         /// All the commit functions that must be called when committing.
@@ -16,9 +16,9 @@ namespace SocialToolBox.Core.Mocks.Database
         private readonly Dictionary<object, Action> _committers =
             new Dictionary<object, Action>(); 
 
-// ReSharper disable CSharpWarnings::CS1998
+        // ReSharper disable CSharpWarnings::CS1998
         public async Task Commit()
-// ReSharper restore CSharpWarnings::CS1998
+        // ReSharper restore CSharpWarnings::CS1998
         {
             foreach (var v in _committers.Values) v();
             _committers.Clear();
@@ -31,9 +31,9 @@ namespace SocialToolBox.Core.Mocks.Database
         /// Register a commit function for the specified object on the
         /// transaction. Increases load by the specified number.
         /// </summary>
-        public static void RegisterCommit(IProjectTransaction it, object o, Action a, int load = 1)
+        public static void RegisterCommit(IProjectCursor it, object o, Action a, int load = 1)
         {
-            var t = it as ProjectTransaction;
+            var t = it as ProjectCursor;
             if (t == null) return;
             t.Load += load;
             if (t._committers.ContainsKey(o)) return;

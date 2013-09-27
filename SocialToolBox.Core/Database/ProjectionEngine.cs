@@ -31,7 +31,7 @@ namespace SocialToolBox.Core.Database
         /// <summary>
         /// The transaction used for projection.
         /// </summary>
-        private IProjectTransaction _transaction;
+        private IProjectCursor _cursor;
 
         /// <summary>
         /// Responsible for running <see cref="Run"/> in a loop.
@@ -54,9 +54,9 @@ namespace SocialToolBox.Core.Database
         /// </remarks>
         public void Run()
         {
-            if (_transaction == null) _transaction = Driver.StartProjectorTransaction();
+            if (_cursor == null) _cursor = Driver.OpenProjectionCursor();
             Task.WaitAll(_registeredProjectors.Select(f => f()).ToArray());
-            _transaction.Commit();
+            _cursor.Commit();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace SocialToolBox.Core.Database
         /// </summary>
         public void StartBackgroundThread()
         {
-            _transaction = Driver.StartProjectorTransaction();
+            _cursor = Driver.OpenProjectionCursor();
             _thread.Start();
         }
 
@@ -85,21 +85,21 @@ namespace SocialToolBox.Core.Database
             where TEv : class
         {
             var vectorClock = await Driver.ClockRegistry.LoadProjection(proj.Name);
-            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, _transaction, proj.Streams);
+            var iterator = FromEventStream.EachOfType<TEv>(vectorClock, _cursor, proj.Streams);
 
             while (true)
             {
                 var ev = await iterator.NextAsync();
                 
-                if (ev == null || _transaction.Load >= MaxLoad)
+                if (ev == null || _cursor.Load >= MaxLoad)
                 {
                     await Driver.ClockRegistry.SaveProjection(proj.Name, iterator.VectorClock);
-                    await _transaction.Commit();          
+                    await _cursor.Commit();          
                 }
 
                 if (ev == null) break;
 
-                await proj.ProcessEvent(ev, _transaction);
+                await proj.ProcessEvent(ev, _cursor);
             }
         }
     }

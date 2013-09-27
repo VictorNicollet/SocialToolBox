@@ -18,14 +18,14 @@ namespace SocialToolBox.Sample.Web
         /// </summary>
         public static void AddTo(SocialModules modules)
         {
-            var t = modules.Database.StartReadWriteTransaction();
+            var t = modules.Database.OpenReadWriteCursor();
             AddContactsTo(modules, t);
         }
 
         /// <summary>
         /// Generates sample contacts.
         /// </summary>
-        private static void AddContactsTo(SocialModules modules, ITransaction t)
+        private static void AddContactsTo(SocialModules modules, ICursor t)
         {
             foreach (var ev in new IContactEvent[]
             {

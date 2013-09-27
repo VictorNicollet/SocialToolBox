@@ -36,7 +36,7 @@ namespace SocialToolBox.Core.Database.EventStream
             /// <summary>
             /// The transaction through which events are read.
             /// </summary>
-            private readonly IProjectTransaction _transaction; 
+            private readonly IProjectCursor _cursor; 
 
             /// <summary>
             /// The number of events fetched by each query.
@@ -52,13 +52,13 @@ namespace SocialToolBox.Core.Database.EventStream
 
             public VectorClock VectorClock { get { return _publicClock; } }
 
-            public FilterIterator(VectorClock clock, IProjectTransaction t, IEventStream[] streams)
+            public FilterIterator(VectorClock clock, IProjectCursor t, IEventStream[] streams)
             {
                 _currentFetchedEvents = new List<EventInStream<T>>();
                 _streams = streams;
                 _clock = clock;
                 _publicClock = clock.Clone();
-                _transaction = t;
+                _cursor = t;
             }
 
             public async Task<EventInStream<T>> NextAsync()
@@ -71,7 +71,7 @@ namespace SocialToolBox.Core.Database.EventStream
                         while (_currentFetchedEvents.Count == 0)
                         {
                             var events = await stream.GetEventsOfType<T>(
-                                _clock.GetNextInStream(stream), FetchCount, _transaction);
+                                _clock.GetNextInStream(stream), FetchCount, _cursor);
                             
                             // No more events left in stream : give up and try next stream
                             if (events.RealCount == 0) break;
@@ -126,7 +126,7 @@ namespace SocialToolBox.Core.Database.EventStream
         /// before stream 1 starts being processed, and so on.
         /// </remarks>
         public static IMultiStreamIterator<T> EachOfType<T>(
-            VectorClock clock, IProjectTransaction t, params IEventStream[] streams) where T : class
+            VectorClock clock, IProjectCursor t, params IEventStream[] streams) where T : class
         {
             return new FilterIterator<T>(clock, t, streams);    
         }

@@ -46,7 +46,7 @@ namespace SocialToolBox.Core.Mocks.Database
             get { return _name; }
         }
 
-        public Task AddEvent(object e, ITransaction t)
+        public Task AddEvent(object e, ICursor t)
         {
             var serialized = Serializer.Serialize(e);
             SerializedEventList.Add(serialized);
@@ -54,7 +54,7 @@ namespace SocialToolBox.Core.Mocks.Database
         }
 
 // ReSharper disable CSharpWarnings::CS1998
-        public async Task<EventInStream<T>> GetEvent<T>(long position, IProjectTransaction t) where T : class
+        public async Task<EventInStream<T>> GetEvent<T>(long position, IProjectCursor t) where T : class
 // ReSharper restore CSharpWarnings::CS1998
         {
             // It is acceptable to cast the position to an int, since this happens in-memory
@@ -67,7 +67,7 @@ namespace SocialToolBox.Core.Mocks.Database
         }
 
 // ReSharper disable CSharpWarnings::CS1998
-        public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count, IProjectTransaction t) where T : class
+        public async Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count, IProjectCursor t) where T : class
 // ReSharper restore CSharpWarnings::CS1998
         {
             // It is acceptable to cast the position to an int, since this happens in-memory
@@ -85,9 +85,9 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventListInStream<T>(list, pos, pos - start);
         }
 
-// ReSharper disable CSharpWarnings::CS1998
-        public async Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count, IProjectTransaction t) where T : class
-// ReSharper restore CSharpWarnings::CS1998
+        // ReSharper disable CSharpWarnings::CS1998
+        public async Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count, IProjectCursor t) where T : class
+        // ReSharper restore CSharpWarnings::CS1998
         {
             // It is acceptable to cast the position to an int, since this happens in-memory
             var start = (int)startPosition;
@@ -104,7 +104,7 @@ namespace SocialToolBox.Core.Mocks.Database
             return new EventListInStream<T>(list, pos, pos - start);
         }
 
-        public Task<long> NextPosition(IReadTransaction t)
+        public Task<long> NextPosition(IReadCursor t)
         {
             return Task.FromResult((long)SerializedEventList.Count); 
         }

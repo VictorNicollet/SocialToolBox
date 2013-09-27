@@ -57,19 +57,19 @@ namespace SocialToolBox.Core.Mocks.Database
             return new Projection<TEv>(name, this);            
         }
 
-        public IReadTransaction StartReadTransaction()
+        public IReadCursor OpenReadCursor()
         {
-            return new ReadTransaction();
+            return new ReadCursor();
         }
 
-        public IProjectTransaction StartProjectorTransaction()
+        public IProjectCursor OpenProjectionCursor()
         {
-            return new ProjectTransaction();
+            return new ProjectCursor();
         }
 
-        public ITransaction StartReadWriteTransaction()
+        public ICursor OpenReadWriteCursor()
         {
-            return new Transaction();
+            return new Cursor();
         }
     }
 }

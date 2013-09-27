@@ -15,7 +15,7 @@ namespace SocialToolBox.Core.Tests.Entity
         public EntityModule Module;
         public IEventStream Stream;
         public ProjectionEngine Projections;
-        public ITransaction Transaction;
+        public ICursor Cursor;
 
         public readonly Id IdA = Id.Parse("aaaaaaaaaaa");
 
@@ -31,7 +31,7 @@ namespace SocialToolBox.Core.Tests.Entity
             MockAccountAsEntityPage.ExtendVisitor(Module.PageEventVisitor);
             Module.Compile();
 
-            Transaction = driver.StartReadWriteTransaction();
+            Cursor = driver.OpenReadWriteCursor();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace SocialToolBox.Core.Tests.Entity
         [Test]
         public void create_provides_title()
         {           
-            Stream.AddEvent(new MockAccountCreated(IdA, "The Title", DateTime.Parse("2011/05/14")), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "The Title", DateTime.Parse("2011/05/14")), Cursor);
             Projections.Run();
 
             Assert.AreEqual(typeof(MockAccountAsEntityPage), Module.Pages.Get(IdA).Result.GetType());
@@ -53,8 +53,8 @@ namespace SocialToolBox.Core.Tests.Entity
         [Test]
         public void update_changes_title()
         {
-            Stream.AddEvent(new MockAccountCreated(IdA, "Old Title", DateTime.Parse("2011/05/14")), Transaction);
-            Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "Old Title", DateTime.Parse("2011/05/14")), Cursor);
+            Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Cursor);
             Projections.Run();
 
             Assert.AreEqual("New Title", Module.Pages.Get(IdA).Result.Title);
@@ -63,8 +63,8 @@ namespace SocialToolBox.Core.Tests.Entity
         [Test]
         public void delete_removes_page()
         {
-            Stream.AddEvent(new MockAccountCreated(IdA, "Old Title", DateTime.Parse("2011/05/14")), Transaction);
-            Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2011/05/14")), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "Old Title", DateTime.Parse("2011/05/14")), Cursor);
+            Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2011/05/14")), Cursor);
             Projections.Run();
 
             Assert.IsNull(Module.Pages.Get(IdA).Result);
@@ -73,7 +73,7 @@ namespace SocialToolBox.Core.Tests.Entity
         [Test]
         public void missing_without_create()
         {
-            Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Transaction);
+            Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Cursor);
             Projections.Run();
 
             Assert.IsNull(Module.Pages.Get(IdA).Result);

@@ -16,7 +16,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
         public IStore<MockAccount> Accounts;
         public IProjection<IMockEvent> Projection;
         public ProjectionEngine Projections;
-        public ITransaction Transaction;
+        public ICursor Cursor;
 
         public readonly Id IdA = Id.Parse("aaaaaaaaaaa");
         public readonly Id IdB = Id.Parse("bbbbbbbbbbb");
@@ -29,7 +29,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
             Stream = driver.GetEventStream("Accounts", true);
             Accounts = Projection.CreateStore("Store", MockAccount.ApplyEvent, new[] { Stream });
             Projections = driver.Projections;
-            Transaction = driver.StartReadWriteTransaction();
+            Cursor = driver.OpenReadWriteCursor();
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
         public void after_creation()
         {
             Projection.Compile();
-            Stream.AddEvent(new MockAccountCreated(IdA, "Name", DateTime.Parse("2013/07/12")), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "Name", DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
             var current = Accounts.Get(IdA).Result;
@@ -68,8 +68,8 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
         public void after_update()
         {
             Projection.Compile();
-            Stream.AddEvent(new MockAccountCreated(IdA, "Bob", DateTime.Parse("2013/07/12")), Transaction);
-            Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "Bob", DateTime.Parse("2013/07/12")), Cursor);
+            Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Cursor);
             Projections.Run();
 
             var current = Accounts.Get(IdA).Result;
@@ -80,9 +80,9 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
         public void after_update_delete()
         {
             Projection.Compile();
-            Stream.AddEvent(new MockAccountCreated(IdA, "Bob", DateTime.Parse("2013/07/12")), Transaction);
-            Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Transaction);
-            Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2013/07/12")), Transaction);
+            Stream.AddEvent(new MockAccountCreated(IdA, "Bob", DateTime.Parse("2013/07/12")), Cursor);
+            Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Cursor);
+            Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
             Assert.IsNull(Accounts.Get(IdA).Result);

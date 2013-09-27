@@ -68,7 +68,7 @@ namespace SocialToolBox.Core.Mocks.Database
             private readonly IWritableStore<TEn> _store; 
             
             // ReSharper disable CSharpWarnings::CS1998
-            public async Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t)
+            public async Task ProcessEvent(EventInStream<T> ev, IProjectCursor t)
             // ReSharper restore CSharpWarnings::CS1998
             {
                 _projection.Process(_store, ev).Wait();

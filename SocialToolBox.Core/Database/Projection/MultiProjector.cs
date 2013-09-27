@@ -120,7 +120,7 @@ namespace SocialToolBox.Core.Database.Projection
         /// Pass the event to all projectors, in order, as long as they have been 
         /// registered to receive events from that stream.
         /// </summary>
-        public async Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t)
+        public async Task ProcessEvent(EventInStream<T> ev, IProjectCursor t)
         {
             foreach (var p in _projectors) 
                 if (p.Streams.Any(s => s == ev.Stream))

@@ -24,7 +24,7 @@ namespace SocialToolBox.Core.Mocks.Entity
         
             MockAccountAsEntityPage.ExtendVisitor(module.PageEventVisitor);
 
-            var t = driver.StartReadWriteTransaction();
+            var t = driver.OpenReadWriteCursor();
 
             stream.AddEvent(new MockAccountCreated(IdAlice, NameAlice, Creation), t);
             stream.AddEvent(new MockAccountCreated(IdBob, "", Creation), t);

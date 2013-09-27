@@ -17,16 +17,16 @@ namespace SocialToolBox.Core.Tests.Database
         }
 
         public IEventStream EventStream;
-        public ITransaction Transaction;
-        public IProjectTransaction PTransaction;
+        public ICursor Cursor;
+        public IProjectCursor PCursor;
 
         [SetUp]
         public void SetUp()
         {
             var driver = new DatabaseDriver();
             EventStream = driver.GetEventStream("TheCorrectName", true);
-            Transaction = driver.StartReadWriteTransaction();
-            PTransaction = driver.StartProjectorTransaction();
+            Cursor = driver.OpenReadWriteCursor();
+            PCursor = driver.OpenProjectionCursor();
         }
 
         [Test]
@@ -38,33 +38,33 @@ namespace SocialToolBox.Core.Tests.Database
         [Test]
         public void initially_at_zero()
         {
-            Assert.AreEqual(0, EventStream.NextPosition(Transaction).Result);
+            Assert.AreEqual(0, EventStream.NextPosition(Cursor).Result);
         }
 
         [Test]
         public void initially_contains_nothing()
         {
-            Assert.IsNull(EventStream.GetEvent<MockAccount>(0, PTransaction).Result);
-            Assert.IsEmpty(EventStream.GetEvents<MockAccount>(0, 10, PTransaction).Result);
+            Assert.IsNull(EventStream.GetEvent<MockAccount>(0, PCursor).Result);
+            Assert.IsEmpty(EventStream.GetEvents<MockAccount>(0, 10, PCursor).Result);
         }
 
         public void after_one_event()
         {
-            EventStream.AddEvent(MockAccount.Bob, Transaction).RunSynchronously();
+            EventStream.AddEvent(MockAccount.Bob, Cursor).RunSynchronously();
         }
 
         [Test]
         public void after_one_event_at_one()
         {
             after_one_event();
-            Assert.AreEqual(1, EventStream.NextPosition(Transaction).Result);
+            Assert.AreEqual(1, EventStream.NextPosition(Cursor).Result);
         }
 
         [Test]
         public void after_one_event_contains_bob()
         {
             after_one_event();
-            var eventInStream = EventStream.GetEvent<MockAccount>(0, PTransaction).Result;
+            var eventInStream = EventStream.GetEvent<MockAccount>(0, PCursor).Result;
             Assert.AreEqual(0, eventInStream.Position);
             Assert.AreEqual(MockAccount.Bob, eventInStream.Event);
         }
@@ -73,7 +73,7 @@ namespace SocialToolBox.Core.Tests.Database
         public void after_one_event_query_bob()
         {
             after_one_event();
-            var events = EventStream.GetEvents<MockAccount>(0, 10, PTransaction).Result;
+            var events = EventStream.GetEvents<MockAccount>(0, 10, PCursor).Result;
             Assert.AreEqual(1, events.Count);
             Assert.AreEqual(MockAccount.Bob, events[0].Event);
             Assert.AreEqual(0, events[0].Position);
@@ -83,7 +83,7 @@ namespace SocialToolBox.Core.Tests.Database
         public void after_one_event_query_nothing()
         {
             after_one_event();
-            Assert.IsEmpty(EventStream.GetEvents<MockAccount>(1, 10, PTransaction).Result);   
+            Assert.IsEmpty(EventStream.GetEvents<MockAccount>(1, 10, PCursor).Result);   
         }
 
         [Test]
@@ -91,16 +91,16 @@ namespace SocialToolBox.Core.Tests.Database
         {
             after_one_event();
             Assert.Throws<AggregateException>(() =>
-                EventStream.GetEvent<IncorrectSerializable>(0, PTransaction).Wait());
+                EventStream.GetEvent<IncorrectSerializable>(0, PCursor).Wait());
             Assert.Throws<AggregateException>(() =>
-                EventStream.GetEvents<IncorrectSerializable>(0, 10, PTransaction).Wait());
+                EventStream.GetEvents<IncorrectSerializable>(0, 10, PCursor).Wait());
         }
 
         [Test]
         public void after_one_event_query_wrong_type_discards()
         {
             after_one_event();
-            var list = EventStream.GetEventsOfType<IncorrectSerializable>(0, 10, PTransaction).Result;
+            var list = EventStream.GetEventsOfType<IncorrectSerializable>(0, 10, PCursor).Result;
             Assert.IsEmpty(list);
             Assert.AreEqual(1, list.RealCount);
             Assert.AreEqual(1, list.NextPosition);

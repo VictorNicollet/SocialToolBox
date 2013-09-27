@@ -17,7 +17,7 @@ namespace SocialToolBox.Core.Database
         /// <summary>
         /// Process one event. 
         /// </summary>
-        Task ProcessEvent(EventInStream<T> ev, IProjectTransaction t);
+        Task ProcessEvent(EventInStream<T> ev, IProjectCursor t);
 
         /// <summary>
         /// The streams from which this projector reads.

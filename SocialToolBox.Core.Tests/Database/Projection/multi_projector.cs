@@ -25,8 +25,8 @@ namespace SocialToolBox.Core.Tests.Database.Projection
 
         public MultiProjector<Event> Multi;
 
-        public IProjectTransaction PTransaction;
-        public ITransaction Transaction;
+        public IProjectCursor PCursor;
+        public ICursor Cursor;
 
         [Persist("SocialToolBox.Core.Tests.Database.Projection.multi_projector.Event")]
         public class Event
@@ -58,7 +58,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
             public string Name { get { return string.Concat(Streams.Select(s => s.Name)); } }
 
             // ReSharper disable CSharpWarnings::CS1998
-            public async Task ProcessEvent(EventInStream<Event> ev, IProjectTransaction t)
+            public async Task ProcessEvent(EventInStream<Event> ev, IProjectCursor t)
             // ReSharper restore CSharpWarnings::CS1998
             {
                 Events.Add(ev.Event.ToString());
@@ -82,8 +82,8 @@ namespace SocialToolBox.Core.Tests.Database.Projection
 
             Multi = new MultiProjector<Event>("Test");
 
-            Transaction = driver.StartReadWriteTransaction();
-            PTransaction = driver.StartProjectorTransaction();
+            Cursor = driver.OpenReadWriteCursor();
+            PCursor = driver.OpenProjectionCursor();
         }
 
         public void With(params Projector[] projectors)
@@ -93,7 +93,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
 
         public IMultiStreamIterator<Event> Iterator
         {
-            get { return FromEventStream.EachOfType<Event>(new VectorClock(), PTransaction, Multi.Streams); }
+            get { return FromEventStream.EachOfType<Event>(new VectorClock(), PCursor, Multi.Streams); }
         }
             
         [Test]
@@ -122,11 +122,11 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         [Test]
         public void everything_receives_events()
         {
-            B.AddEvent(new Event("B1"), Transaction);
+            B.AddEvent(new Event("B1"), Cursor);
             With(Ab,Bc);
 
             var iter = Iterator;
-            Multi.ProcessEvent(iter.Next(), PTransaction).Wait();
+            Multi.ProcessEvent(iter.Next(), PCursor).Wait();
 
             CollectionAssert.AreEqual(new[] { "B1" }, Ab.Events);
             CollectionAssert.AreEqual(new[] { "B1" }, Bc.Events);
@@ -135,13 +135,13 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         [Test]
         public void events_filtered()
         {
-            A.AddEvent(new Event("A1"), Transaction);
-            B.AddEvent(new Event("B1"), Transaction);
-            C.AddEvent(new Event("C1"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            B.AddEvent(new Event("B1"), Cursor);
+            C.AddEvent(new Event("C1"), Cursor);
             With(Ab,Bc);
 
             foreach (var e in Iterator)
-                Multi.ProcessEvent(e, PTransaction).Wait();
+                Multi.ProcessEvent(e, PCursor).Wait();
 
             CollectionAssert.AreEqual(new[] { "A1", "B1" }, Ab.Events);
             CollectionAssert.AreEqual(new[] { "B1", "C1" }, Bc.Events);

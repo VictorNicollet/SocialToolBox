@@ -22,7 +22,7 @@ namespace SocialToolBox.Core.Database
         /// <summary>
         /// Appends a new event to the event stream.
         /// </summary>
-        Task AddEvent(object e, ITransaction t);
+        Task AddEvent(object e, ICursor t);
 
         /// <summary>
         /// Grab the event at the specified position, if it exists.
@@ -32,7 +32,7 @@ namespace SocialToolBox.Core.Database
         /// type fails. Returns <code>null</code> if there is no event at
         /// the specified position.
         /// </remarks>
-        Task<EventInStream<T>> GetEvent<T>(long position, IProjectTransaction t) 
+        Task<EventInStream<T>> GetEvent<T>(long position, IProjectCursor t) 
             where T : class;
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SocialToolBox.Core.Database
         /// Throws an exception if unserialization or cast to the specified
         /// type fails. 
         /// </remarks>
-        Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count, IProjectTransaction t) 
+        Task<EventListInStream<T>> GetEvents<T>(long startPosition, int count, IProjectCursor t) 
             where T : class;
 
         /// <summary>
@@ -54,13 +54,13 @@ namespace SocialToolBox.Core.Database
         /// Events that cannot be cast to the specified type are discarded
         /// from the returned list.
         /// </remarks>
-        Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count, IProjectTransaction t) 
+        Task<EventListInStream<T>> GetEventsOfType<T>(long startPosition, int count, IProjectCursor t) 
             where T : class;
 
         /// <summary>
         /// The number of events in this stream. Also, the position of the
         /// next event to be inserted in this stream.
         /// </summary>
-        Task<long> NextPosition(IReadTransaction t);
+        Task<long> NextPosition(IReadCursor t);
     }
 }

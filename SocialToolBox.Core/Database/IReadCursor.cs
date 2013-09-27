@@ -3,7 +3,7 @@
     /// <summary>
     /// A transaction that supports only read-only operations.
     /// </summary>
-    public interface IReadTransaction
+    public interface IReadCursor
     {
     }
 }

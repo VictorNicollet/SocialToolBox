@@ -15,7 +15,7 @@ namespace SocialToolBox.Core.Tests.Database
         public IEventStream A;
         public IEventStream B;
         public IClockRegistry Clocks;
-        public ITransaction Transaction;
+        public ICursor Cursor;
 
         [Persist("SocialToolBox.Core.Tests.Database.projection_engine.Event")]
         public class Event
@@ -44,7 +44,7 @@ namespace SocialToolBox.Core.Tests.Database
             A = driver.GetEventStream("A", true);
             B = driver.GetEventStream("B", true);
             Clocks = driver.ClockRegistry;
-            Transaction = driver.StartReadWriteTransaction();
+            Cursor = driver.OpenReadWriteCursor();
         }
 
         [Test]
@@ -66,13 +66,13 @@ namespace SocialToolBox.Core.Tests.Database
             }
 
             // ReSharper disable CSharpWarnings::CS1998
-            public async Task ProcessEvent(EventInStream<Event> ev, IProjectTransaction t)
+            public async Task ProcessEvent(EventInStream<Event> ev, IProjectCursor t)
             // ReSharper restore CSharpWarnings::CS1998
             {
                 Contents.Append(ev.Event);
                 Contents.Append('\n');
 
-                ProjectTransaction.RegisterCommit(t, Name, Commit);
+                ProjectCursor.RegisterCommit(t, Name, Commit);
             }
 
             private void Commit()
@@ -86,8 +86,8 @@ namespace SocialToolBox.Core.Tests.Database
         {
             var proj = new Projector(A) { Name = "TEST" };
 
-            A.AddEvent(new Event("A1"), Transaction);
-            A.AddEvent(new Event("A2"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            A.AddEvent(new Event("A2"), Cursor);
             Engine.Register(proj);
 
             Assert.AreEqual("", proj.Contents.ToString());
@@ -104,8 +104,8 @@ namespace SocialToolBox.Core.Tests.Database
 
             Clocks.SaveProjection("TEST", VectorClock.Unserialize("A:1")).Wait();
 
-            A.AddEvent(new Event("A1"), Transaction);
-            A.AddEvent(new Event("A2"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            A.AddEvent(new Event("A2"), Cursor);
             Engine.Register(proj);
             Engine.Run();
 
@@ -120,13 +120,13 @@ namespace SocialToolBox.Core.Tests.Database
 
             var proj = new Projector(A) { Name = "TEST" };
 
-            A.AddEvent(new Event("A1"), Transaction);
-            A.AddEvent(new Event("A2"), Transaction);
-            A.AddEvent(new Event("A3"), Transaction);
-            A.AddEvent(new Event("A4"), Transaction);
-            A.AddEvent(new Event("A5"), Transaction);
-            A.AddEvent(new Event("A6"), Transaction);
-            A.AddEvent(new Event("A7"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            A.AddEvent(new Event("A2"), Cursor);
+            A.AddEvent(new Event("A3"), Cursor);
+            A.AddEvent(new Event("A4"), Cursor);
+            A.AddEvent(new Event("A5"), Cursor);
+            A.AddEvent(new Event("A6"), Cursor);
+            A.AddEvent(new Event("A7"), Cursor);
             Engine.Register(proj);
             Engine.Run();
 
@@ -140,8 +140,8 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector(A) { Name = "TEST1" };
             var proj2 = new Projector(A) { Name = "TEST2" };
 
-            A.AddEvent(new Event("A1"), Transaction);
-            A.AddEvent(new Event("A2"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            A.AddEvent(new Event("A2"), Cursor);
             Engine.Register(proj1);
             Engine.Register(proj2);
             Engine.Run();
@@ -156,10 +156,10 @@ namespace SocialToolBox.Core.Tests.Database
             var proj1 = new Projector(A) { Name = "TEST1" };
             var proj2 = new Projector(A,B) { Name = "TEST2" };
 
-            A.AddEvent(new Event("A1"), Transaction);
-            A.AddEvent(new Event("A2"), Transaction);
-            B.AddEvent(new Event("B1"), Transaction);
-            B.AddEvent(new Event("B2"), Transaction);
+            A.AddEvent(new Event("A1"), Cursor);
+            A.AddEvent(new Event("A2"), Cursor);
+            B.AddEvent(new Event("B1"), Cursor);
+            B.AddEvent(new Event("B2"), Cursor);
             Engine.Register(proj1);
             Engine.Register(proj2);
             Engine.Run();

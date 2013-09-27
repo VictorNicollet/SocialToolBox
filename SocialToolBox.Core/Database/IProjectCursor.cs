@@ -6,7 +6,7 @@ namespace SocialToolBox.Core.Database
     /// A transaction which supports both read and write operations, used
     /// by projectors.
     /// </summary>
-    public interface IProjectTransaction : IReadTransaction
+    public interface IProjectCursor : IReadCursor
     {
         /// <summary>
         /// Commits the operations performed under the current 
