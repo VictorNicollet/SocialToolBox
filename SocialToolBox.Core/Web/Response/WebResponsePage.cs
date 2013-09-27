@@ -11,14 +11,14 @@ namespace SocialToolBox.Core.Web.Response
         /// <summary>
         /// The page to be rendered as HTML and sent back to the client.
         /// </summary>
-        public readonly IPageNode Page;
+        public readonly IPage Page;
 
         /// <summary>
         /// The renderer recommended for rendering to HTML.
         /// </summary>
         public readonly INodeRenderer Renderer;
 
-        public WebResponsePage(IPageNode page, INodeRenderer renderer, int code, IWebResponseVisitor sender) : base(code, sender)
+        public WebResponsePage(IPage page, INodeRenderer renderer, int code, IWebResponseVisitor sender) : base(code, sender)
         {
             Page = page;
             Renderer = renderer;

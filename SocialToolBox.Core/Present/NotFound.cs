@@ -6,7 +6,7 @@ namespace SocialToolBox.Core.Present
     /// A node that explains something could not be found. Often 
     /// used as a root node.
     /// </summary>
-    public class NotFound : IPageNode
+    public class NotFound : IPage
     {
         public Task<HtmlString> RenderWith(INodeRenderer visitor)
         {
