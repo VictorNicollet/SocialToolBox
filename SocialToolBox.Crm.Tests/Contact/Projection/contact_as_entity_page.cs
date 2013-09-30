@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
-using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Crm.Contact;

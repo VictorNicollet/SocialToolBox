@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Projection;
-using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Database.Events;
 using SocialToolBox.Core.Mocks.Database.Serialization;
