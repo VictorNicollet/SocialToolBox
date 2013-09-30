@@ -65,8 +65,8 @@ namespace SocialToolBox.Core.Mocks.Database
 
             private readonly IStoreProjection<T, TEn> _projection;
 
-            private readonly IWritableStore<TEn> _store; 
-            
+            private readonly IWritableStore<TEn> _store;
+
             // ReSharper disable CSharpWarnings::CS1998
             public async Task ProcessEvent(EventInStream<T> ev, IProjectCursor t)
             // ReSharper restore CSharpWarnings::CS1998
@@ -76,6 +76,46 @@ namespace SocialToolBox.Core.Mocks.Database
 
             public IEventStream[] Streams { get; set; }
         }
+
+        public IIndex<TSet, TSort> Create<TSet, TSort>(string name, IIndexProjection<T, TSet, TSort> proj, IEventStream[] streams) 
+            where TSet : class where TSort : class
+        {
+            if (_isCompiled)
+                throw new InvalidOperationException(
+                    string.Format("Projection {0} is already compiled.", Name));
+
+            var index = new InMemoryIndex<TSet, TSort>();
+            Projector.Register(new IndexProjector<TSet,TSort>(proj, index){Name = name, Streams = streams});
+            return index;
+        }
+
+        /// <summary>
+        /// A projector for store views.
+        /// </summary>
+        private class IndexProjector<TSet,TSort> : IProjector<T> where TSet : class where TSort : class
+        {
+            public IndexProjector(IIndexProjection<T, TSet, TSort> proj, IWritableIndex<TSet,TSort> index)
+            {
+                _projection = proj;
+                _index = index;
+            }
+
+            public string Name { get; set; }
+
+            private readonly IIndexProjection<T, TSet, TSort> _projection;
+
+            private readonly IWritableIndex<TSet, TSort> _index;
+
+            // ReSharper disable CSharpWarnings::CS1998
+            public async Task ProcessEvent(EventInStream<T> ev, IProjectCursor t)
+            // ReSharper restore CSharpWarnings::CS1998
+            {
+                _projection.Process(_index, ev, t).Wait();
+            }
+
+            public IEventStream[] Streams { get; set; }
+        }
+
 
         public void Compile()
         {

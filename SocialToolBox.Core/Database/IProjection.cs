@@ -28,6 +28,14 @@ namespace SocialToolBox.Core.Database
             where TEn : class;
 
         /// <summary>
+        /// Create an index using the specified projection.
+        /// </summary>
+        IIndex<TSet, TSort> Create<TSet, TSort>(string name, IIndexProjection<T, TSet, TSort> proj,
+            IEventStream[] streams)
+            where TSet : class
+            where TSort : class;
+
+        /// <summary>
         /// Compiles the projection. This means using the projection contents
         /// becomes allowed, but adding new views or projectors becomes 
         /// forbidden. 

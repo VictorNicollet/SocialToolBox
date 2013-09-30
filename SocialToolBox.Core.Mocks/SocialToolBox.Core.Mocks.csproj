@@ -46,6 +46,7 @@
     <Compile Include="Database\Events\MockAccountNameUpdated.cs" />
     <Compile Include="Database\Events\MockAccountPasswordUpdated.cs" />
     <Compile Include="Database\Projection.cs" />
+    <Compile Include="Database\Projections\InMemoryIndex.cs" />
     <Compile Include="Database\Projections\InMemoryStore.cs" />
     <Compile Include="Database\ReadCursor.cs" />
     <Compile Include="Database\Serialization\MockAccount.cs" />
