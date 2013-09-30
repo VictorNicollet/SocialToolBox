@@ -101,5 +101,18 @@ namespace SocialToolBox.Core.Tests.Database.Projection
                 new KeyValuePair<StringKey, Id>(K("C"), IdB)
             }, result);
         }
+
+        [Test]
+        public void query_min_value()
+        {
+            Fill();
+
+            var result = Index.Query(K("A"), Cursor, 10, 0, K("C")).Result;
+            CollectionAssert.AreEqual(new[]
+            {
+                new KeyValuePair<StringKey, Id>(K("C"), IdB),
+                new KeyValuePair<StringKey, Id>(K("D"), IdA)
+            }, result);
+        }
     }
 }

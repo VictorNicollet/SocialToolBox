@@ -77,7 +77,7 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
             }
         }
 
-        public async Task<IEnumerable<KeyValuePair<TSort, Id>>> Query(TSet set, IReadCursor cursor, int count, int offset = 0, TSort maxValue = null, TSort minValue = null)
+        public async Task<IEnumerable<KeyValuePair<TSort, Id>>> Query(TSet set, IReadCursor cursor, int count, int offset = 0, TSort minValue = null, TSort maxValue = null)
         {
             using (await _lock.Lock())
             {
