@@ -123,5 +123,45 @@ namespace SocialToolBox.Core.Database.Projection
                 await store.Set((Id)id, _mutator(ev.Event, current), cursor);
             }
         }
+
+        /// <summary>
+        /// Create an index from an updater function that is called on every event
+        /// and has access to the writable index.
+        /// </summary>
+        public static IIndex<TSet, TSort> CreateIndex<TEv, TSet, TSort>(
+            this IProjection<TEv> proj,
+            string name,
+            Func<IWritableIndex<TSet, TSort>, TEv, IProjectCursor, Task> updater,
+            IEventStream[] streams)
+
+            where TEv : class
+            where TSet : class
+            where TSort : class
+        {
+            var projection = new IndexWithUpdater<TEv, TSet, TSort>(updater);
+            return proj.Create(name, projection, streams);
+        }
+
+        /// <summary>
+        /// An index projection that forwards events to an updater function.
+        /// </summary>
+        private class IndexWithUpdater<TEv, TSet, TSort> : IIndexProjection<TEv, TSet, TSort>
+            where TEv : class
+            where TSet : class
+            where TSort : class
+        {
+            private readonly Func<IWritableIndex<TSet, TSort>, TEv, IProjectCursor, Task> _updater;
+
+            public IndexWithUpdater(Func<IWritableIndex<TSet, TSort>, TEv, IProjectCursor, Task> updater)
+            {
+                _updater = updater;
+            }
+
+            public Task Process(IWritableIndex<TSet, TSort> index, EventInStream<TEv> ev, IProjectCursor cursor)
+            {
+                return _updater(index, ev.Event, cursor);
+            }
+        }
+
     }
 }

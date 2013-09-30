@@ -30,5 +30,7 @@ namespace SocialToolBox.Core.Mocks.Database.Events
         public MockAccountNameUpdated() {}
 
         public Id EntityId { get { return Id; } }
+
+        public bool EntityTitleChanged { get { return true; } }
     }
 }

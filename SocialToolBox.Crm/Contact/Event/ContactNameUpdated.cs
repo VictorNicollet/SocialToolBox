@@ -67,5 +67,7 @@ namespace SocialToolBox.Crm.Contact.Event
         }
 
         public Id EntityId { get { return Id; } }
+        
+        public bool EntityTitleChanged { get { return true; } }
     }
 }

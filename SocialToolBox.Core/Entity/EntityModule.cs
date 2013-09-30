@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.Index;
 using SocialToolBox.Core.Database.Projection;
 using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
@@ -39,6 +42,24 @@ namespace SocialToolBox.Core.Entity
         private IStore<IEntityPage> _pages;
 
         /// <summary>
+        /// An index of pages, sorted by their name.
+        /// </summary>
+        private IIndex<NoKey, StringKey> _pageByTitle;
+
+        /// <summary>
+        /// An index of pages, sorted by their name. Reading this property
+        /// will compile the module.
+        /// </summary>
+        public IIndex<NoKey, StringKey> PageByTitle
+        {
+            get
+            {
+                if (!Compiled) Compile();
+                return _pageByTitle;
+            }
+        }
+
+        /// <summary>
         /// Have the module projections aready been compiled ? 
         /// </summary>
         public bool Compiled { get; private set; }
@@ -56,9 +77,24 @@ namespace SocialToolBox.Core.Entity
             _pages = pagesProjection.CreateStore(
                 "Pages", ev => ev.EntityId, PageEventVisitor, EventStreams.ToArray());
 
+            _pageByTitle = pagesProjection.CreateIndex<IEntityPageEvent,NoKey,StringKey>(
+                "PagesByTitle", ProjectPagesByTitle, EventStreams.ToArray());
+
             pagesProjection.Compile();
             
             Compiled = true;
+        }
+
+        private async Task ProjectPagesByTitle(IWritableIndex<NoKey, StringKey> index, IEntityPageEvent ev,
+            IProjectCursor cursor)
+        {
+            if (!ev.EntityTitleChanged) return;
+            var page = await Pages.Get(ev.EntityId, cursor);
+            
+            if (page == null)
+                await index.Delete(ev.EntityId, cursor);
+            else
+                await index.Set(ev.EntityId, new NoKey(), new StringKey(page.Title), cursor);
         }
 
         /// <summary>
