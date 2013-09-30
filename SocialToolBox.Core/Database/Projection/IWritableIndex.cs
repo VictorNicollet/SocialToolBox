@@ -28,5 +28,11 @@ namespace SocialToolBox.Core.Database.Projection
         /// Adds several bindings for a given identifier.
         /// </summary>
         Task Add(Id id, IEnumerable<IPair<TSet, TSort>> bindings, IProjectCursor c);
+
+        /// <summary>
+        /// Updates or creates the single binding for a given identifier. If
+        /// multiple bindings were already present, one or more may be updated.
+        /// </summary>
+        Task Set(Id id, TSet set, TSort sort, IProjectCursor c);
     }
 }

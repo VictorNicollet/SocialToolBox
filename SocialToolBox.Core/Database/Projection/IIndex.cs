@@ -20,7 +20,7 @@ namespace SocialToolBox.Core.Database.Projection
         /// the specified offset first, and staying between the min
         /// and max values (inclusive).
         /// </summary>
-        Task<IEnumerable<IPair<TSort, Id>>> Query(
+        Task<IEnumerable<KeyValuePair<TSort, Id>>> Query(
             TSet set, IReadCursor cursor, int count,
             int offset = 0,
             TSort maxValue = null,
