@@ -57,11 +57,11 @@ namespace SocialToolBox.Core.Database.Projection
                 _mutator = mutator;
             }
 
-            public async Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev)
+            public async Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev, IProjectCursor cursor)
             {
                 var id = ev.Event.Id;
-                var current = await store.Get(id);
-                await store.Set(id, _mutator(ev.Event,current));
+                var current = await store.Get(id, cursor);
+                await store.Set(id, _mutator(ev.Event,current), cursor);
             }
         }
 
@@ -115,12 +115,12 @@ namespace SocialToolBox.Core.Database.Projection
                 _getId = getId;
             }
 
-            public async Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev)
+            public async Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev, IProjectCursor cursor)
             {
                 var id = _getId(ev.Event);
                 if (id == null) return;                
-                var current = await store.Get((Id)id);
-                await store.Set((Id)id, _mutator(ev.Event, current));
+                var current = await store.Get((Id)id, cursor);
+                await store.Set((Id)id, _mutator(ev.Event, current), cursor);
             }
         }
     }

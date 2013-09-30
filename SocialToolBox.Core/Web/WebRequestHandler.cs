@@ -26,6 +26,20 @@ namespace SocialToolBox.Core.Web
         public IDatabaseDriver Database { get { return Web.Database; } }
 
         /// <summary>
+        /// A read-write cursor on the database, initialized the first
+        /// time it is queried.
+        /// </summary>
+        private ICursor _cursor;
+        
+        /// <summary>
+        /// A read-write cursor on the database. 
+        /// </summary>
+        public ICursor Cursor
+        {
+            get { return _cursor ?? (_cursor = Database.OpenReadWriteCursor()); }
+        }
+
+        /// <summary>
         /// The arguments from the current web request.
         /// </summary>
         public T Arguments { get; private set; }

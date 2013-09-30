@@ -50,7 +50,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
         public void initially_empty()
         {
             Projection.Compile();
-            Assert.IsNull(Accounts.Get(IdA).Result);
+            Assert.IsNull(Accounts.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
             Stream.AddEvent(new MockAccountCreated(IdA, "Name", DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
-            var current = Accounts.Get(IdA).Result;
+            var current = Accounts.Get(IdA, Cursor).Result;
             Assert.AreEqual(new MockAccount { Name = "Name" }, current);
         }
 
@@ -72,7 +72,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
             Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Cursor);
             Projections.Run();
 
-            var current = Accounts.Get(IdA).Result;
+            var current = Accounts.Get(IdA, Cursor).Result;
             Assert.AreEqual(MockAccount.Bob, current);
         }
 
@@ -85,7 +85,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection.ProjectionExtensions
             Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Accounts.Get(IdA).Result);
+            Assert.IsNull(Accounts.Get(IdA, Cursor).Result);
         }
     }
 }

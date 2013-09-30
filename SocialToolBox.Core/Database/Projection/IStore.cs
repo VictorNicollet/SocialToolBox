@@ -17,6 +17,6 @@ namespace SocialToolBox.Core.Database.Projection
         /// Get the item using its identifier. Returns null if no item
         /// was found.
         /// </summary>
-        Task<T> Get(Id id);
+        Task<T> Get(Id id, IReadCursor cursor);
     }
 }

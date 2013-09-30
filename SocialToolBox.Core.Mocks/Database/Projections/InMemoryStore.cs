@@ -24,7 +24,7 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
         } 
 
 // ReSharper disable CSharpWarnings::CS1998
-        public async Task<T> Get(Id id)
+        public async Task<T> Get(Id id, IReadCursor cursor)
 // ReSharper restore CSharpWarnings::CS1998
         {
             byte[] value;
@@ -34,12 +34,12 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
         }
 
 // ReSharper disable CSharpWarnings::CS1998
-        public async Task Set(Id id, T item)
+        public async Task Set(Id id, T item, IProjectCursor cursor)
 // ReSharper restore CSharpWarnings::CS1998
         {
             Contents.Remove(id);
             if (item == null) return;
-            Contents.Add(id,Serializer.Serialize(item));
+            Contents.Add(id,Serializer.Serialize(item));         
         }
     }
 }

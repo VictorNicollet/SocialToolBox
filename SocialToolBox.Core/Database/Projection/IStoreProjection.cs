@@ -13,6 +13,6 @@ namespace SocialToolBox.Core.Database.Projection
         /// <summary>
         /// Process an event, possibly by updating a writable store.
         /// </summary>
-        Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev);
+        Task Process(IWritableStore<TEn> store, EventInStream<TEv> ev, IProjectCursor cursor);
     }
 }

@@ -36,7 +36,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
         [Test]
         public void initially_empty()
         {
-            Assert.IsNull(Entities.Pages.Get(IdA).Result);
+            Assert.IsNull(Entities.Pages.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
             Contacts.Stream.AddEvent(new ContactCreated(IdA, DateTime.Parse("2011/05/14"), IdUser), Cursor);
             Projections.Run();
 
-            Assert.AreEqual(typeof(ContactAsEntityPage), Entities.Pages.Get(IdA).Result.GetType());
-            Assert.IsNull(Entities.Pages.Get(IdA).Result.Title);
+            Assert.AreEqual(typeof(ContactAsEntityPage), Entities.Pages.Get(IdA, Cursor).Result.GetType());
+            Assert.IsNull(Entities.Pages.Get(IdA, Cursor).Result.Title);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
             Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"), Cursor);
             Projections.Run();
 
-            Assert.AreEqual("Victor Nicollet", Entities.Pages.Get(IdA).Result.Title);
+            Assert.AreEqual("Victor Nicollet", Entities.Pages.Get(IdA, Cursor).Result.Title);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
             Contacts.Stream.AddEvent(new ContactDeleted(IdA, DateTime.Parse("2011/05/14"), IdUser), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Entities.Pages.Get(IdA).Result);
+            Assert.IsNull(Entities.Pages.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace SocialToolBox.Crm.Tests.Contact.Projection
             Contacts.Stream.AddEvent(new ContactNameUpdated(IdA, DateTime.Parse("2011/05/14"), IdUser, "Victor", "Nicollet"), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Entities.Pages.Get(IdA).Result);
+            Assert.IsNull(Entities.Pages.Get(IdA, Cursor).Result);
         }
     }
 }

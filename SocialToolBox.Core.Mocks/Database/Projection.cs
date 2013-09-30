@@ -71,7 +71,7 @@ namespace SocialToolBox.Core.Mocks.Database
             public async Task ProcessEvent(EventInStream<T> ev, IProjectCursor t)
             // ReSharper restore CSharpWarnings::CS1998
             {
-                _projection.Process(_store, ev).Wait();
+                _projection.Process(_store, ev, t).Wait();
             }
 
             public IEventStream[] Streams { get; set; }

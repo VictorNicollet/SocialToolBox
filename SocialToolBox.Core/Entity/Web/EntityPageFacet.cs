@@ -34,7 +34,7 @@ namespace SocialToolBox.Core.Entity.Web
 
             protected override WebResponse Process()
             {
-                var pageT = Facet.Module.Pages.Get(Arguments.Ident);
+                var pageT = Facet.Module.Pages.Get(Arguments.Ident, Cursor);
 
                 var page = pageT.Result;
                 if (page == null) return Page(new NotFound());

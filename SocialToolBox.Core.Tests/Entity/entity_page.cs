@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using SocialToolBox.Core.Database;
-using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Database.Events;
@@ -37,7 +36,7 @@ namespace SocialToolBox.Core.Tests.Entity
         [Test]
         public void initially_empty()
         {
-            Assert.IsNull(Module.Pages.Get(IdA).Result);
+            Assert.IsNull(Module.Pages.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -46,8 +45,8 @@ namespace SocialToolBox.Core.Tests.Entity
             Stream.AddEvent(new MockAccountCreated(IdA, "The Title", DateTime.Parse("2011/05/14")), Cursor);
             Projections.Run();
 
-            Assert.AreEqual(typeof(MockAccountAsEntityPage), Module.Pages.Get(IdA).Result.GetType());
-            Assert.AreEqual("The Title", Module.Pages.Get(IdA).Result.Title);
+            Assert.AreEqual(typeof(MockAccountAsEntityPage), Module.Pages.Get(IdA, Cursor).Result.GetType());
+            Assert.AreEqual("The Title", Module.Pages.Get(IdA, Cursor).Result.Title);
         }
 
         [Test]
@@ -57,7 +56,7 @@ namespace SocialToolBox.Core.Tests.Entity
             Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Cursor);
             Projections.Run();
 
-            Assert.AreEqual("New Title", Module.Pages.Get(IdA).Result.Title);
+            Assert.AreEqual("New Title", Module.Pages.Get(IdA, Cursor).Result.Title);
         }
 
         [Test]
@@ -67,7 +66,7 @@ namespace SocialToolBox.Core.Tests.Entity
             Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2011/05/14")), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Module.Pages.Get(IdA).Result);
+            Assert.IsNull(Module.Pages.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -76,7 +75,7 @@ namespace SocialToolBox.Core.Tests.Entity
             Stream.AddEvent(new MockAccountNameUpdated(IdA, DateTime.Parse("2011/05/14"), "New Title"), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Module.Pages.Get(IdA).Result);
+            Assert.IsNull(Module.Pages.Get(IdA, Cursor).Result);
         }
     }
 }

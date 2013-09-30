@@ -4,7 +4,6 @@ using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.EventStream;
 using SocialToolBox.Core.Database.Projection;
-using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Database.Events;
 using SocialToolBox.Core.Mocks.Database.Serialization;
@@ -25,11 +24,11 @@ namespace SocialToolBox.Core.Tests.Database.Projection
 
         private class AccountProjection : IStoreProjection<IMockEvent,MockAccount>
         {
-            public async Task Process(IWritableStore<MockAccount> store, EventInStream<IMockEvent> ev)
+            public async Task Process(IWritableStore<MockAccount> store, EventInStream<IMockEvent> ev, IProjectCursor cursor)
             {
                 var id = ev.Event.Id;
-                var old = await store.Get(id);
-                await store.Set(id, MockAccount.ApplyEvent.Visit(ev.Event, old));
+                var old = await store.Get(id, cursor);
+                await store.Set(id, MockAccount.ApplyEvent.Visit(ev.Event, old), cursor);
             }
         }
 
@@ -62,7 +61,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         public void initially_empty()
         {
             Projection.Compile();
-            Assert.IsNull(Accounts.Get(IdA).Result);
+            Assert.IsNull(Accounts.Get(IdA, Cursor).Result);
         }
 
         [Test]
@@ -72,7 +71,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
             Stream.AddEvent(new MockAccountCreated(IdA, "Name", DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
-            var current = Accounts.Get(IdA).Result;
+            var current = Accounts.Get(IdA, Cursor).Result;
             Assert.AreEqual(new MockAccount{Name = "Name"}, current);
         }
 
@@ -84,7 +83,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
             Stream.AddEvent(new MockAccountPasswordUpdated(IdA, DateTime.Parse("2013/07/12"), MockAccount.Bob.Password), Cursor);
             Projections.Run();
 
-            var current = Accounts.Get(IdA).Result;
+            var current = Accounts.Get(IdA, Cursor).Result;
             Assert.AreEqual(MockAccount.Bob, current);
         }
 
@@ -97,7 +96,7 @@ namespace SocialToolBox.Core.Tests.Database.Projection
             Stream.AddEvent(new MockAccountDeleted(IdA, DateTime.Parse("2013/07/12")), Cursor);
             Projections.Run();
 
-            Assert.IsNull(Accounts.Get(IdA).Result);
+            Assert.IsNull(Accounts.Get(IdA, Cursor).Result);
         }
     }
 }

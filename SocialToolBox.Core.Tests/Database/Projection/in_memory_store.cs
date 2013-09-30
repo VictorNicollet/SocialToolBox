@@ -12,34 +12,36 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         public readonly Id IdA = Id.Parse("aaaaaaaaaaa");
         public readonly Id IdB = Id.Parse("bbbbbbbbbbb");
         public InMemoryStore<MockAccount> Store;
+        public IProjectCursor Cursor;
 
         [SetUp]
         public void SetUp()
         {
             var driver = new DatabaseDriver();
             Store = new InMemoryStore<MockAccount>(driver);
+            Cursor = driver.OpenProjectionCursor();
         }
 
         [Test]
         public void default_is_missing()
         {
-            Assert.IsNull(Store.Get(IdA).Result);
+            Assert.IsNull(Store.Get(IdA, Cursor).Result);
         }
 
         [Test]
         public void save_and_load()
         {
-            Store.Set(IdA, MockAccount.Bob).Wait();
-            Assert.IsNull(Store.Get(IdB).Result);
-            Assert.AreEqual(MockAccount.Bob, Store.Get(IdA).Result);
+            Store.Set(IdA, MockAccount.Bob, Cursor).Wait();
+            Assert.IsNull(Store.Get(IdB, Cursor).Result);
+            Assert.AreEqual(MockAccount.Bob, Store.Get(IdA, Cursor).Result);
         }
 
         [Test]
         public void save_delete_and_load()
         {
-            Store.Set(IdA, MockAccount.Bob).Wait();
-            Store.Set(IdA, null).Wait();
-            Assert.IsNull(Store.Get(IdA).Result);
+            Store.Set(IdA, MockAccount.Bob, Cursor).Wait();
+            Store.Set(IdA, null, Cursor).Wait();
+            Assert.IsNull(Store.Get(IdA, Cursor).Result);
         }
     }
 }
