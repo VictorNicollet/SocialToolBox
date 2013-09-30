@@ -66,6 +66,7 @@
     <Compile Include="Database\Projection\IIndex.cs" />
     <Compile Include="Database\Projection\IStore.cs" />
     <Compile Include="Database\Projection\IStoreProjection.cs" />
+    <Compile Include="Database\Projection\IWritableIndex.cs" />
     <Compile Include="Database\Projection\IWritableStore.cs" />
     <Compile Include="Database\Projection\MultiProjector.cs" />
     <Compile Include="Database\Projection\ProjectionEngineThread.cs" />
