@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Database.Index
+﻿using System;
+
+namespace SocialToolBox.Core.Database.Index
 {
     /// <summary>
     /// A one-column, 255-character string key. Provided as a helpful utility class.
@@ -13,6 +15,18 @@
         public override string ToString()
         {
             return Key;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var sk = obj as StringKey;
+            if (sk == null) return false;
+            return string.Compare(Key, sk.Key, StringComparison.InvariantCulture) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Key.GetHashCode();
         }
     }
 }

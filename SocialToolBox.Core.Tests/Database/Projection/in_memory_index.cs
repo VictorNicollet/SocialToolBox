@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Index;
 using SocialToolBox.Core.Mocks.Database;
@@ -45,6 +46,35 @@ namespace SocialToolBox.Core.Tests.Database.Projection
             Index.Add(IdB, K("A"), K("B"), Cursor).Wait();
             Assert.AreEqual(2, Index.Count(K("A"), Cursor).Result);
             Assert.AreEqual(0, Index.Count(K("B"), Cursor).Result);
+        }
+
+        public void Fill()
+        {
+            Index.Add(IdA, new[]
+            {
+                Pair.Make(K("A"), K("B")),
+                Pair.Make(K("A"), K("D"))
+            }, Cursor).Wait();
+
+            Index.Add(IdB, new[]
+            {
+                Pair.Make(K("A"), K("C")),
+                Pair.Make(K("B"), K("A"))
+            }, Cursor).Wait();
+        }
+
+        [Test]
+        public void query_simple()
+        {
+            Fill();
+
+            var result = Index.Query(K("A"), Cursor, 10).Result;
+            CollectionAssert.AreEqual(new[]
+            {
+                new KeyValuePair<StringKey, Id>(K("B"), IdA),
+                new KeyValuePair<StringKey, Id>(K("C"), IdB),
+                new KeyValuePair<StringKey, Id>(K("D"), IdA)
+            }, result);
         }
     }
 }

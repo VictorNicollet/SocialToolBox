@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SocialToolBox.Core.Async;
@@ -88,7 +89,11 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
                 if (maxValue != null)
                     inSet = inSet.Where(l => _comparer.SortComparer.Compare(l.Sort, maxValue) <= 0);
 
-                return inSet.Skip(offset).Take(count)
+                var filtered = inSet.ToArray();
+                Array.Sort(filtered, _comparer);
+
+                return filtered                    
+                    .Skip(offset).Take(count)
                     .Select(l => new KeyValuePair<TSort, Id>(l.Sort, l.Id));
             }
         }
