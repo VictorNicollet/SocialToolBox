@@ -49,6 +49,7 @@
     <Compile Include="Database\id.cs" />
     <Compile Include="Database\Index\index_field_type.cs" />
     <Compile Include="Database\Index\index_key_comparer.cs" />
+    <Compile Include="Database\Projection\in_memory_index.cs" />
     <Compile Include="Database\Projection\in_memory_store.cs" />
     <Compile Include="Database\Projection\multi_projector.cs" />
     <Compile Include="Database\Projection\ProjectionExtensions\store_with_mutator_projection.cs" />
