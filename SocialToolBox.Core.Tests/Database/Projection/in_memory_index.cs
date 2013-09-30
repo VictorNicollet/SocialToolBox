@@ -89,5 +89,17 @@ namespace SocialToolBox.Core.Tests.Database.Projection
                 new KeyValuePair<StringKey, Id>(K("D"), IdA)
             }, result); 
         }
+
+        [Test]
+        public void query_skip_count()
+        {
+            Fill();
+
+            var result = Index.Query(K("A"), Cursor, 1, 1).Result;
+            CollectionAssert.AreEqual(new[]
+            {
+                new KeyValuePair<StringKey, Id>(K("C"), IdB)
+            }, result);
+        }
     }
 }
