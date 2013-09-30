@@ -94,7 +94,7 @@ namespace SocialToolBox.Core.Entity
             if (page == null)
                 await index.Delete(ev.EntityId, cursor);
             else
-                await index.Set(ev.EntityId, new NoKey(), new StringKey(page.Title), cursor);
+                await index.Set(ev.EntityId, new StringKey(page.Title), cursor);
         }
 
         /// <summary>

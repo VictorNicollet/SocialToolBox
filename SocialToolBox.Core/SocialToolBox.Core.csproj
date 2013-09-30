@@ -67,6 +67,7 @@
     <Compile Include="Database\Projection\IIdExtractor.cs" />
     <Compile Include="Database\Projection\IIndex.cs" />
     <Compile Include="Database\Projection\IIndexProjection.cs" />
+    <Compile Include="Database\Projection\IndexExtensions.cs" />
     <Compile Include="Database\Projection\IStore.cs" />
     <Compile Include="Database\Projection\IStoreProjection.cs" />
     <Compile Include="Database\Projection\IWritableIndex.cs" />
