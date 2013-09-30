@@ -16,7 +16,7 @@ namespace SocialToolBox.Core.Database.Projection
         /// Run a query on an index with no set key. A simplification of <see cref="IIndex{TSet,TSort}.Query"/>
         /// </summary>
         public static Task<IEnumerable<KeyValuePair<TSort, Id>>> Query<TSort>(
-            this IIndex<NoKey, TSort> index, IProjectCursor cursor, int count,
+            this IIndex<NoKey, TSort> index, IReadCursor cursor, int count,
             int offset = 0,
             TSort minValue = null,
             TSort maxValue = null)
@@ -24,6 +24,16 @@ namespace SocialToolBox.Core.Database.Projection
             where TSort : class
         {
             return index.Query(new NoKey(), cursor, count, offset, minValue, maxValue);
+        }
+
+        /// <summary>
+        /// Counts the items in an index with no set key. A simplification of 
+        /// <see cref="IIndex{TSet,TSort}.Count"/>.
+        /// </summary>
+        public static Task<int> Count<TSort>(this IIndex<NoKey, TSort> index, IReadCursor cursor)
+            where TSort : class
+        {
+            return index.Count(new NoKey(), cursor);
         }
 
         /// <summary>
