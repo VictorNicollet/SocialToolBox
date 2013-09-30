@@ -29,5 +29,13 @@ namespace SocialToolBox.Core.Tests.Database.Projection
         {
             Assert.AreEqual(0, Index.Count(K("A"), Cursor).Result);
         }
+
+        [Test]
+        public void count_one_is_correct()
+        {
+            Index.Add(IdA, K("A"), K("B"), Cursor).Wait();
+            Assert.AreEqual(1, Index.Count(K("A"), Cursor).Result);
+            Assert.AreEqual(0, Index.Count(K("B"), Cursor).Result);
+        }
     }
 }
