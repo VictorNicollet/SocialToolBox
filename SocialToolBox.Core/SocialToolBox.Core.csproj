@@ -63,6 +63,7 @@
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
+    <Compile Include="Database\Projection\IIndex.cs" />
     <Compile Include="Database\Projection\IStore.cs" />
     <Compile Include="Database\Projection\IStoreProjection.cs" />
     <Compile Include="Database\Projection\IWritableStore.cs" />
