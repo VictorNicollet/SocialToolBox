@@ -114,5 +114,18 @@ namespace SocialToolBox.Core.Tests.Database.Projection
                 new KeyValuePair<StringKey, Id>(K("D"), IdA)
             }, result);
         }
+
+        [Test]
+        public void query_max_value()
+        {
+            Fill();
+
+            var result = Index.Query(K("A"), Cursor, 10, 0, null, K("C")).Result;
+            CollectionAssert.AreEqual(new[]
+            {
+                new KeyValuePair<StringKey, Id>(K("B"), IdA),
+                new KeyValuePair<StringKey, Id>(K("C"), IdB)
+            }, result);
+        }
     }
 }
