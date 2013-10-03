@@ -60,6 +60,8 @@ namespace SocialToolBox.Core.Web.Args
             if (!int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out page))
                 return false;
 
+            if (page < 1) return false;
+
             Page = page - 1;
             startAt++;
             return true;

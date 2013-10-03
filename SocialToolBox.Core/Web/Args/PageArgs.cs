@@ -1,7 +1,13 @@
 ﻿namespace SocialToolBox.Core.Web.Args
 {
+    /// <summary>
+    /// A single argument representing a page number.
+    /// </summary>
     public class PageArgs : WithPageArgs
     {
+        public PageArgs() {}
+        public PageArgs(int page) : base(page) {}
+
         public override WebUrl AddTo(WebUrl url)
         {
             AppendTo(url);
