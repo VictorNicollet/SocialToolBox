@@ -8,12 +8,43 @@ namespace SocialToolBox.Core.Present.Bootstrap3
     public static class ListRenderer
     {
         /// <summary>
+        /// Opening tag for a stack of items.
+        /// </summary>
+        public static readonly HtmlString StartStack =
+            HtmlString.Verbatim("<table class='table'>");
+
+        /// <summary>
+        /// Closing tag for a stack of items.
+        /// </summary>
+        public static readonly HtmlString EndStack =
+            HtmlString.Verbatim("</table>");
+
+        /// <summary>
+        /// Opening tag for an item in a stack.
+        /// </summary>
+        public static readonly HtmlString StartStackItem =
+            HtmlString.Verbatim("<tr><td>");
+
+        /// <summary>
+        /// Closing tag for an item in a stack.
+        /// </summary>
+        public static readonly HtmlString EndStackItem =
+            HtmlString.Verbatim("</td></tr>");
+
+        /// <summary>
         /// Renders a list of items with no wrappers.
         /// </summary>
         public static void RenderStacked(
             IEnumerable<IPageNode> items, INodeRenderer renderer, HtmlOutput output)
         {
-            output.InsertNodes(items, renderer);
+            output.Add(StartStack);
+            foreach (var item in items)
+            {
+                output.Add(StartStackItem);
+                output.InsertNode(item, renderer);
+                output.Add(EndStackItem);
+            }
+            output.Add(EndStack);
         }
     }
 }
