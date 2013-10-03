@@ -26,5 +26,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("List !");
         }
+
+        public void Render(Pagination pagination, HtmlOutput output)
+        {
+            output.Add("Pagination !");
+        }
     }
 }

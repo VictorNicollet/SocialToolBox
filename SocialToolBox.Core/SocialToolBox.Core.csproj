@@ -99,6 +99,7 @@
     <Compile Include="Present\Builders\ListBuilder.cs" />
     <Compile Include="Present\HtmlOutput.cs" />
     <Compile Include="Present\Builders\ColumnPageBuilder.cs" />
+    <Compile Include="Present\Pagination.cs" />
     <Compile Include="Present\ListVertical.cs" />
     <Compile Include="Present\NodeRendererExtensions.cs" />
     <Compile Include="Present\HtmlString.cs" />

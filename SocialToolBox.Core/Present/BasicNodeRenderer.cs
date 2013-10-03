@@ -36,5 +36,6 @@ namespace SocialToolBox.Core.Present
         public abstract void Render(NotFound notFound, HtmlOutput o);
         public abstract void Render(ColumnPage page, HtmlOutput o);
         public abstract void Render(ListVertical list, HtmlOutput o);
+        public abstract void Render(Pagination pagination, HtmlOutput o);
     }
 }
