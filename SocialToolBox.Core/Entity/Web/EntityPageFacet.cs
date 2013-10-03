@@ -65,6 +65,9 @@ namespace SocialToolBox.Core.Entity.Web
             }
         }
 
+        /// <summary>
+        /// Handler for displaying all pages, in name order.
+        /// </summary>
         private class AllPagesHandler : FacetHandler<EntityPageFacet, PageArgs>
         {
             public AllPagesHandler(EntityPageFacet facet) : base(facet) {}
@@ -85,7 +88,7 @@ namespace SocialToolBox.Core.Entity.Web
                 var pages = pagesT.Result;
 
                 var list = ListBuilder.From(pages, RenderPage)
-                    .WithPagination(Pagination.PrevNext(prevLink, nextLink))
+                    .WithPagination(Pagination.PrevNext(prevLink, nextLink, Pagination.Position.Below))
                     .BuildVertical();
 
                 return Page(ColumnPage
