@@ -86,12 +86,13 @@ namespace SocialToolBox.Core.Present.Bootstrap3
 
         public override void Render(ListVertical list, HtmlOutput output)
         {
-            ListRenderer.RenderStacked(list.Items, this, output);
+            ListRenderer.RenderStacked(list.Items, list.Pagination, this, output);
         }
 
         public override void Render(Pagination pagination, HtmlOutput output)
         {
-            PaginationRenderer.RenderList();
+            if (pagination.IsPrevNext)
+                PaginationRenderer.RenderPrevNext(pagination.Links, output);
         }
 
         public PageNodeRenderer()

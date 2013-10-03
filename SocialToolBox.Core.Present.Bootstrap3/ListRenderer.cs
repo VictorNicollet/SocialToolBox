@@ -35,15 +35,31 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// Renders a list of items with no wrappers.
         /// </summary>
         public static void RenderStacked(
-            IEnumerable<IPageNode> items, INodeRenderer renderer, HtmlOutput output)
+            IEnumerable<IPageNode> items, Pagination pagination, INodeRenderer renderer, HtmlOutput output)
         {
             output.Add(StartStack);
+
+            if ((pagination.Where & Pagination.Position.Above) != 0)
+            {
+                output.Add(StartStackItem);
+                output.InsertNode(pagination, renderer);
+                output.Add(EndStackItem);
+            }
+
             foreach (var item in items)
             {
                 output.Add(StartStackItem);
                 output.InsertNode(item, renderer);
                 output.Add(EndStackItem);
             }
+
+            if ((pagination.Where & Pagination.Position.Below) != 0)
+            {
+                output.Add(StartStackItem);
+                output.InsertNode(pagination, renderer);
+                output.Add(EndStackItem);
+            }
+            
             output.Add(EndStack);
         }
     }

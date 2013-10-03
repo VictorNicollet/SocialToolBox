@@ -21,9 +21,24 @@ namespace SocialToolBox.Core.Present.Builders
         /// <summary>
         /// Append a node to the list.
         /// </summary>
-        public void Add(IPageNode node)
+        public ListBuilder Add(IPageNode node)
         {
             _items.Add(node);
+            return this;
+        }
+
+        /// <summary>
+        /// The pagination of the list, none by default.
+        /// </summary>
+        public Pagination Pagination { get; private set; }
+
+        /// <summary>
+        /// Add a pagination (or remove it, if null) to the list.
+        /// </summary>
+        public ListBuilder WithPagination(Pagination pagination)
+        {
+            Pagination = pagination;
+            return this;
         }
 
         /// <summary>

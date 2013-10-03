@@ -71,11 +71,22 @@ namespace SocialToolBox.Core.Entity.Web
 
             protected override WebResponse Process()
             {
+                var countT = Facet.Module.PageByTitle.Count(Cursor);
                 var pagesT = Facet.Module.PageByTitle.Query(Cursor, PageSize, PageSize * Arguments.Page);
+
+                var prevLink = Arguments.Page == 0 ? null :
+                    Facet.All.Url(Request, new PageArgs(Arguments.Page - 1));
+
+                var count = countT.Result;
+
+                var nextLink = (Arguments.Page + 1) * PageSize >= count ? null :
+                    Facet.All.Url(Request, new PageArgs(Arguments.Page + 1));
 
                 var pages = pagesT.Result;
 
-                var list = ListBuilder.From(pages, RenderPage).BuildVertical();
+                var list = ListBuilder.From(pages, RenderPage)
+                    .WithPagination(Pagination.PrevNext(prevLink, nextLink))
+                    .BuildVertical();
 
                 return Page(ColumnPage
                     .WithTitle("All Entity Pages")

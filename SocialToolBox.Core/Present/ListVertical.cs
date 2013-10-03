@@ -13,9 +13,15 @@ namespace SocialToolBox.Core.Present
         /// </summary>
         public readonly IReadOnlyList<IPageNode> Items;
 
+        /// <summary>
+        /// How is this list paginated, if applicable ? 
+        /// </summary>
+        public readonly Pagination Pagination;
+
         public ListVertical(ListBuilder source)
         {
             Items = source.Items;
+            Pagination = source.Pagination;
         }
 
         public void RenderWith(INodeRenderer visitor, HtmlOutput output)
