@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SocialToolBox.Core.Mocks.Web;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
