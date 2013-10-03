@@ -21,5 +21,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("Page !");
         }
+
+        public void Render(ListVertical list, HtmlOutput output)
+        {
+            output.Add("List !");
+        }
     }
 }

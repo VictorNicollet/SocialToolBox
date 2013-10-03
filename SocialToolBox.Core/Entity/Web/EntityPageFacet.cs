@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using SocialToolBox.Core.Database;
+using SocialToolBox.Core.Database.Index;
 using SocialToolBox.Core.Database.Projection;
 using SocialToolBox.Core.Present;
+using SocialToolBox.Core.Present.Builders;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Facets;
@@ -72,10 +75,22 @@ namespace SocialToolBox.Core.Entity.Web
 
                 var pages = pagesT.Result;
 
+                var list = ListBuilder.From(pages, RenderPage).BuildVertical();
+
                 return Page(ColumnPage
                     .WithTitle("All Entity Pages")
-                    .AddPrimary(HtmlString.Concat(pages.Select(p => HtmlString.Escape(p.Key.Key))))
+                    .AddPrimary(list)
                     .Build());
+            }
+
+            /// <summary>
+            /// Render a page.
+            /// </summary>
+            private IPageNode RenderPage(KeyValuePair<StringKey, Id> arg)
+            {
+                return HtmlString.Format("<a href='{0}'>{1}</a>", 
+                    Facet.View.Url(new IdArgs(arg.Value)),
+                    arg.Key);
             }
         }
     }

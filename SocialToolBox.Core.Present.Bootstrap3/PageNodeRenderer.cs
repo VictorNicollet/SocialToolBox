@@ -70,7 +70,7 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// </summary>
         public int[][] ColumnSizes { get; set; }
 
-        public override async void Render(ColumnPage page, HtmlOutput output)
+        public override void Render(ColumnPage page, HtmlOutput output)
         {
             var nColumns = page.Columns.Length;
             if (nColumns == 0) return;
@@ -82,6 +82,11 @@ namespace SocialToolBox.Core.Present.Bootstrap3
                 FormatTitle(page.Title), 
                 DefaultLayout(o => ColumnRenderer.Render(page.Columns, sizes, this, o)))
                 (output);
+        }
+
+        public override void Render(ListVertical list, HtmlOutput output)
+        {
+            ListRenderer.RenderStacked(list.Items, this, output);
         }
 
         public PageNodeRenderer()

@@ -9,5 +9,6 @@
         void Render(HtmlString html, HtmlOutput o);
         void Render(NotFound notFound, HtmlOutput o);
         void Render(ColumnPage page, HtmlOutput o);
+        void Render(ListVertical list, HtmlOutput o);
     }
 }
