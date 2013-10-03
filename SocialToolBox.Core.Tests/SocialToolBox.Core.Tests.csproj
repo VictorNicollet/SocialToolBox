@@ -60,6 +60,7 @@
     <Compile Include="Entity\entity_page.cs" />
     <Compile Include="Entity\entity_page_by_title.cs" />
     <Compile Include="Entity\Web\EntityPage\MockFixture.cs" />
+    <Compile Include="Entity\Web\EntityPage\all_pages.cs" />
     <Compile Include="Entity\Web\EntityPage\view_page.cs" />
     <Compile Include="EventReaderFixture.cs" />
     <Compile Include="Present\html_output.cs" />
