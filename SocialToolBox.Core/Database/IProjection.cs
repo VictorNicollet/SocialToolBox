@@ -36,6 +36,14 @@ namespace SocialToolBox.Core.Database
             where TSort : class;
 
         /// <summary>
+        /// Create a manually updated index. This is usually updated by reacting to 
+        /// changes on other objects within this projection.
+        /// </summary>
+        IWritableIndex<TSet, TSort> CreateManual<TSet, TSort>(string name)
+            where TSet : class
+            where TSort : class;
+
+        /// <summary>
         /// Compiles the projection. This means using the projection contents
         /// becomes allowed, but adding new views or projectors becomes 
         /// forbidden. 

@@ -19,6 +19,12 @@ namespace SocialToolBox.Core.Database.Projection
             new List<IProjector<T>>();
 
         /// <summary>
+        /// The list of the names of all registered manual operations.
+        /// </summary>
+        private readonly List<string> _manualOperations = 
+            new List<string>();
+
+        /// <summary>
         /// Register a new projector.
         /// </summary>
         public void Register(IProjector<T> projector)
@@ -125,6 +131,14 @@ namespace SocialToolBox.Core.Database.Projection
             foreach (var p in _projectors) 
                 if (p.Streams.Any(s => s == ev.Stream))
                     await p.ProcessEvent(ev, t);
+        }
+
+        /// <summary>
+        /// Register a new manual operation. 
+        /// </summary>
+        public void RegisterManual(string name)
+        {
+            _manualOperations.Add(name);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using SocialToolBox.Core.Database.Index;
-using SocialToolBox.Core.Web.Args;
 
 namespace SocialToolBox.Core.Database.Projection
 {

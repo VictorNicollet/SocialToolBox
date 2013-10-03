@@ -163,5 +163,24 @@ namespace SocialToolBox.Core.Database.Projection
             }
         }
 
+        /// <summary>
+        /// Create an index that is updated when changes are applied to the
+        /// provided store.
+        /// </summary>
+        public static IIndex<TSet, TSort> CreateIndex<TEv, TEn, TSet, TSort>(
+            this IProjection<TEv> proj,
+            string name,
+            IStore<TEn> store,
+            Action<IWritableIndex<TSet, TSort>, ValueChangedEventArgs<TEn>> update)
+
+            where TEv : class
+            where TEn : class
+            where TSet : class
+            where TSort : class
+        {
+            var index = proj.CreateManual<TSet, TSort>(name);
+            store.ValueChanged += args => update(index, args);
+            return index;
+        }
     }
 }

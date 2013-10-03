@@ -89,6 +89,16 @@ namespace SocialToolBox.Core.Mocks.Database
             return index;
         }
 
+        public IWritableIndex<TSet, TSort> CreateManual<TSet, TSort>(string name) where TSet : class where TSort : class
+        {
+            if (_isCompiled)
+                throw new InvalidOperationException(
+                    string.Format("Projection {0} is already compiled.", Name));
+
+            Projector.RegisterManual(name);
+            return new InMemoryIndex<TSet, TSort>();
+        }
+
         /// <summary>
         /// A projector for store views.
         /// </summary>
