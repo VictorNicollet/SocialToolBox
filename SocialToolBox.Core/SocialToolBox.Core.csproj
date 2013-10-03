@@ -121,6 +121,7 @@
     <Compile Include="Web\Args\AnyArgs.cs" />
     <Compile Include="Web\Args\IConvertibleToArgs.cs" />
     <Compile Include="Web\Args\PageArgs.cs" />
+    <Compile Include="Web\Args\WithPageArgs.cs" />
     <Compile Include="Web\Dispatch\WebRequestDispatcher.cs" />
     <Compile Include="Web\Dispatch\WebRequestHandlerWrapper.cs" />
     <Compile Include="Web\Facet.cs" />
