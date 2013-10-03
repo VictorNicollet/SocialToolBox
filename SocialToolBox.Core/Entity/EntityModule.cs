@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Configuration;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Index;
-using SocialToolBox.Core.Database.Index.Action;
 using SocialToolBox.Core.Database.Projection;
 using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
@@ -84,18 +81,6 @@ namespace SocialToolBox.Core.Entity
             pagesProjection.Compile();
             
             Compiled = true;
-        }
-
-        private async Task ProjectPagesByTitle(IWritableIndex<NoKey, StringKey> index, IEntityPageEvent ev,
-            IProjectCursor cursor)
-        {
-            if (!ev.EntityTitleChanged) return;
-            var page = await Pages.Get(ev.EntityId, cursor);
-            
-            if (page == null)
-                await index.Delete(ev.EntityId, cursor);
-            else
-                await index.Set(ev.EntityId, new StringKey(page.Title), cursor);
         }
 
         /// <summary>

@@ -5,9 +5,5 @@
     /// </summary>
     public interface IEntityPageEvent : IEventWithEntityId
     {
-        /// <summary>
-        /// Returns true if this event changed the name of the entity page.
-        /// </summary>
-        bool EntityTitleChanged { get; }
     }
 }
