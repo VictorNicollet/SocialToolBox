@@ -13,6 +13,8 @@ namespace SocialToolBox.Core.Mocks.Web
         public IWebDriver Driver { get; private set; }
         public HttpVerb Verb { get; set; }
         public string Domain { get; set; }
+        public bool IsSecure { get; set; }
+        public int Port { get; set; }
 
         public string Path
         {

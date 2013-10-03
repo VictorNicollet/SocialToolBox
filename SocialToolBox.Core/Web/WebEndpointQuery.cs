@@ -77,50 +77,50 @@ namespace SocialToolBox.Core.Web
                 Domain = other.Domain;
                 MatchedPath = other.MatchedPath;
                 UnmatchedPath = other.UnmatchedPath;
-                CookieData = Copy(other.CookieData);
-                PostData = Copy(other.PostData);
-                GetData = Copy(other.GetData);
+                _cookieData = Copy(other._cookieData);
+                _postData = Copy(other._postData);
+                _getData = Copy(other._getData);
                 Payload = other.Payload;
+                IsSecure = other.IsSecure;
+                Port = other.Port;
             }
 
-            public HttpVerb Verb { get; set; }
-            public string Domain { get; set; }
+            public HttpVerb Verb { get; private set; }
+            public string Domain { get; private set; }
+            public bool IsSecure { get; private set; }
+            public int Port { get; private set; }
             public string Path { get { return MatchedPath + "/" + string.Join("/", UnmatchedPath); } }
-            public string MatchedPath { get; set; }
-            public string[] UnmatchedPath { get; set; }
+            public string MatchedPath { get; private set; }
+            public string[] UnmatchedPath { get; private set; }
             public IWebRequest UnmatchOne() { return null; }
 
             public string Cookie(string name)
             {
                 string result;
-                if (CookieData.TryGetValue(name, out result)) return result;
+                if (_cookieData.TryGetValue(name, out result)) return result;
                 return null;
             }
 
             public string Post(string name)
             {
                 string result;
-                if (PostData.TryGetValue(name, out result)) return result;
+                if (_postData.TryGetValue(name, out result)) return result;
                 return null;
             }
 
             public string Get(string name)
             {
                 string result;
-                if (GetData.TryGetValue(name, out result)) return result;
+                if (_getData.TryGetValue(name, out result)) return result;
                 return null;
             }
 
-            public readonly Dictionary<string,string> CookieData = new Dictionary<string, string>();
-            public readonly Dictionary<string,string> PostData = new Dictionary<string,string>();
-            public readonly Dictionary<string, string> GetData = new Dictionary<string, string>();
-            public string Payload { get; set; }
+            private readonly Dictionary<string,string> _cookieData = new Dictionary<string, string>();
+            private readonly Dictionary<string,string> _postData = new Dictionary<string,string>();
+            private readonly Dictionary<string, string> _getData = new Dictionary<string, string>();
+            public string Payload { get; private set; }
 
-            public IWebResponseVisitor ResponseSender { get { return null; } }
-            public void SetDriver(IWebDriver webDriver)
-            {
-                Debug.Assert(false, "This request should never be passed to a driver.");
-            }
+            public IWebResponseVisitor ResponseSender { get { return null; } }            
         }
     }
 }

@@ -33,9 +33,10 @@ namespace SocialToolBox.Core.Tests.Web.Response
 
         private class Request : IWebRequest
         {
-            public IWebDriver Driver { get; set; }
             public HttpVerb Verb { get; private set; }
             public string Domain { get; private set; }
+            public bool IsSecure { get; private set; }
+            public int Port { get; private set; }
             public string Path { get; private set; }
             public string MatchedPath { get; private set; }
             public string[] UnmatchedPath { get; private set; }

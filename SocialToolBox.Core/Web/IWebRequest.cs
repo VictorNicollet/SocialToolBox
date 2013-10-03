@@ -18,6 +18,16 @@ namespace SocialToolBox.Core.Web
         string Domain { get; }
 
         /// <summary>
+        /// Whether the request was secure.
+        /// </summary>
+        bool IsSecure { get; }
+
+        /// <summary>
+        /// The port on which the request was received.
+        /// </summary>
+        int Port { get; }
+
+        /// <summary>
         /// The full path on which the request was received.
         /// </summary>
         string Path { get; }

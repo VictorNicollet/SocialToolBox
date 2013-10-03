@@ -63,6 +63,16 @@ namespace SocialToolBox.Core.Web.IIS
             get { return Context.Request.Url.Host; }
         }
 
+        public bool IsSecure
+        {
+            get { return Context.Request.IsSecureConnection; }
+        }
+
+        public int Port
+        {
+            get { return Context.Request.Url.Port; }
+        }
+
         public string Path
         {
             get { return string.Join("/", _pathSegments); }

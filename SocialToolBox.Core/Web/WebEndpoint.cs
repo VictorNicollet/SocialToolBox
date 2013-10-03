@@ -59,6 +59,11 @@ namespace SocialToolBox.Core.Web
             return args.AddTo(new WebUrl(Domain, BasePath, IsSecure, Port));
         }
 
+        public WebUrl Url(IWebRequest request, TArgs args)
+        {
+            return args.AddTo(new WebUrl(request.Domain, BasePath, request.IsSecure, request.Port));
+        }
+
         /// <summary>
         /// Builds a query for unit testing the endpoint.
         /// </summary>
