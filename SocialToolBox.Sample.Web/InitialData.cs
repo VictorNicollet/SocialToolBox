@@ -1,6 +1,5 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
-using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Crm.Contact.Event;
 
 namespace SocialToolBox.Sample.Web
@@ -12,6 +11,7 @@ namespace SocialToolBox.Sample.Web
     {
         public static readonly Id UserVictorNicollet = Id.Parse("aaaaaaaaaaa");
         public static readonly Id ContactBenjaminFranklin = Id.Parse("aaaaaaaaaab");
+        public static readonly Id ContactJuliusCaesar = Id.Parse("aaaaaaaaaac");
 
         /// <summary>
         /// Generates sample data.
@@ -31,6 +31,8 @@ namespace SocialToolBox.Sample.Web
             {
                 new ContactCreated(ContactBenjaminFranklin, DateTime.Parse("2013/09/26"),UserVictorNicollet),
                 new ContactNameUpdated(ContactBenjaminFranklin, DateTime.Parse("2013/09/26"),UserVictorNicollet,"Benjamin","Franklin"),                
+                new ContactCreated(ContactJuliusCaesar, DateTime.Parse("2013/09/27"),UserVictorNicollet),
+                new ContactNameUpdated(ContactJuliusCaesar, DateTime.Parse("2013/09/27"),UserVictorNicollet,"Julius","Caesar")                                
             }) modules.Contacts.Stream.AddEvent(ev, t);
         }
     }
