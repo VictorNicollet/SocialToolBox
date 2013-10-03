@@ -64,6 +64,7 @@
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
+    <Compile Include="Database\Index\Action\IndexAction.cs" />
     <Compile Include="Database\Projection\ValueChangedEvent.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
     <Compile Include="Database\Projection\IIndex.cs" />

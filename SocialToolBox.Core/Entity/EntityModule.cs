@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Index;
+using SocialToolBox.Core.Database.Index.Action;
 using SocialToolBox.Core.Database.Projection;
 using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
@@ -77,8 +78,8 @@ namespace SocialToolBox.Core.Entity
             _pages = pagesProjection.CreateStore(
                 "Pages", ev => ev.EntityId, PageEventVisitor, EventStreams.ToArray());
 
-            _pageByTitle = pagesProjection.CreateIndex<IEntityPageEvent,NoKey,StringKey>(
-                "PagesByTitle", ProjectPagesByTitle, EventStreams.ToArray());
+            _pageByTitle = pagesProjection.CreateIndex(
+                "PagesByTitle", _pages, GetPageTitle);
 
             pagesProjection.Compile();
             
@@ -136,6 +137,15 @@ namespace SocialToolBox.Core.Entity
         public EntityModule(IDatabaseDriver driver)
         {
             Driver = driver;
+        }
+
+        /// <summary>
+        /// Extracts the title of a page, or null if no page is provided.
+        /// </summary>
+        private static IPair<NoKey, StringKey> GetPageTitle(IEntityPage page)
+        {
+            if (page == null) return null;
+            return Pair.Make(new NoKey(), new StringKey(page.Title));
         }
     }
 }

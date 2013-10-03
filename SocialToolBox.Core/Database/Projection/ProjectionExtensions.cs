@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using SocialToolBox.Core.Database.Event;
 using SocialToolBox.Core.Database.EventStream;
+using SocialToolBox.Core.Database.Index;
+using SocialToolBox.Core.Database.Index.Action;
 
 namespace SocialToolBox.Core.Database.Projection
 {
@@ -171,7 +173,7 @@ namespace SocialToolBox.Core.Database.Projection
             this IProjection<TEv> proj,
             string name,
             IStore<TEn> store,
-            Action<IWritableIndex<TSet, TSort>, ValueChangedEventArgs<TEn>> update)
+            Func<ValueChangedEventArgs<TEn>, IndexAction<TSet,TSort>> extract)
 
             where TEv : class
             where TEn : class
@@ -179,8 +181,62 @@ namespace SocialToolBox.Core.Database.Projection
             where TSort : class
         {
             var index = proj.CreateManual<TSet, TSort>(name);
-            store.ValueChanged += args => update(index, args);
+            store.ValueChanged += args =>
+            {
+                var action = extract(args);
+                if (action != null)
+                {
+                    var task = action(index, args.Id, args.Cursor);
+                    if (task.Status == TaskStatus.WaitingToRun) task.Start();
+                }        
+                    
+            };
             return index;
+        }
+
+        /// <summary>
+        /// Uses an extractor to obtain a key from every entity in the store. 
+        /// Updates the index when the key changes.
+        /// </summary>
+        public static IIndex<TSet, TSort> CreateIndex<TEv, TEn, TSet, TSort>(
+            this IProjection<TEv> proj,
+            string name,
+            IStore<TEn> store,
+            Func<TEn, IPair<TSet, TSort>> extract)
+
+            where TEv : class
+            where TEn : class
+            where TSet : class
+            where TSort : class
+        {
+            var setC = new IndexKeyComparer<TSet>();
+            var sortC = new IndexKeyComparer<TSort>();
+
+            return proj.CreateIndex(name, store, args =>
+            {
+                var oldKeys = args.OldValue == null ? null : extract(args.OldValue);
+                var newKeys = args.NewValue == null ? null : extract(args.NewValue);
+
+                // Nothing changed, return a no-operation
+                if (newKeys == null && oldKeys == null)
+                    return null;
+
+                // Object was deleted, return deletion
+                if (oldKeys != null && newKeys == null) 
+                    return IndexAction.Delete<TSet, TSort>();
+
+                // Object was created, return standard set
+                if (oldKeys == null) 
+                    return IndexAction.Set(newKeys.First, newKeys.Second);
+
+                // Object was not changed, return a no-operation
+                if (setC.Compare(oldKeys.First, newKeys.First) == 0
+                    && sortC.Compare(oldKeys.Second, newKeys.Second) == 0)
+                    return null;
+
+                // Object was updated, return updater
+                return IndexAction.Set(newKeys.First, newKeys.Second);
+            });
         }
     }
 }
