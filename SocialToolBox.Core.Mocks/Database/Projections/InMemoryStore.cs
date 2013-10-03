@@ -31,24 +31,36 @@ namespace SocialToolBox.Core.Mocks.Database.Projections
 
         public async Task<T> Get(Id id, IReadCursor cursor)
         {
-            byte[] value;
+            byte[] bytes;
             
             using (await _lock.Lock())
             {
-                if (!Contents.TryGetValue(id, out value)) return null;
+                if (!Contents.TryGetValue(id, out bytes)) return null;
             }
             
-            return Serializer.Unserialize<T>(value);
+            return Serializer.Unserialize<T>(bytes);
         }
 
-        public async Task Set(Id id, T item, IProjectCursor cursor)
+        public event ValueChangedEvent<T> ValueChanged;
+
+        public async Task Set(Id id, T newValue, IProjectCursor cursor)
         {
-            var bytes = item == null ? null : Serializer.Serialize(item);
+            byte[] oldBytes;
+            var bytes = newValue == null ? null : Serializer.Serialize(newValue);
+            
             using (await _lock.Lock())
             {
+                Contents.TryGetValue(id, out oldBytes);
                 Contents.Remove(id);
-                if (item == null) return;
-                Contents.Add(id, bytes);
+                if (newValue != null) Contents.Add(id, bytes);
+            }
+
+            if (ValueChanged != null)
+            {
+                var oldValue = oldBytes == null ? null : Serializer.Unserialize<T>(oldBytes);
+
+                // Run the event after setting the new value AND releasing the lock
+                ValueChanged(new ValueChangedEventArgs<T>(id, oldValue, newValue, cursor));
             }
         }
     }

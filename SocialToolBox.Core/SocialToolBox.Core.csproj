@@ -64,6 +64,7 @@
     <Compile Include="Database\ProjectionEngine.cs" />
     <Compile Include="Database\IProjector.cs" />
     <Compile Include="Database\ITypeDictionary.cs" />
+    <Compile Include="Database\Projection\ValueChangedEvent.cs" />
     <Compile Include="Database\Projection\IIdExtractor.cs" />
     <Compile Include="Database\Projection\IIndex.cs" />
     <Compile Include="Database\Projection\IIndexProjection.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Database\Projection\MultiProjector.cs" />
     <Compile Include="Database\Projection\ProjectionEngineThread.cs" />
     <Compile Include="Database\Projection\ProjectionExtensions.cs" />
+    <Compile Include="Database\Projection\ValueChangedEventArgs.cs" />
     <Compile Include="Database\Reader\EarliestTime.cs" />
     <Compile Include="Database\Reader\EarliestTimeEx.cs" />
     <Compile Include="Database\Serialization\ICustomSerializer.cs" />

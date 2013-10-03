@@ -18,5 +18,12 @@ namespace SocialToolBox.Core.Database.Projection
         /// was found.
         /// </summary>
         Task<T> Get(Id id, IReadCursor cursor);
+
+        /// <summary>
+        /// Event triggered when the value at a specific id changes
+        /// while the projection is being built. Handlers should only
+        /// be attached within the same projection.
+        /// </summary>
+        event ValueChangedEvent<T> ValueChanged;
     }
 }
