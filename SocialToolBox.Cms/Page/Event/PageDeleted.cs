@@ -8,7 +8,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// A page was deleted.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Event.PageDeleted")]
-    public class PageDeleted : IPageEvent
+    public sealed class PageDeleted : IPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -26,6 +26,12 @@ namespace SocialToolBox.Cms.Page.Event
             Id = id;
             Time = time;
             AuthorId = author;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{2:s}] Page {0} deleted by {1}",
+                Id, AuthorId, Time);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// The body of a page was updated.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Event.PageBodyUpdated")]
-    public class PageBodyUpdated : IPageEvent
+    public sealed class PageBodyUpdated : IPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -30,6 +30,12 @@ namespace SocialToolBox.Cms.Page.Event
             Time = time;
             AuthorId = author;
             Body = body;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{2:s}] Page {0} body updated by {1}",
+                Id, AuthorId, Time);
         }
     }
 }

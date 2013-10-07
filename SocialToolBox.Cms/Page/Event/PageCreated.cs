@@ -8,7 +8,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// A new page is created.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Events.PageCreated")]
-    public class PageCreated : IPageEvent
+    public sealed class PageCreated : IPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -26,6 +26,12 @@ namespace SocialToolBox.Cms.Page.Event
             AuthorId = author;
             Id = id;
             Time = time;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{2:s}] Page {0} created by {1}",
+                Id, AuthorId, Time);
         }
     }
 }

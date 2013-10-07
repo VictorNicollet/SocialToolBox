@@ -30,5 +30,11 @@ namespace SocialToolBox.Cms.Page.Event
             Time = time;
             AuthorId = author;
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{2:s}] Page {0} title updated by {1} : '{3}'",
+                Id, AuthorId, Time, Title);
+        }
     }
 }
