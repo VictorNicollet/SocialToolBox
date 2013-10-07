@@ -24,11 +24,12 @@ namespace SocialToolBox.Cms.Page.Event
     
         public PageTitleUpdated() {}
 
-        public PageTitleUpdated(Id id, DateTime time, Id author)
+        public PageTitleUpdated(Id id, DateTime time, Id author, string title)
         {
             Id = id;
             Time = time;
             AuthorId = author;
+            Title = title;
         }
 
         public override string ToString()
