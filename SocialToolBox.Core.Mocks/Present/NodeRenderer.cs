@@ -31,5 +31,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("Pagination !");
         }
+
+        public void Render(ItemSummary item, HtmlOutput output)
+        {
+            output.Add("Item !");
+        }
     }
 }

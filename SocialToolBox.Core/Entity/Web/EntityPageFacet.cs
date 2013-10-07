@@ -102,9 +102,9 @@ namespace SocialToolBox.Core.Entity.Web
             /// </summary>
             private IPageNode RenderPage(KeyValuePair<StringKey, Id> arg)
             {
-                return HtmlString.Format("<a href='{0}'>{1}</a>", 
-                    Facet.View.Url(Request, new IdArgs(arg.Value)),
-                    arg.Key);
+                return ItemSummary.Build(arg.Key.ToString())
+                    .WithUrl(Facet.View.Url(Request, new IdArgs(arg.Value)))
+                    .Build();
             }
         }
     }

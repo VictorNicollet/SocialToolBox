@@ -95,6 +95,11 @@ namespace SocialToolBox.Core.Present.Bootstrap3
                 PaginationRenderer.RenderPrevNext(pagination.Links, output);
         }
 
+        public override void Render(ItemSummary item, HtmlOutput output)
+        {            
+            ItemRenderer.RenderName(item, output);
+        }
+
         public PageNodeRenderer()
         {
             NotFoundTitle = "Page not found";
