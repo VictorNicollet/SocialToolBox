@@ -18,6 +18,9 @@ namespace SocialToolBox.Cms.Page.Event
         
         [PersistMember(2)]
         public Id AuthorId { get; private set; }
+
+        [PersistMember(3)]
+        public string Title { get; private set; }
     
         public PageTitleUpdated() {}
 
