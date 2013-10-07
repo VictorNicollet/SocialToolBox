@@ -39,6 +39,8 @@
     <Compile Include="Page\Event\PageCreated.cs" />
     <Compile Include="Page\Event\PageDeleted.cs" />
     <Compile Include="Page\Event\PageTitleUpdated.cs" />
+    <Compile Include="Page\PageModule.cs" />
+    <Compile Include="Page\PageModuleEntityExtensions.cs" />
     <Compile Include="Page\Projection\PageAsEntityPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
