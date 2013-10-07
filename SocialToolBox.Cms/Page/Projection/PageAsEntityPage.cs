@@ -3,6 +3,7 @@ using SocialToolBox.Core;
 using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
+using SocialToolBox.Core.Present;
 
 namespace SocialToolBox.Cms.Page.Projection
 {
@@ -18,9 +19,15 @@ namespace SocialToolBox.Cms.Page.Projection
         public string Title { get; private set; }
 
         /// <summary>
-        /// Extends an entity page visitor to react to contacte events.
+        /// The content of the page.
         /// </summary>
-        public static void ExtendVisitor(Visitor<IEntityPageEvent, IEntityPage, IEntityPage> visitor)
+        [PersistMember(1)]
+        public string Body { get; private set; }
+
+        /// <summary>
+        /// Extends an entity page visitor to react to page events.
+        /// </summary>
+        public static void ExtendEventVisitor(Visitor<IEntityPageEvent, IEntityPage, IEntityPage> visitor)
         {
             visitor.On<PageCreated>((e,i) => new PageAsEntityPage());
             visitor.On<PageDeleted>((e,i) => null);
@@ -31,6 +38,21 @@ namespace SocialToolBox.Cms.Page.Projection
                 if (old != null) old.Title = e.Title;
                 return i;
             });
+
+            visitor.On<PageBodyUpdated>((e, i) =>
+            {
+                var old = i == null ? null : i as PageAsEntityPage;
+                if (old != null) old.Body = e.Body;
+                return i;
+            });
+        }
+
+        /// <summary>
+        /// Extends the details visitor to generate a body from a page.
+        /// </summary>
+        public static void ExtendDetailsVisitor(VisitingExtractor<IEntityPage, IPageNode> visitor)
+        {
+            visitor.On<PageAsEntityPage>(page => HtmlString.Verbatim(page.Body));
         }
     }
 }

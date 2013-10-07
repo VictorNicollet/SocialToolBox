@@ -47,7 +47,8 @@ namespace SocialToolBox.Sample.Web
             foreach (var ev in new IPageEvent[]
             {
                 new PageCreated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet),
-                new PageTitleUpdated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet, "About") 
+                new PageTitleUpdated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet, "About"), 
+                new PageBodyUpdated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet, "<b>Contents of the about us page.</b>") 
             }) modules.Pages.Stream.AddEvent(ev, t);
         }
     }

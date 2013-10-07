@@ -16,7 +16,8 @@ namespace SocialToolBox.Cms.Page
         public static void RegisterPagesAsEntities(this PageModule pmodule, EntityModule emodule)
         {
             emodule.AddEventStream(pmodule.Stream);
-            PageAsEntityPage.ExtendVisitor(emodule.PageEventVisitor);
+            PageAsEntityPage.ExtendEventVisitor(emodule.PageEventVisitor);
+            PageAsEntityPage.ExtendDetailsVisitor(emodule.PageDetailsExtractor);
         }
     }
 }

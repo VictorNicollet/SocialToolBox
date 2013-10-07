@@ -58,10 +58,14 @@ namespace SocialToolBox.Core.Entity.Web
                 var page = pageT.Result;
                 if (page == null) return Page(new NotFound());
 
-                return Page(ColumnPage
+                var output = ColumnPage
                     .WithTitle(page.Title)
-                    .AddPrimary(HtmlString.Escape(page.Title))
-                    .Build());
+                    .AddPrimary(HtmlString.Escape(page.Title));
+
+                var details = Facet.Module.PageDetailsExtractor.Visit(page);
+                if (details != null) output.AddPrimary(details);
+
+                return Page(output.Build());
             }
         }
 
