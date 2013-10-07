@@ -6,6 +6,7 @@ using SocialToolBox.Core.Database.Index;
 using SocialToolBox.Core.Database.Projection;
 using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
+using SocialToolBox.Core.Present;
 
 namespace SocialToolBox.Core.Entity
 {
@@ -119,9 +120,16 @@ namespace SocialToolBox.Core.Entity
         public readonly Visitor<IEntityPageEvent, IEntityPage, IEntityPage> PageEventVisitor =
             new Visitor<IEntityPageEvent, IEntityPage, IEntityPage>();
 
+        /// <summary>
+        /// The visitor used to extract details for a page.
+        /// </summary>
+        public readonly VisitingExtractor<IEntityPage,IPageNode> PageDetailsExtractor = 
+            new VisitingExtractor<IEntityPage, IPageNode>();
+
         public EntityModule(IDatabaseDriver driver)
         {
             Driver = driver;
+            PageDetailsExtractor.SetDefaultAction(o => null);
         }
 
         /// <summary>
