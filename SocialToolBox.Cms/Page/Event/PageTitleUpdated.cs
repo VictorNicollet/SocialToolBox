@@ -8,7 +8,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// The title of a page is updated.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Event.PageTitleUpdated")]
-    public class PageTitleUpdated : IPageEvent
+    public sealed class PageTitleUpdated : IPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
