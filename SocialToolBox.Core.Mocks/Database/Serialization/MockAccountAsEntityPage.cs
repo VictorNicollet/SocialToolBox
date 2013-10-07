@@ -1,4 +1,5 @@
 ﻿using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
 using SocialToolBox.Core.Mocks.Database.Events;
 
@@ -24,7 +25,7 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
         /// <summary>
         /// Extends an entity page visitor.
         /// </summary>
-        public static void ExtendVisitor(Visitor<IEntityPage, IEntityPage> visitor)
+        public static void ExtendVisitor(Visitor<IEntityPageEvent, IEntityPage, IEntityPage> visitor)
         {
             visitor.On<MockAccountCreated>((e,i) => new MockAccountAsEntityPage{Name = e.Name});
             visitor.On<MockAccountDeleted>((e,i) => null);

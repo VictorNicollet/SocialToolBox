@@ -6,7 +6,7 @@ namespace SocialToolBox.Core
     /// <summary>
     /// A reflection-based implementation of a visitor pattern.
     /// </summary>
-    public class Visitor<TInput,TOutput>
+    public class Visitor<TIEvent, TInput,TOutput>
     {
         /// <summary>
         /// A visitor action. These are stored for each type.
@@ -33,7 +33,7 @@ namespace SocialToolBox.Core
         /// implement that interface are affected, unless they have
         /// their own binding.
         /// </remarks>
-        public void On<TEvent>(Func<TEvent, TInput, TOutput> f)
+        public void On<TEvent>(Func<TEvent, TInput, TOutput> f) where TEvent : TIEvent
         {
             try
             {

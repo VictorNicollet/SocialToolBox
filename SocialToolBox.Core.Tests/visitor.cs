@@ -12,7 +12,7 @@ namespace SocialToolBox.Core.Tests
         [Test]
         public void find_event()
         {
-            var visitor = new Visitor<MockAccount, MockAccount>();
+            var visitor = new Visitor<object, MockAccount, MockAccount>();
             visitor.On<MockAccountCreated>((e,i) => new MockAccount{Name=e.Name});
             visitor.On<MockAccountDeleted>((e,i) => null);
 
@@ -27,7 +27,7 @@ namespace SocialToolBox.Core.Tests
         [Test]
         public void find_event_by_interface()
         {
-            var visitor = new Visitor<Unit, DateTime>();
+            var visitor = new Visitor<object, Unit, DateTime>();
             visitor.On<IMockEvent>((e,unit) => e.Time);
 
             var date = DateTime.Parse("2012/05/21");

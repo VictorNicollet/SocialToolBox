@@ -36,7 +36,7 @@ namespace SocialToolBox.Core.Database.Projection
         public static IStore<TEn> CreateStore<TEv, TEn>(
             this IProjection<TEv> projection,
             string name,
-            Visitor<TEn, TEn> mutate,
+            Visitor<TEv, TEn, TEn> mutate,
             IEventStream[] streams)
 
             where TEv : class, IEventWithId
@@ -92,7 +92,7 @@ namespace SocialToolBox.Core.Database.Projection
             this IProjection<TEv> projection,
             string name,
             Func<TEv, Id?> getId,
-            Visitor<TEn, TEn> mutate,
+            Visitor<TEv, TEn, TEn> mutate,
             IEventStream[] streams)
 
             where TEv : class

@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 
 namespace SocialToolBox.Cms.Page.Event
 {
@@ -8,7 +9,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// The title of a page is updated.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Event.PageTitleUpdated")]
-    public sealed class PageTitleUpdated : IPageEvent
+    public sealed class PageTitleUpdated : IPageEvent, IEntityPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -37,5 +38,7 @@ namespace SocialToolBox.Cms.Page.Event
             return string.Format("[{2:s}] Page {0} title updated by {1} : '{3}'",
                 Id, AuthorId, Time, Title);
         }
+
+        public Id EntityId { get { return Id; } }
     }
 }

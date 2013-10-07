@@ -116,8 +116,8 @@ namespace SocialToolBox.Core.Entity
         /// <summary>
         /// The visitor used to update entity pages. 
         /// </summary>
-        public readonly Visitor<IEntityPage, IEntityPage> PageEventVisitor =
-            new Visitor<IEntityPage, IEntityPage>();
+        public readonly Visitor<IEntityPageEvent, IEntityPage, IEntityPage> PageEventVisitor =
+            new Visitor<IEntityPageEvent, IEntityPage, IEntityPage>();
 
         public EntityModule(IDatabaseDriver driver)
         {

@@ -1,6 +1,7 @@
 ﻿using SocialToolBox.Cms.Page.Event;
 using SocialToolBox.Core;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 using SocialToolBox.Core.Entity.Projection;
 
 namespace SocialToolBox.Cms.Page.Projection
@@ -18,7 +19,7 @@ namespace SocialToolBox.Cms.Page.Projection
         /// <summary>
         /// Extends an entity page visitor to react to contacte events.
         /// </summary>
-        public static void ExtendVisitor(Visitor<IEntityPage, IEntityPage> visitor)
+        public static void ExtendVisitor(Visitor<IEntityPageEvent, IEntityPage, IEntityPage> visitor)
         {
             visitor.On<PageCreated>((e,i) => new PageAsEntityPage());
             visitor.On<PageDeleted>((e,i) => null);

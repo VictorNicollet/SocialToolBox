@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Entity.Event;
 
 namespace SocialToolBox.Cms.Page.Event
 {
@@ -8,7 +9,7 @@ namespace SocialToolBox.Cms.Page.Event
     /// A new page is created.
     /// </summary>
     [Persist("SocialToolBox.Cms.Page.Events.PageCreated")]
-    public sealed class PageCreated : IPageEvent
+    public sealed class PageCreated : IPageEvent, IEntityPageEvent
     {
         [PersistMember(0)]
         public Id Id { get; private set; }
@@ -33,5 +34,7 @@ namespace SocialToolBox.Cms.Page.Event
             return string.Format("[{2:s}] Page {0} created by {1}",
                 Id, AuthorId, Time);
         }
+
+        public Id EntityId { get { return Id; } }
     }
 }

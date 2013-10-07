@@ -36,7 +36,7 @@ namespace SocialToolBox.Sample.Web
                 new ContactNameUpdated(ContactBenjaminFranklin, DateTime.Parse("2013/09/26"),UserVictorNicollet,"Benjamin","Franklin"),                
                 new ContactCreated(ContactJuliusCaesar, DateTime.Parse("2013/09/27"),UserVictorNicollet),
                 new ContactNameUpdated(ContactJuliusCaesar, DateTime.Parse("2013/09/27"),UserVictorNicollet,"Julius","Caesar")                                
-            }) modules.Contacts.Stream.AddEvent(ev, t).Wait();
+            }) modules.Contacts.Stream.AddEvent(ev, t);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace SocialToolBox.Sample.Web
             {
                 new PageCreated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet),
                 new PageTitleUpdated(PageAbout, DateTime.Parse("2013/10/07"), UserVictorNicollet, "About") 
-            }) modules.Pages.Stream.AddEvent(ev, t).Wait();
+            }) modules.Pages.Stream.AddEvent(ev, t);
         }
     }
 }

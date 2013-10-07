@@ -1,4 +1,5 @@
 ﻿using System;
+using SocialToolBox.Core.Database.Event;
 using SocialToolBox.Core.Database.Serialization;
 using SocialToolBox.Core.Mocks.Database.Events;
 
@@ -47,8 +48,8 @@ namespace SocialToolBox.Core.Mocks.Database.Serialization
             }
         };
 
-        public static readonly Visitor<MockAccount, MockAccount> ApplyEvent =
-            new Visitor<MockAccount, MockAccount>();
+        public static readonly Visitor<IMockEvent, MockAccount, MockAccount> ApplyEvent =
+            new Visitor<IMockEvent, MockAccount, MockAccount>();
 
         static MockAccount()
         {
