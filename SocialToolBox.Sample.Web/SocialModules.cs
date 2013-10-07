@@ -1,4 +1,5 @@
-﻿using SocialToolBox.Core.Database;
+﻿using SocialToolBox.Cms.Page;
+using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Entity;
 using SocialToolBox.Core.Entity.Web;
 using SocialToolBox.Core.Mocks.Database;
@@ -12,7 +13,7 @@ namespace SocialToolBox.Sample.Web
     /// <summary>
     /// All the modules enabled on this project.
     /// </summary>
-    public class SocialModules
+    public sealed class SocialModules
     {
         /// <summary>
         /// The database driver used by all modules.
@@ -35,6 +36,11 @@ namespace SocialToolBox.Sample.Web
         public readonly EntityModule Entities;
 
         /// <summary>
+        /// CMS Pages.
+        /// </summary>
+        public readonly PageModule Pages;
+
+        /// <summary>
         /// Registered web endpoints for entity pages.
         /// </summary>
         public readonly EntityPageFacet EntityPages;
@@ -49,13 +55,16 @@ namespace SocialToolBox.Sample.Web
             // Instantiate all modules
             Contacts = new ContactModule(Database);
             Entities = new EntityModule(Database);
+            Pages = new PageModule(Database);
 
             // Set up bridges between modules
             Contacts.RegisterContactsAsEntities(Entities);
+            Pages.RegisterPagesAsEntities(Entities);
 
             // Compile all modules, start background thread
             Contacts.Compile();
             Entities.Compile();
+            Pages.Compile();
 
             Database.Projections.StartBackgroundThread();
 
