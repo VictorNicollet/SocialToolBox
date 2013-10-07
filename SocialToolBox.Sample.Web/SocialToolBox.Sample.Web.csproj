@@ -63,6 +63,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SocialToolBox.Cms\SocialToolBox.Cms.csproj">
+      <Project>{7b139207-19ab-404d-8ab6-e1b0b4888939}</Project>
+      <Name>SocialToolBox.Cms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SocialToolBox.Core.Mocks\SocialToolBox.Core.Mocks.csproj">
       <Project>{436b21da-8def-4e9e-8efe-3b01f83f8670}</Project>
       <Name>SocialToolBox.Core.Mocks</Name>
