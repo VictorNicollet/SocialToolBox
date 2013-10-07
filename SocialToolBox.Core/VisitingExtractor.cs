@@ -11,7 +11,7 @@ namespace SocialToolBox.Core
         /// <summary>
         /// A visitor action. These are stored for each type.
         /// </summary>
-        private delegate TOutput VisitorAction(object e);
+        private delegate TOutput VisitorAction(TIPoly e);
 
         /// <summary>
         /// The visitor action registered for each type.
@@ -48,7 +48,7 @@ namespace SocialToolBox.Core
         /// <summary>
         /// Specifies a default action for the visitor.
         /// </summary>
-        public void SetDefaultAction(Func<object, TOutput> f)
+        public void SetDefaultAction(Func<TIPoly, TOutput> f)
         {
             _defaultAction = e => f(e);
         }
