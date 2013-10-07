@@ -14,6 +14,7 @@ namespace SocialToolBox.Cms.Page.Projection
     {
         public PageAsEntityPage() {}
 
+        [PersistMember(0)]
         public string Title { get; private set; }
 
         /// <summary>
