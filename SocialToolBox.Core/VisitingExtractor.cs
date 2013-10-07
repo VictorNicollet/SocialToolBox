@@ -6,7 +6,7 @@ namespace SocialToolBox.Core
     /// <summary>
     /// Acts as a visitor, but does not expect any input.
     /// </summary>
-    public class VisitingExtractor<TOutput>
+    public class VisitingExtractor<TIPoly, TOutput> where TIPoly : class
     {
         /// <summary>
         /// A visitor action. These are stored for each type.
@@ -33,7 +33,7 @@ namespace SocialToolBox.Core
         /// implement that interface are affected, unless they have
         /// their own binding.
         /// </remarks>
-        public void On<TEvent>(Func<TEvent, TOutput> f)
+        public void On<TEvent>(Func<TEvent, TOutput> f) where TEvent : TIPoly
         {
             try
             {
@@ -70,7 +70,7 @@ namespace SocialToolBox.Core
         /// Visits the object, determining the required action based on its type.
         /// Action receives input data and object, its return value is returned. 
         /// </summary>
-        public TOutput Visit(object e)
+        public TOutput Visit(TIPoly e)
         {
             if (e == null)
                 throw new ArgumentNullException("e");

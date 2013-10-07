@@ -6,12 +6,12 @@ namespace SocialToolBox.Core
     /// <summary>
     /// A reflection-based implementation of a visitor pattern.
     /// </summary>
-    public class Visitor<TIEvent, TInput,TOutput>
+    public class Visitor<TIPoly,TInput,TOutput> where TIPoly : class
     {
         /// <summary>
         /// A visitor action. These are stored for each type.
         /// </summary>
-        private delegate TOutput VisitorAction(object e, TInput input);
+        private delegate TOutput VisitorAction(TIPoly e, TInput input);
 
         /// <summary>
         /// The visitor action registered for each type.
@@ -33,7 +33,7 @@ namespace SocialToolBox.Core
         /// implement that interface are affected, unless they have
         /// their own binding.
         /// </remarks>
-        public void On<TEvent>(Func<TEvent, TInput, TOutput> f) where TEvent : TIEvent
+        public void On<TEvent>(Func<TEvent, TInput, TOutput> f) where TEvent : TIPoly
         {
             try
             {
@@ -48,7 +48,7 @@ namespace SocialToolBox.Core
         /// <summary>
         /// Specifies a default action for the visitor.
         /// </summary>
-        public void SetDefaultAction(Func<object, TInput, TOutput> f)
+        public void SetDefaultAction(Func<TIPoly, TInput, TOutput> f)
         {
             _defaultAction = (e,i) => f(e,i);
         }
@@ -70,7 +70,7 @@ namespace SocialToolBox.Core
         /// Visits the object, determining the required action based on its type.
         /// Action receives input data and object, its return value is returned. 
         /// </summary>
-        public TOutput Visit(object e, TInput input)
+        public TOutput Visit(TIPoly e, TInput input)
         {
             if (e == null)
                 throw new ArgumentNullException("e");

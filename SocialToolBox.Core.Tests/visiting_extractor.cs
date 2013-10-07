@@ -11,7 +11,7 @@ namespace SocialToolBox.Core.Tests
         [Test]
         public void find_event()
         {
-            var visitor = new VisitingExtractor<string>();
+            var visitor = new VisitingExtractor<IMockEvent,string>();
             visitor.On<MockAccountCreated>(e => e.Name);
 
             var ev = new MockAccountCreated(Id.Parse("aaaaaaaaaaa"), "Test", DateTime.Parse("2012/05/21"));
@@ -24,7 +24,7 @@ namespace SocialToolBox.Core.Tests
         [Test]
         public void find_event_by_interface()
         {
-            var visitor = new VisitingExtractor<DateTime>();
+            var visitor = new VisitingExtractor<IMockEvent,DateTime>();
             visitor.On<IMockEvent>(e => e.Time);
 
             var date = DateTime.Parse("2012/05/21");
