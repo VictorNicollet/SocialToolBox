@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace SocialToolBox.Core.Web.Response
 {
@@ -26,9 +27,9 @@ namespace SocialToolBox.Core.Web.Response
             MimeType = mimetype;
         }
 
-        protected override void Visit(IWebResponseVisitor visitor)
+        protected override Task Visit(IWebResponseVisitor visitor)
         {
-            visitor.Visit(this);
+            return visitor.Visit(this);
         }
 
         public override void Dispose()

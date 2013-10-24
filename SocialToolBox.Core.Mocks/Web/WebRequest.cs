@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Response;
 
@@ -171,11 +172,13 @@ namespace SocialToolBox.Core.Mocks.Web
         /// </summary>
         private class NullResponseSender : IWebResponseVisitor
         {
-            public void Visit(WebResponseRedirect redirect) {}
-            public void Visit(WebResponseJson json) {}
-            public void Visit(WebResponseHtml html) {}
-            public void Visit(WebResponseData data) {}
-            public void Visit(WebResponsePage page) {}
+            // ReSharper disable CSharpWarnings::CS1998
+            public async Task Visit(WebResponseRedirect redirect) {}
+            public async Task Visit(WebResponseJson json) { }
+            public async Task Visit(WebResponseHtml html) { }
+            public async Task Visit(WebResponseData data) { }
+            public async Task Visit(WebResponsePage page) { }
+            // ReSharper restore CSharpWarnings::CS1998
         }
     }
 }

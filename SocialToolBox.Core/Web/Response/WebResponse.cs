@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SocialToolBox.Core.Web.Response
 {
@@ -41,16 +42,16 @@ namespace SocialToolBox.Core.Web.Response
             _sender = sender;
         }
 
-        public void Send()
+        public Task Send()
         {
-            Visit(_sender);
+            return Visit(_sender);
         }
 
         /// <summary>
         /// Implementation of the web response visitor pattern, to 
         /// allow access to the various response types.
         /// </summary>
-        protected abstract void Visit(IWebResponseVisitor visitor);
+        protected abstract Task Visit(IWebResponseVisitor visitor);
 
         public abstract void Dispose();
     }

@@ -124,10 +124,13 @@ namespace SocialToolBox.Core.Present
         /// Build the concatenation HTML string.
         /// </summary>
         /// <returns></returns>
-        public HtmlString Build()
+        public async Task<HtmlString> Build()
         {
             while (_pending.Count > 0)
-                _pending.Dequeue().Result(_builder);
+            {
+                var renderer = await _pending.Dequeue();
+                renderer(_builder);
+            }
 
             return HtmlString.Verbatim(_builder.ToString());
         }

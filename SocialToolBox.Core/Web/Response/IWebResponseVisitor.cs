@@ -1,11 +1,13 @@
-﻿namespace SocialToolBox.Core.Web.Response
+﻿using System.Threading.Tasks;
+
+namespace SocialToolBox.Core.Web.Response
 {
     public interface IWebResponseVisitor
     {
-        void Visit(WebResponseRedirect redirect);
-        void Visit(WebResponseJson json);
-        void Visit(WebResponseHtml html);
-        void Visit(WebResponseData data);
-        void Visit(WebResponsePage page);
+        Task Visit(WebResponseRedirect redirect);
+        Task Visit(WebResponseJson json);
+        Task Visit(WebResponseHtml html);
+        Task Visit(WebResponseData data);
+        Task Visit(WebResponsePage page);
     }
 }

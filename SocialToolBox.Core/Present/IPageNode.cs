@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace SocialToolBox.Core.Present
+﻿namespace SocialToolBox.Core.Present
 {
     /// <summary>
     /// A page node, part of a page tree. Specifies the contents, but not

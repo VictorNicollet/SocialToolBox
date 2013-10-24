@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
@@ -45,14 +46,15 @@ namespace SocialToolBox.Core.Web.IIS
             }
         }
 
-        public void Visit(WebResponseRedirect redirect)
+        // ReSharper disable CSharpWarnings::CS1998
+        public async Task Visit(WebResponseRedirect redirect)
         {
             Prepare(redirect);            
             Response.Redirect(redirect.Url, true);
             Response.Flush();
         }
 
-        public void Visit(WebResponseJson json)
+        public async Task Visit(WebResponseJson json)
         {
             Prepare(json);
             Response.ContentType = "application/json";
@@ -61,7 +63,7 @@ namespace SocialToolBox.Core.Web.IIS
             Response.Flush();
         }
 
-        public void Visit(WebResponseHtml html)
+        public async Task Visit(WebResponseHtml html)
         {
             Prepare(html);
             Response.ContentType = "text/html";
@@ -70,7 +72,7 @@ namespace SocialToolBox.Core.Web.IIS
             Response.Flush();
         }
 
-        public void Visit(WebResponseData data)
+        public async Task Visit(WebResponseData data)
         {
             Prepare(data);
             Response.ContentType = data.MimeType;
@@ -79,13 +81,16 @@ namespace SocialToolBox.Core.Web.IIS
             data.Stream.CopyTo(Response.OutputStream);
             Response.Flush();
         }
+        // ReSharper restore CSharpWarnings::CS1998
 
-        public void Visit(WebResponsePage page)
+        public async Task Visit(WebResponsePage page)
         {
             var output = new HtmlOutput();
             page.Page.RenderWith(page.Renderer, output);
             Response.ContentType = "text/html";
-            var bytes = Encoding.UTF8.GetBytes(output.Build().ToString());
+
+            var html = await output.Build();
+            var bytes = Encoding.UTF8.GetBytes(html.ToString());
             Response.BinaryWrite(bytes);
             Response.Flush();
         }

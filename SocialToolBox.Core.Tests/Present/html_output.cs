@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using SocialToolBox.Core.Present;
@@ -20,7 +18,7 @@ namespace SocialToolBox.Core.Tests.Present
 
         private void Is(string expected)
         {
-            Assert.AreEqual(expected, Output.Build().ToString());
+            Assert.AreEqual(expected, Output.Build().Result.ToString());
         }
 
         public void Nothing(Task<bool> b) {}

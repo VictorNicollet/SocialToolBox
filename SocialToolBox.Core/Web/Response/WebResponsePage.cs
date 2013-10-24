@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Threading.Tasks;
 using SocialToolBox.Core.Present;
 
 namespace SocialToolBox.Core.Web.Response
@@ -24,9 +24,9 @@ namespace SocialToolBox.Core.Web.Response
             Renderer = renderer;
         }
 
-        protected override void Visit(IWebResponseVisitor visitor)
+        protected override Task Visit(IWebResponseVisitor visitor)
         {
-            visitor.Visit(this);
+            return visitor.Visit(this);
         }
 
         public override void Dispose() {}

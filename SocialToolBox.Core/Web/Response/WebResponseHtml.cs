@@ -1,4 +1,6 @@
-﻿namespace SocialToolBox.Core.Web.Response
+﻿using System.Threading.Tasks;
+
+namespace SocialToolBox.Core.Web.Response
 {
     /// <summary>
     /// A web response that carries an HTML payload.
@@ -20,9 +22,9 @@
             Html = html;
         }
 
-        protected override void Visit(IWebResponseVisitor visitor)
+        protected override Task Visit(IWebResponseVisitor visitor)
         {
-            visitor.Visit(this);
+            return visitor.Visit(this);
         }
 
         public override void Dispose()

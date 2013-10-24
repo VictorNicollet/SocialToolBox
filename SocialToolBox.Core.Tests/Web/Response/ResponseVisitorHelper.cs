@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SocialToolBox.Core.Web.Response;
 
@@ -17,7 +18,8 @@ namespace SocialToolBox.Core.Tests.Web.Response
             return this;
         }
 
-        public void Visit(WebResponseRedirect redirect)
+        // ReSharper disable CSharpWarnings::CS1998
+        public async Task Visit(WebResponseRedirect redirect)
         {
             if (null == _onRedirect)
                 Assert.Fail("Encountered object {0}", redirect);
@@ -33,7 +35,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
             return this;
         }
 
-        public void Visit(WebResponseJson json)
+        public async Task Visit(WebResponseJson json)
         {
             if (null == _onJson)
                 Assert.Fail("Encountered object {0}", json);
@@ -49,7 +51,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
             return this;
         }
 
-        public void Visit(WebResponseHtml html)
+        public async Task Visit(WebResponseHtml html)
         {
             if (null == _onHtml)
                 Assert.Fail("Encountered object {0}", html);
@@ -65,7 +67,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
             return this;
         }
 
-        public void Visit(WebResponseData data)
+        public async Task Visit(WebResponseData data)
         {
             if (null == _onData)
                 Assert.Fail("Encountered object {0}", data);
@@ -81,12 +83,13 @@ namespace SocialToolBox.Core.Tests.Web.Response
             return this;
         }
 
-        public void Visit(WebResponsePage page)
+        public async Task Visit(WebResponsePage page)
         {
             if (null == _onPage)
                 Assert.Fail("Encountered object {0}", page);
 
             _onPage(page);
         }
+        // ReSharper restore CSharpWarnings::CS1998
     }
 }
