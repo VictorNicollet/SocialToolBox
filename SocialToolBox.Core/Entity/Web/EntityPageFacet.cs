@@ -61,8 +61,13 @@ namespace SocialToolBox.Core.Entity.Web
                 var page = await pageT;
                 if (page == null) return Page(new NotFoundPage());
 
+                var nav = Navigation.Horizontal()
+                    .AddPrimary("Page", Facet.View.Url(Request, Arguments), true)
+                    .Build();
+
                 var output = ColumnPage
                     .WithTitle(page.Title)
+                    .WithLocalNavigation(nav)
                     .AddPrimary(new Heading(page.Title, 1));
 
                 var details = Facet.Module.PageDetailsExtractor.Visit(page);
