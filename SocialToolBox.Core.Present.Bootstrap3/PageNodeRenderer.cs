@@ -105,6 +105,13 @@ namespace SocialToolBox.Core.Present.Bootstrap3
             HeadingRenderer.Render(heading, output);
         }
 
+        public override void Render(RichUserContent content, HtmlOutput o)
+        {
+            o.Add("<div class=\"user-content\">");
+            o.Add(content.Html);
+            o.Add("</div>");
+        }
+
         public PageNodeRenderer()
         {
             NotFoundTitle = "Page not found";

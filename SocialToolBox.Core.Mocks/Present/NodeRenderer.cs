@@ -41,5 +41,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("Title !");
         }
+
+        public void Render(RichUserContent content, HtmlOutput output)
+        {
+            output.Add("Rich user content !");
+        }
     }
 }
