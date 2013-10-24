@@ -13,18 +13,18 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         public static readonly HtmlString[] StartColumn = 
         {
             HtmlString.Verbatim("<div style='display:none'>"),
-            HtmlString.Verbatim("<div class='col-md-1'>"),
-            HtmlString.Verbatim("<div class='col-md-2'>"),
-            HtmlString.Verbatim("<div class='col-md-3'>"),
-            HtmlString.Verbatim("<div class='col-md-4'>"),
-            HtmlString.Verbatim("<div class='col-md-5'>"),
-            HtmlString.Verbatim("<div class='col-md-6'>"),
-            HtmlString.Verbatim("<div class='col-md-7'>"),
-            HtmlString.Verbatim("<div class='col-md-8'>"),
-            HtmlString.Verbatim("<div class='col-md-9'>"),
-            HtmlString.Verbatim("<div class='col-md-10'>"),
-            HtmlString.Verbatim("<div class='col-md-11'>"),
-            HtmlString.Verbatim("<div class='col-md-12'>")
+            HtmlString.Verbatim("<div class=col-md-1>"),
+            HtmlString.Verbatim("<div class=col-md-2>"),
+            HtmlString.Verbatim("<div class=col-md-3>"),
+            HtmlString.Verbatim("<div class=col-md-4>"),
+            HtmlString.Verbatim("<div class=col-md-5>"),
+            HtmlString.Verbatim("<div class=col-md-6>"),
+            HtmlString.Verbatim("<div class=col-md-7>"),
+            HtmlString.Verbatim("<div class=col-md-8>"),
+            HtmlString.Verbatim("<div class=col-md-9>"),
+            HtmlString.Verbatim("<div class=col-md-10>"),
+            HtmlString.Verbatim("<div class=col-md-11>"),
+            HtmlString.Verbatim("<div class=col-md-12>")
         };
 
         /// <summary>
@@ -33,16 +33,27 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         public static readonly HtmlString EndColumn =
             HtmlString.Verbatim("</div>");
 
-        /// <summary>
-        /// Ending column div tags.
+        /// <summary> 
+        /// Starting a row block.
         /// </summary>
         public static readonly HtmlString StartRow =
-            HtmlString.Verbatim("<div class='row'>");
+            HtmlString.Verbatim("<div class=row>");
 
         /// <summary>
         /// Ending row div tags.
         /// </summary>
         public static readonly HtmlString EndRow = EndColumn;
+
+        /// <summary>
+        /// Starting a page header block.
+        /// </summary>
+        public static readonly HtmlString StartHeader =
+            HtmlString.Verbatim("<div class=page-header>");
+
+        /// <summary>
+        /// Ending header div tags.
+        /// </summary>
+        public static readonly HtmlString EndHeader = EndColumn;
 
         /// <summary>
         /// Render a list of columns
