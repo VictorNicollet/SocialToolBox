@@ -5,7 +5,7 @@ namespace SocialToolBox.Core.Present.Builders
     /// <summary>
     /// Builds a <see cref="ColumnPage"/> from scratch.
     /// </summary>
-    public class ColumnPageBuilder
+    public sealed class ColumnPageBuilder
     {
         /// <summary>
         /// The title of the page.
