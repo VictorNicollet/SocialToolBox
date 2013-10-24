@@ -10,5 +10,7 @@
         {
             visitor.Render(this, output);
         }
+
+        public Navigation LocalNavigation { get { return null; } }
     }
 }

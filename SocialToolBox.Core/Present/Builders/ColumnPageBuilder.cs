@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 
 namespace SocialToolBox.Core.Present.Builders
 {
@@ -45,6 +46,11 @@ namespace SocialToolBox.Core.Present.Builders
         private readonly List<IPageNode> _tertiary = new List<IPageNode>(); 
 
         /// <summary>
+        /// The local navigation block for the page.
+        /// </summary>
+        public Navigation LocalNavigation { get; private set; }
+
+        /// <summary>
         /// Add a node at the bottom of the primary column.
         /// </summary>
         public ColumnPageBuilder AddPrimary(IPageNode node) 
@@ -68,6 +74,17 @@ namespace SocialToolBox.Core.Present.Builders
         public ColumnPageBuilder AddTertiary(IPageNode node)
         {
             _tertiary.Add(node);
+            return this;
+        }
+
+        // TODO: test
+
+        /// <summary>
+        /// Set the local navigation for this page. Returns the builder.
+        /// </summary>
+        public ColumnPageBuilder WithLocalNavigation(Navigation nav)
+        {
+            LocalNavigation = nav;
             return this;
         }
 

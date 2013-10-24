@@ -6,5 +6,10 @@
     /// </summary>
     public interface IPage : IPageNode
     {
+        /// <summary>
+        /// The local navigation for this page. Will usually be different
+        /// depending on the page.
+        /// </summary>
+        Navigation LocalNavigation { get; }
     }
 }

@@ -17,7 +17,12 @@ namespace SocialToolBox.Core.Present
         /// <summary>
         /// All the columns, by order of importance.
         /// </summary>
-        public readonly IEnumerable<IPageNode>[] Columns; 
+        public readonly IEnumerable<IPageNode>[] Columns;
+
+        /// <summary>
+        /// Local navigation, returned by <see cref="LocalNavigation"/>.
+        /// </summary>
+        private readonly Navigation _localNavigation;
 
         public ColumnPage(ColumnPageBuilder source)
         {
@@ -26,6 +31,7 @@ namespace SocialToolBox.Core.Present
                 .Where(column => column.Count > 0)
                 .Select(column => (IEnumerable<IPageNode>) column)
                 .ToArray();
+            _localNavigation = source.LocalNavigation;
         }
 
         public void RenderWith(INodeRenderer visitor, HtmlOutput output)
@@ -40,5 +46,7 @@ namespace SocialToolBox.Core.Present
         {
             return new ColumnPageBuilder(title);
         }
+
+        public Navigation LocalNavigation { get { return _localNavigation;  } }
     }
 }
