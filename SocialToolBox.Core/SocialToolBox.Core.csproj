@@ -109,7 +109,7 @@
     <Compile Include="Present\INodeRenderer.cs" />
     <Compile Include="Present\IPageNode.cs" />
     <Compile Include="Present\IRenderingStrategy.cs" />
-    <Compile Include="Present\NotFound.cs" />
+    <Compile Include="Present\NotFoundPage.cs" />
     <Compile Include="Present\ColumnPage.cs" />
     <Compile Include="Present\RenderingStrategy\NaiveRenderingStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
