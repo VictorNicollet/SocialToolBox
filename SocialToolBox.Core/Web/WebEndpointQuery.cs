@@ -61,28 +61,6 @@ namespace SocialToolBox.Core.Web
                 return copied.ToDictionary(kv => kv.Key, kv => kv.Value);
             }
 
-            /// <summary>
-            /// Creates an empty web request.
-            /// </summary>
-            public WebRequest() {}
-
-            /// <summary>
-            /// Creates an independent copy of a web request.
-            /// </summary>
-            public WebRequest(WebRequest other)
-            {
-                Verb = other.Verb;
-                Domain = other.Domain;
-                MatchedPath = other.MatchedPath;
-                UnmatchedPath = other.UnmatchedPath;
-                _cookieData = Copy(other._cookieData);
-                _postData = Copy(other._postData);
-                _getData = Copy(other._getData);
-                Payload = other.Payload;
-                IsSecure = other.IsSecure;
-                Port = other.Port;
-            }
-
             public HttpVerb Verb { get; private set; }
             public string Domain { get; private set; }
             public bool IsSecure { get; private set; }
