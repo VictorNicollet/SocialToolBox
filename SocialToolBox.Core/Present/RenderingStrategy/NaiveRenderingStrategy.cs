@@ -1,8 +1,8 @@
 ﻿namespace SocialToolBox.Core.Present.RenderingStrategy
 {
     /// <summary>
-    /// A rendering strategy that always returns the same renderer regardless
-    /// of parameters.
+    /// A <see cref="IRenderingStrategy{T}"/> that always returns the same renderer 
+    /// regardless of parameters.
     /// </summary>
     public class NaiveRenderingStrategy<T> : IRenderingStrategy<T>
     {
