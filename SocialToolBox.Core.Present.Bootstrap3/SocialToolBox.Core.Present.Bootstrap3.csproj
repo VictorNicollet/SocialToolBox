@@ -38,6 +38,7 @@
     <Compile Include="HeadingRenderer.cs" />
     <Compile Include="ItemRenderer.cs" />
     <Compile Include="ListRenderer.cs" />
+    <Compile Include="NavigationRenderer.cs" />
     <Compile Include="PageNodeRenderer.cs" />
     <Compile Include="PaginationRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -113,7 +113,8 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         }
 
         public override void Render(Navigation navigation, HtmlOutput o)
-        {            
+        {
+            NavigationRenderer.Render(navigation, o);
         }
 
         public PageNodeRenderer()
