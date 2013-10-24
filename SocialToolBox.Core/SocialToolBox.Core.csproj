@@ -98,6 +98,7 @@
     <Compile Include="Present\BasicNodeRenderer.cs" />
     <Compile Include="Present\Builders\ItemBuilder.cs" />
     <Compile Include="Present\Builders\ListBuilder.cs" />
+    <Compile Include="Present\Builders\NavigationBuilder.cs" />
     <Compile Include="Present\HtmlOutput.cs" />
     <Compile Include="Present\Builders\ColumnPageBuilder.cs" />
     <Compile Include="Present\ItemSummary.cs" />
