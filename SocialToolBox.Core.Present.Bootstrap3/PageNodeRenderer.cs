@@ -112,6 +112,10 @@ namespace SocialToolBox.Core.Present.Bootstrap3
             o.AddVerbatim("</div>");
         }
 
+        public override void Render(Navigation navigation, HtmlOutput o)
+        {            
+        }
+
         public PageNodeRenderer()
         {
             NotFoundTitle = "Page not found";

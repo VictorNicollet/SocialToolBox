@@ -14,5 +14,6 @@
         void Render(ItemSummary item, HtmlOutput o);
         void Render(Heading title, HtmlOutput o);
         void Render(RichUserContent content, HtmlOutput o);
+        void Render(Navigation navigation, HtmlOutput o);
     }
 }

@@ -101,6 +101,7 @@
     <Compile Include="Present\HtmlOutput.cs" />
     <Compile Include="Present\Builders\ColumnPageBuilder.cs" />
     <Compile Include="Present\ItemSummary.cs" />
+    <Compile Include="Present\Navigation.cs" />
     <Compile Include="Present\Pagination.cs" />
     <Compile Include="Present\ListVertical.cs" />
     <Compile Include="Present\NodeRendererExtensions.cs" />

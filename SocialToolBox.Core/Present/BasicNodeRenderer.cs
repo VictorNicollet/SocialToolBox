@@ -40,5 +40,6 @@ namespace SocialToolBox.Core.Present
         public abstract void Render(ItemSummary item, HtmlOutput o);
         public abstract void Render(Heading heading, HtmlOutput o);
         public abstract void Render(RichUserContent content, HtmlOutput o);
+        public abstract void Render(Navigation navigation, HtmlOutput o);
     }
 }

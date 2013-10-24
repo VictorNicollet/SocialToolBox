@@ -46,5 +46,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("Rich user content !");
         }
+
+        public void Render(Navigation navigation, HtmlOutput output)
+        {
+            output.Add("Navigation !");
+        }
     }
 }
