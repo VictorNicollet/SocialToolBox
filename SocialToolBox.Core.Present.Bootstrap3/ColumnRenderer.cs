@@ -40,7 +40,7 @@ namespace SocialToolBox.Core.Present.Bootstrap3
             HtmlString.Verbatim("<div class='row'>");
 
         /// <summary>
-        /// Endinc row div tags.
+        /// Ending row div tags.
         /// </summary>
         public static readonly HtmlString EndRow = EndColumn;
 
@@ -48,11 +48,15 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// Render a list of columns
         /// </summary>
         public static void Render(
+            Navigation localNavigation,
             IEnumerable<IEnumerable<IPageNode>> columns, 
             int[] sizes, 
             INodeRenderer renderer, 
             HtmlOutput output)
         {
+            if (localNavigation != null)            
+                renderer.Render(localNavigation, output);            
+
             output.Add(StartRow);
             
             var i = 0;

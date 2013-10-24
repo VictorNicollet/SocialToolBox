@@ -80,7 +80,7 @@ namespace SocialToolBox.Core.Present.Bootstrap3
 
             RenderHtml(
                 FormatTitle(page.Title), 
-                DefaultLayout(o => ColumnRenderer.Render(page.Columns, sizes, this, o)))
+                DefaultLayout(o => ColumnRenderer.Render(page.LocalNavigation, page.Columns, sizes, this, o)))
                 (output);
         }
 
