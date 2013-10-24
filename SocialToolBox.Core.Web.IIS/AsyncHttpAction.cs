@@ -34,10 +34,12 @@ namespace SocialToolBox.Core.Web.IIS
                     driver = appWithDispatcher.Dispatcher;
                 }
 
-                var response = driver.Dispatch(new WebRequest(context));
-                if (response != null) response.Send();
-
-                cb(this);
+                driver.Dispatch(new WebRequest(context)).ContinueWith(responseT =>
+                {
+                    var response = responseT.Result;
+                    if (response != null) response.Send();
+                    cb(this);
+                });
             });
         }
 

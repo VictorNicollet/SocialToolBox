@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Index;
 using SocialToolBox.Core.Database.Projection;
@@ -51,11 +52,11 @@ namespace SocialToolBox.Core.Entity.Web
         {
             public ViewPageHandler(EntityPageFacet facet) : base(facet) {}
 
-            protected override WebResponse Process()
+            protected override async Task<WebResponse> Process()
             {
                 var pageT = Facet.Module.Pages.Get(Arguments.Ident, Cursor);
 
-                var page = pageT.Result;
+                var page = await pageT;
                 if (page == null) return Page(new NotFoundPage());
 
                 var output = ColumnPage
@@ -76,7 +77,7 @@ namespace SocialToolBox.Core.Entity.Web
         {
             public AllPagesHandler(EntityPageFacet facet) : base(facet) {}
 
-            protected override WebResponse Process()
+            protected override async Task<WebResponse> Process()
             {
                 var countT = Facet.Module.PageByTitle.Count(Cursor);
                 var pagesT = Facet.Module.PageByTitle.Query(Cursor, PageSize, PageSize * Arguments.Page);
@@ -84,12 +85,12 @@ namespace SocialToolBox.Core.Entity.Web
                 var prevLink = Arguments.Page == 0 ? null :
                     Facet.All.Url(Request, new PageArgs(Arguments.Page - 1));
 
-                var count = countT.Result;
+                var count = await countT;
 
                 var nextLink = (Arguments.Page + 1) * PageSize >= count ? null :
                     Facet.All.Url(Request, new PageArgs(Arguments.Page + 1));
 
-                var pages = pagesT.Result;
+                var pages = await pagesT;
 
                 var list = ListBuilder.From(pages, RenderPage)
                     .WithPagination(Pagination.PrevNext(prevLink, nextLink, Pagination.Position.Below))

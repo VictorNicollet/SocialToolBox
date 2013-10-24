@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.Dispatch
@@ -47,7 +48,7 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// <remarks>
         /// Attempts using the longest possible path prefixes first.
         /// </remarks>
-        public WebResponse Dispatch(IWebRequest request)
+        public async Task<WebResponse> Dispatch(IWebRequest request)
         {
             while (null != request)
             {
@@ -56,7 +57,7 @@ namespace SocialToolBox.Core.Web.Dispatch
                 {
                     foreach (var handler in handlersForPath)
                     {
-                        var response = handler.Process(request);
+                        var response = await handler.Process(request);
                         if (null != response) return response;
                     }
                 }

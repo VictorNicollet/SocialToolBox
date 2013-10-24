@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
@@ -35,6 +36,6 @@ namespace SocialToolBox.Core.Web
         /// the driver which is dispatching it, this expects a request-building
         /// function instead of a request.
         /// </summary>
-        WebResponse Dispatch(IWebRequest request);
+        Task<WebResponse> Dispatch(IWebRequest request);
     }
 }

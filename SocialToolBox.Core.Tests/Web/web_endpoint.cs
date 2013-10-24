@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Response;
 
@@ -27,7 +28,7 @@ namespace SocialToolBox.Core.Tests.Web
 
         public class SimpleHandler : WebRequestHandler<SimpleArgument>
         {
-            protected override WebResponse Process() { return null; }
+            protected override Task<WebResponse> Process() { return null; }
         }
 
         public IWebDriver Driver;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web.Dispatch
@@ -25,7 +26,7 @@ namespace SocialToolBox.Core.Web.Dispatch
         /// this request (either because the arguments could not be parsed, or because
         /// the verb is not acceptable). Throws an exception if anything else fails.
         /// </summary>
-        public abstract WebResponse Process(IWebRequest request);
+        public abstract Task<WebResponse> Process(IWebRequest request);
 
         /// <summary>
         /// Wrap a request handler to make its generic type disappear.
@@ -48,7 +49,7 @@ namespace SocialToolBox.Core.Web.Dispatch
                 _driver = driver;
             }
 
-            public override WebResponse Process(IWebRequest request)
+            public override async Task<WebResponse> Process(IWebRequest request)
             {
                 if ((request.Verb & AcceptableVerbs) == 0) return null;
 
@@ -57,7 +58,7 @@ namespace SocialToolBox.Core.Web.Dispatch
 
                 WebRequestHandler<TArg> handler;
                 lock (_getHandler) handler = _getHandler();
-                var response = handler.Process(_driver, request, args);
+                var response = await handler.Process(_driver, request, args);
 
                 if (null == response) 
                     throw new NoNullAllowedException(

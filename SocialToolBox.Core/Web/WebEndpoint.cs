@@ -69,7 +69,7 @@ namespace SocialToolBox.Core.Web
         /// </summary>
         public WebEndpointQuery Query(TArgs args)
         {
-            return new WebEndpointQuery(req => RequestHandler().Process(Driver, req, args));
+            return new WebEndpointQuery(req => RequestHandler().Process(Driver, req, args).Result);
         }
     }
 }

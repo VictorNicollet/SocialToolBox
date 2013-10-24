@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 using SocialToolBox.Core.Mocks.Web;
 using SocialToolBox.Core.Web;
 using SocialToolBox.Core.Web.Args;
@@ -27,9 +28,9 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
                 _echo = echo;
             }
 
-            protected override WebResponse Process()
+            protected override Task<WebResponse> Process()
             {
-                return Json(_echo);
+                return Task.FromResult(Json(_echo));
             }
         }
 
@@ -43,7 +44,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         [Test]
         public void empty_dispatcher()
         {
-            var response = Dispatcher.Dispatch(WebRequest.Get(A));
+            var response = Dispatcher.Dispatch(WebRequest.Get(A)).Result;
             Assert.IsNull(response);
         }
 
@@ -51,7 +52,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         public void with_exact_path()
         {
             Dispatcher.Register(Driver, "a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
-            var response = Dispatcher.Dispatch(WebRequest.Get(A));
+            var response = Dispatcher.Dispatch(WebRequest.Get(A)).Result;
             var asJson = response as WebResponseJson;
 
             Assert.IsNotNull(asJson);
@@ -63,7 +64,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
         {
             Dispatcher.Register(Driver, "a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
             Dispatcher.Register(Driver, "a", HttpVerb.Get, () => new JsonEcho<NoArgs>("null"));
-            var response = Dispatcher.Dispatch(WebRequest.Get(A));
+            var response = Dispatcher.Dispatch(WebRequest.Get(A)).Result;
             var asJson = response as WebResponseJson;
 
             Assert.IsNotNull(asJson);
@@ -76,7 +77,7 @@ namespace SocialToolBox.Core.Tests.Web.Dispatch
             Dispatcher.Register(Driver, "a", HttpVerb.Post, () => new JsonEcho<NoArgs>("{}"));
             Dispatcher.Register(Driver, "", HttpVerb.Get, () => new JsonEcho<NoArgs>("[]"));
             Dispatcher.Register(Driver, "", HttpVerb.Get,() =>  new JsonEcho<AnyArgs>("null"));
-            var response = Dispatcher.Dispatch(WebRequest.Get(A));
+            var response = Dispatcher.Dispatch(WebRequest.Get(A)).Result;
             var asJson = response as WebResponseJson;
 
             Assert.IsNotNull(asJson);

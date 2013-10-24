@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Present;
@@ -25,9 +26,9 @@ namespace SocialToolBox.Core.Tests.Web.Response
                 _action = action;
             }
 
-            protected override WebResponse Process()
+            protected override Task<WebResponse> Process()
             {
-                return _action(this);
+                return Task.FromResult(_action(this));
             }
         }
 
@@ -68,7 +69,7 @@ namespace SocialToolBox.Core.Tests.Web.Response
         public void Do(Func<WebRequestHandler<NoArgs>, WebResponse> action)
         {
             var handler = new RequestHandler(action);
-            using (var response = handler.Process(Driver, Req, null))
+            using (var response = handler.Process(Driver, Req, null).Result)
                 response.Send();            
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Response;
@@ -47,12 +48,12 @@ namespace SocialToolBox.Core.Web
         /// <summary>
         /// Process the current response and arguments.
         /// </summary>
-        protected abstract WebResponse Process();
+        protected abstract Task<WebResponse> Process();
 
         /// <summary>
         /// Processes the provided request. Not re-entrant.
         /// </summary>
-        public WebResponse Process(IWebDriver webDriver, IWebRequest request, T args)
+        public Task<WebResponse> Process(IWebDriver webDriver, IWebRequest request, T args)
         {
             Request = request;
             Web = webDriver;

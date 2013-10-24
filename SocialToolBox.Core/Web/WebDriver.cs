@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Present;
 using SocialToolBox.Core.Web.Dispatch;
@@ -56,7 +57,7 @@ namespace SocialToolBox.Core.Web
 
         public IDatabaseDriver Database { get; private set; }
 
-        public WebResponse Dispatch(IWebRequest request)
+        public Task<WebResponse> Dispatch(IWebRequest request)
         {
             return _dispatcher.Dispatch(request);
         }

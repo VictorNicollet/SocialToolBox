@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 using SocialToolBox.Core.Mocks.Database;
 using SocialToolBox.Core.Mocks.Present;
 using SocialToolBox.Core.Present.RenderingStrategy;
@@ -39,9 +40,9 @@ namespace SocialToolBox.Core.Tests.Web
         /// </summary>
         private class MockHandler : WebRequestHandler<AnyArgs>
         {
-            protected override WebResponse Process()
+            protected override Task<WebResponse> Process()
             {
-                return Html("");
+                return Task.FromResult(Html(""));
             }
 
             public static MockHandler Make() { return new MockHandler(); }
