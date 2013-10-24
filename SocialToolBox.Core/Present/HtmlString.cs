@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Present
     /// <summary>
     /// An arbitrary piece of HTML. Can also appear as a page node.
     /// </summary>
-    public sealed class HtmlString : IPage
+    public sealed class HtmlString : IPageNode
     {
         /// <summary>
         /// The actual HTML string.
