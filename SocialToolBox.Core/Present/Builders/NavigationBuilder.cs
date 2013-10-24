@@ -110,5 +110,10 @@ namespace SocialToolBox.Core.Present.Builders
         {
             return AddSecondary(new Link(label, url, isCurrent));
         }
+
+        /// <summary>
+        /// Build the immutable <see cref="Navigation"/>.
+        /// </summary>
+        public Navigation Build() { return new Navigation(this);}
     }
 }

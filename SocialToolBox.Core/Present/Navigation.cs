@@ -53,7 +53,7 @@ namespace SocialToolBox.Core.Present
         /// <summary>
         /// Start building a new item.
         /// </summary>
-        public static NavigationBuilder Build()
+        public static NavigationBuilder Horizontal()
         {
             return new NavigationBuilder();
         }
