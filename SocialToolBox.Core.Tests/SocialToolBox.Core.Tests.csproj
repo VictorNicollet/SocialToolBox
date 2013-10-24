@@ -67,6 +67,7 @@
     <Compile Include="Present\Builders\column_page_builder.cs" />
     <Compile Include="Present\Builders\item_builder.cs" />
     <Compile Include="Present\Builders\list_builder.cs" />
+    <Compile Include="Present\heading.cs" />
     <Compile Include="Present\html_output.cs" />
     <Compile Include="Present\html_string.cs" />
     <Compile Include="Present\pagination.cs" />

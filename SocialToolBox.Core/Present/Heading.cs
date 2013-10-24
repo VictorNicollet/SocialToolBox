@@ -2,8 +2,6 @@
 
 namespace SocialToolBox.Core.Present
 {
-    // TODO: test
-
     /// <summary>
     /// A heading: a bold, title-like block for presenting a piece of 
     /// primary information.
