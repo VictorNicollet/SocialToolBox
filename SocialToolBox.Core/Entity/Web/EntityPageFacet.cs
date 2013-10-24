@@ -61,7 +61,7 @@ namespace SocialToolBox.Core.Entity.Web
 
                 var output = ColumnPage
                     .WithTitle(page.Title)
-                    .AddPrimary(HtmlString.Escape(page.Title));
+                    .AddPrimary(new Heading(page.Title, 1));
 
                 var details = Facet.Module.PageDetailsExtractor.Visit(page);
                 if (details != null) output.AddPrimary(details);
