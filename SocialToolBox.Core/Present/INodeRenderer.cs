@@ -12,5 +12,6 @@
         void Render(ListVertical list, HtmlOutput o);
         void Render(Pagination pagination, HtmlOutput o);
         void Render(ItemSummary item, HtmlOutput o);
+        void Render(Heading title, HtmlOutput output);
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Present\NotFoundPage.cs" />
     <Compile Include="Present\ColumnPage.cs" />
     <Compile Include="Present\RenderingStrategy\NaiveRenderingStrategy.cs" />
+    <Compile Include="Present\Heading.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\Event\ISessionEvent.cs" />
     <Compile Include="Session\Event\SessionCreated.cs" />

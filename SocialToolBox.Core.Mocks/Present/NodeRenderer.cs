@@ -36,5 +36,10 @@ namespace SocialToolBox.Core.Mocks.Present
         {
             output.Add("Item !");
         }
+
+        public void Render(Heading title, HtmlOutput output)
+        {
+            output.Add("Title !");
+        }
     }
 }

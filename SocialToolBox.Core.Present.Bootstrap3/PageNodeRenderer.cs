@@ -100,6 +100,11 @@ namespace SocialToolBox.Core.Present.Bootstrap3
             ItemRenderer.RenderName(item, output);
         }
 
+        public override void Render(Heading heading, HtmlOutput output)
+        {
+            HeadingRenderer.Render(heading, output);
+        }
+
         public PageNodeRenderer()
         {
             NotFoundTitle = "Page not found";
