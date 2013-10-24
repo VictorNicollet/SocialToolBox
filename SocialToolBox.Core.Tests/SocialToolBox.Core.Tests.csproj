@@ -71,6 +71,7 @@
     <Compile Include="Present\html_output.cs" />
     <Compile Include="Present\html_string.cs" />
     <Compile Include="Present\pagination.cs" />
+    <Compile Include="Present\rich_user_content.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\Projection\user_creation_time.cs" />
     <Compile Include="User\Projection\user_signup_time.cs" />
