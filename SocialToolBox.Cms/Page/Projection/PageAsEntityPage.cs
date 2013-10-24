@@ -52,7 +52,7 @@ namespace SocialToolBox.Cms.Page.Projection
         /// </summary>
         public static void ExtendDetailsVisitor(VisitingExtractor<IEntityPage, IPageNode> visitor)
         {
-            visitor.On<PageAsEntityPage>(page => HtmlString.Verbatim(page.Body));
+            visitor.On<PageAsEntityPage>(page => new RichUserContent(HtmlString.Verbatim(page.Body)));
         }
     }
 }
