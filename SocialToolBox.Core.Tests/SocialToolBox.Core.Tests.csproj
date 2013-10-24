@@ -63,6 +63,7 @@
     <Compile Include="Entity\Web\EntityPage\all_pages.cs" />
     <Compile Include="Entity\Web\EntityPage\view_page.cs" />
     <Compile Include="EventReaderFixture.cs" />
+    <Compile Include="Present\Builders\item_builder.cs" />
     <Compile Include="Present\Builders\list_builder.cs" />
     <Compile Include="Present\html_output.cs" />
     <Compile Include="Present\html_string.cs" />
