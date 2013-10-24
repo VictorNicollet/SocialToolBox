@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Web.UI.WebControls;
 
 namespace SocialToolBox.Core.Web
 {

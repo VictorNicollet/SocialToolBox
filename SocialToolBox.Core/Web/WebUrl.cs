@@ -79,21 +79,10 @@ namespace SocialToolBox.Core.Web
             if (IsSecure != other.IsSecure) return false;
 
             if (_path.Count != other._path.Count) return false;
-            for (var i = 0; i < _path.Count; ++i)
-                if (_path[i] != other._path[i]) return false;
+            if (_path.Where((t, i) => t != other._path[i]).Any()) return false;
 
-            if (_get.Count != other._get.Count) return false;
-            foreach (var kv in _get)
-            {
-                string o;
-                if (!other._get.TryGetValue(kv.Key, out o)) return false;
-                if (o != kv.Value) return false;
-            }
-
-            foreach (var key in other._get.Keys)
-                if (!_get.ContainsKey(key)) return false;
-
-            return true;
+            return _get.Count == other._get.Count 
+                && other._get.All(kv => _get.ContainsKey(kv.Key) && kv.Value == _get[kv.Key]);
         }
 
         public override string ToString()
@@ -110,7 +99,7 @@ namespace SocialToolBox.Core.Web
                 sb.Append(Uri.EscapeDataString(seg));
             }
 
-            bool first = true;
+            var first = true;
             foreach (var kv in _get)
             {
                 sb.Append(first ? '?' : '&');

@@ -10,6 +10,8 @@ using SocialToolBox.Core.Web.Args;
 using SocialToolBox.Core.Web.Facets;
 using SocialToolBox.Core.Web.Response;
 
+// TODO: I18N
+
 namespace SocialToolBox.Core.Entity.Web
 {
     /// <summary>

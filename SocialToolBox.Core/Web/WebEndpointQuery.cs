@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using SocialToolBox.Core.Web.Response;
 
 namespace SocialToolBox.Core.Web
@@ -58,9 +58,7 @@ namespace SocialToolBox.Core.Web
             /// </summary>
             private static Dictionary<string, string> Copy(Dictionary<string, string> copied)
             {
-                var result = new Dictionary<string, string>();
-                foreach (var kv in copied) result.Add(kv.Key, kv.Value);
-                return result;
+                return copied.ToDictionary(kv => kv.Key, kv => kv.Value);
             }
 
             /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace SocialToolBox.Core.Database.Serialization
@@ -28,14 +29,8 @@ namespace SocialToolBox.Core.Database.Serialization
         /// </summary>
         public static string GetName(Type type)
         {
-            foreach (var attr in type.GetCustomAttributes(typeof(PersistAttribute), true))
-            {
-                var asPersist = attr as PersistAttribute;
-                if (null != asPersist)                
-                    return asPersist.Name;                
-            }
-
-            return null;
+            return type.GetCustomAttributes(typeof (PersistAttribute), true).OfType<PersistAttribute>()
+                .Select(asPersist => asPersist.Name).FirstOrDefault();
         }
 
         /// <summary>

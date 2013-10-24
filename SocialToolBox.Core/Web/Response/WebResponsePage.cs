@@ -4,7 +4,8 @@ using SocialToolBox.Core.Present;
 namespace SocialToolBox.Core.Web.Response
 {
     /// <summary>
-    /// Respond with a page.
+    /// Respond with a page. The page itself may not be fully built yet (as pages
+    /// can contain task nodes).
     /// </summary>
     public class WebResponsePage : WebResponse
     {
