@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace SocialToolBox.Core.Present
@@ -9,7 +8,7 @@ namespace SocialToolBox.Core.Present
     /// <summary>
     /// An arbitrary piece of HTML. Can also appear as a page node.
     /// </summary>
-    public class HtmlString : IPage
+    public sealed class HtmlString : IPage
     {
         /// <summary>
         /// The actual HTML string.

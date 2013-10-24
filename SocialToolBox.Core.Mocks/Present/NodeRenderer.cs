@@ -12,7 +12,7 @@ namespace SocialToolBox.Core.Mocks.Present
             output.Add(html);
         }
 
-        public void Render(NotFound notFound, HtmlOutput output)
+        public void Render(NotFoundPage notFound, HtmlOutput output)
         {
             output.Add("Not Found !");
         }

@@ -14,7 +14,7 @@ namespace SocialToolBox.Core.Tests.Entity.Web.EntityPage
         public void get_empty()
         {
             var response = (WebResponsePage) Facet.View.Query(Id.Parse("40404040404").ToArgs()).Run();            
-            Assert.IsTrue(response.Page is NotFound);
+            Assert.IsTrue(response.Page is NotFoundPage);
         }
 
         [Test]

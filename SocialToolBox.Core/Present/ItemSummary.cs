@@ -3,7 +3,10 @@ using SocialToolBox.Core.Web;
 
 namespace SocialToolBox.Core.Present
 {
-    public class ItemSummary : IPageNode
+    /// <summary>
+    /// A short block summarizing an item, usually as part of a list.
+    /// </summary>
+    public sealed class ItemSummary : IPageNode
     {
         /// <summary>
         /// The url for viewing the actual item.

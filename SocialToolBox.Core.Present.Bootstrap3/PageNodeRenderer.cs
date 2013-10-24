@@ -56,7 +56,7 @@ namespace SocialToolBox.Core.Present.Bootstrap3
         /// </summary>
         public HtmlString NotFoundBody { get; set; }
 
-        public override void Render(NotFound notFound, HtmlOutput output)
+        public override void Render(NotFoundPage notFound, HtmlOutput output)
         {
             RenderHtml(
                 FormatTitle(NotFoundTitle),

@@ -8,7 +8,7 @@ namespace SocialToolBox.Core.Present
     /// <summary>
     /// Represents a pagination block.
     /// </summary>
-    public class Pagination : IPageNode
+    public sealed class Pagination : IPageNode
     {
         /// <summary>
         /// Represents the position of the pagination block around a 

@@ -56,7 +56,7 @@ namespace SocialToolBox.Core.Entity.Web
                 var pageT = Facet.Module.Pages.Get(Arguments.Ident, Cursor);
 
                 var page = pageT.Result;
-                if (page == null) return Page(new NotFound());
+                if (page == null) return Page(new NotFoundPage());
 
                 var output = ColumnPage
                     .WithTitle(page.Title)

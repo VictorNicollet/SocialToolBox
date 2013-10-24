@@ -6,7 +6,7 @@ namespace SocialToolBox.Core.Present
     /// <summary>
     /// A list of items, stacked vertically.
     /// </summary>
-    public class ListVertical : IPageNode
+    public sealed class ListVertical : IPageNode
     {
         /// <summary>
         /// Items present in the list, in the correct order.

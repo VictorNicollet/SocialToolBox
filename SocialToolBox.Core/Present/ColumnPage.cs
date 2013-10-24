@@ -7,7 +7,7 @@ namespace SocialToolBox.Core.Present
     /// <summary>
     /// A full web page. Build using a columns-as-stacks-of-nodes approach. 
     /// </summary>
-    public class ColumnPage : IPage
+    public sealed class ColumnPage : IPage
     {
         /// <summary>
         /// The title of this page.
