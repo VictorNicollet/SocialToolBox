@@ -107,9 +107,9 @@ namespace SocialToolBox.Core.Present.Bootstrap3
 
         public override void Render(RichUserContent content, HtmlOutput o)
         {
-            o.Add("<div class=\"user-content\">");
+            o.AddVerbatim("<div class=\"user-content\">");
             o.Add(content.Html);
-            o.Add("</div>");
+            o.AddVerbatim("</div>");
         }
 
         public PageNodeRenderer()
