@@ -89,8 +89,11 @@ namespace SocialToolBox.Core.Database.Serialization
                     var name = GetName(type);
                     if (null != name)
                     {
-                        // TODO: write relevant error message
-                        Debug.Assert(!TypeByName.ContainsKey(name));
+                        if (TypeByName.ContainsKey(name))
+                            throw new Exception(
+                                string.Format("Types '{0}' and '{1}' both persist under name '{2}'.",
+                                    type, TypeByName[name], name));    
+
                         TypeByName.Add(name, type);
                     }
                 }
