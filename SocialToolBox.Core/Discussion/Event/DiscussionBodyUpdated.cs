@@ -2,6 +2,7 @@
 using SocialToolBox.Core.Database;
 using SocialToolBox.Core.Database.Event;
 using SocialToolBox.Core.Database.Serialization;
+using SocialToolBox.Core.Datatypes.RichContent;
 using SocialToolBox.Core.User.Event;
 
 namespace SocialToolBox.Core.Discussion.Event
@@ -19,11 +20,11 @@ namespace SocialToolBox.Core.Discussion.Event
         public Id AuthorId { get; private set; }
 
         [PersistMember(3)]
-        public string Body { get; private set; }
+        public IRichContent Body { get; private set; }
 
         public DiscussionBodyUpdated() {}
 
-        public DiscussionBodyUpdated(Id id, DateTime time, Id author, string body)
+        public DiscussionBodyUpdated(Id id, DateTime time, Id author, IRichContent body)
         {
             Id = id;
             Time = time;
